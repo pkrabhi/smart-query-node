@@ -1,0 +1,1981 @@
+{
+  "module": "ENGINEERING",
+  "description": "KMC Engineering Module - Work Estimates, Tenders, POs, Invoices, Receipts",
+  "schema": "public",
+  "important_rules": [
+    "c_status: 1=Active, 0=Inactive/Deleted. Always filter c_status=1 unless history is requested.",
+    "cancelled_status: 1=Cancelled, 0=Active. Filter cancelled_status=0 for active records.",
+    "Tender flow: kmc_work_estimate_hearder \u2192 engg_est_tender_master \u2192 engg_po_headers \u2192 engg_invoice_headers \u2192 engg_receipt_headers",
+    "Primary JOIN key between estimate and tender: estimate_header_id (kmc_work_estimate_hearder) \u2192 estimate_header_id (engg_est_tender_master)",
+    "Primary JOIN key across tender tables: tender_no (engg_est_tender_master.tender_no)",
+    "Primary JOIN key across PO tables: po_number (engg_po_headers.po_number)",
+    "file_no is a reference to estimate_file_creations table (external); use it as a filter key",
+    "estimate_header_id in kmc_work_estimate_hearder is unique per estimate work order",
+    "est_header_id in detail/distribution tables = estimate_header_id in kmc_work_estimate_hearder",
+    "DPR approval stages: SAE \u2192 AE \u2192 EE \u2192 DY_CE \u2192 DG (hierarchical approval chain)",
+    "dpr_status: INITIATED, PENDING, APPROVED, REJECTED",
+    "concept_note_status: 0=Draft, 1=Submitted, 2=Approved, 3=Rejected",
+    "est_approval_status in estimate header: tracks current approval state",
+    "Bidder shortlisted_flag: Y=Shortlisted, N=Not shortlisted",
+    "bid_winner in engg_estimate_details_item_bid: 1=Winner, 0=Not winner",
+    "payment_status in receipt/invoice: 1=Paid, 0=Unpaid/Pending",
+    "po_type: WORKS=Works contract, SUPPLY=Supply contract, SERVICE=Service contract",
+    "tender_type: OPEN=Open tender, LIMITED=Limited tender, SINGLE=Single tender",
+    "bid_type: FINANCIAL=Financial bid, ENGINEERING=Engineering/item-rate bid",
+    "status_description column contains human-readable workflow status",
+    "borough and ward are location identifiers for work distribution",
+    "zone_no identifies the administrative zone for the work",
+    "department column stores department code responsible for the work",
+    "work_type: CIVIL, ELECTRICAL, MECHANICAL, etc.",
+    "fund_type: identifies budget funding source (SFC, CAP, etc.)",
+    "gst_type: CGST_SGST=local, IGST=inter-state",
+    "invoice bill flow: engg_invoice_headers (header) \u2192 engg_invoice_details (line items)",
+    "receipt flow: engg_receipt_headers (header) \u2192 engg_receipt_details (line items)",
+    "History tables (*_history) contain audit trail of bid changes",
+    "Rejected estimates are stored in rejected_kmc_work_estimate_details",
+    "Temp estimate tables (kmc_work_temp_*) hold draft estimates before finalization",
+    "Annexture estimate is additional/supplementary estimate linked to main estimate",
+    "CRN (Contractor Registration Number) details tracked in engg_tender_contractor_crn_details",
+    "EMD (Earnest Money Deposit) tracked in bidder payment tables"
+  ],
+  "tables": {
+    "kmc_work_estimate_hearder": {
+      "description": "Main work estimate header \u2014 one row per work estimate/work order",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true,
+          "desc": "Internal row ID"
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no",
+          "desc": "Unique file reference number"
+        },
+        "file_description": {
+          "type": "varchar",
+          "desc": "Description of the work file"
+        },
+        "estimate_header_id": {
+          "type": "varchar",
+          "desc": "Unique estimate ID \u2014 used as FK in tender and detail tables"
+        },
+        "work_type": {
+          "type": "varchar",
+          "desc": "Type of work: CIVIL, ELECTRICAL, MECHANICAL etc."
+        },
+        "department": {
+          "type": "varchar",
+          "desc": "Department code responsible for work"
+        },
+        "borough": {
+          "type": "varchar",
+          "desc": "Borough location of work"
+        },
+        "ward": {
+          "type": "varchar",
+          "desc": "Ward number where work is located"
+        },
+        "zone_no": {
+          "type": "varchar",
+          "desc": "Zone number"
+        },
+        "work_name": {
+          "type": "varchar",
+          "desc": "Name/title of the work"
+        },
+        "work_purpose": {
+          "type": "varchar",
+          "desc": "Purpose or objective of the work"
+        },
+        "total_estimate": {
+          "type": "numeric",
+          "desc": "Total estimated cost before GST/cess"
+        },
+        "total_job_value": {
+          "type": "numeric",
+          "desc": "Total job value including all taxes"
+        },
+        "total_estimate_gst": {
+          "type": "numeric",
+          "desc": "Total GST amount on estimate"
+        },
+        "gst_percent": {
+          "type": "numeric",
+          "desc": "GST percentage applied"
+        },
+        "cess_percent": {
+          "type": "numeric",
+          "desc": "CESS percentage applied"
+        },
+        "contingency_percent": {
+          "type": "numeric",
+          "desc": "Contingency percentage"
+        },
+        "est_approval_status": {
+          "type": "varchar",
+          "desc": "Current approval status of estimate"
+        },
+        "status_description": {
+          "type": "varchar",
+          "desc": "Human-readable workflow status"
+        },
+        "stateid": {
+          "type": "varchar",
+          "desc": "Workflow state ID"
+        },
+        "statusid": {
+          "type": "varchar",
+          "desc": "Workflow status ID"
+        },
+        "fund_type": {
+          "type": "varchar",
+          "desc": "Budget fund type (SFC, CAP, etc.)"
+        },
+        "dpr_no": {
+          "type": "varchar",
+          "desc": "DPR reference number"
+        },
+        "concept_note": {
+          "type": "varchar",
+          "desc": "Concept note reference"
+        },
+        "lock_flag": {
+          "type": "numeric",
+          "desc": "1=Locked for editing, 0=Unlocked"
+        },
+        "c_status": {
+          "type": "integer",
+          "desc": "1=Active, 0=Deleted"
+        },
+        "createdAt": {
+          "type": "timestamp",
+          "desc": "Record creation timestamp"
+        },
+        "createdby": {
+          "type": "varchar",
+          "desc": "User who created the record"
+        },
+        "wf_pdf": {
+          "type": "varchar",
+          "desc": "Workflow PDF document path"
+        }
+      }
+    },
+    "kmc_work_estimate_details": {
+      "description": "Line items of a work estimate \u2014 one row per item/activity",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "est_header_id": {
+          "type": "varchar",
+          "fk": "kmc_work_estimate_hearder.estimate_header_id",
+          "desc": "Links to estimate header"
+        },
+        "item_no": {
+          "type": "varchar",
+          "desc": "Line item number"
+        },
+        "item_name": {
+          "type": "varchar",
+          "desc": "Name of work item"
+        },
+        "item_desc": {
+          "type": "varchar",
+          "desc": "Detailed description of work item"
+        },
+        "unitofmeasure": {
+          "type": "varchar",
+          "desc": "Unit (RMT, SQM, NOS, etc.)"
+        },
+        "item_rate": {
+          "type": "numeric",
+          "desc": "Rate per unit"
+        },
+        "quantity": {
+          "type": "numeric",
+          "desc": "Quantity of work"
+        },
+        "estimate_price": {
+          "type": "numeric",
+          "desc": "Estimated price for line item"
+        },
+        "line_value": {
+          "type": "numeric",
+          "desc": "Total line value = rate \u00d7 quantity"
+        },
+        "cgst_percent": {
+          "type": "numeric"
+        },
+        "cgst_amount": {
+          "type": "numeric"
+        },
+        "sgst_percent": {
+          "type": "numeric"
+        },
+        "sgst_amount": {
+          "type": "numeric"
+        },
+        "schedule_name": {
+          "type": "varchar",
+          "desc": "Schedule/DSR name"
+        },
+        "remaining_qty": {
+          "type": "numeric",
+          "desc": "Remaining unexecuted quantity"
+        },
+        "status": {
+          "type": "integer",
+          "desc": "Item status"
+        },
+        "c_status": {
+          "type": "integer",
+          "desc": "1=Active, 0=Deleted"
+        }
+      }
+    },
+    "kmc_work_estimate_distributions": {
+      "description": "Budget distribution of work estimate across wards/boroughs",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "est_header_id": {
+          "type": "varchar",
+          "fk": "kmc_work_estimate_hearder.estimate_header_id"
+        },
+        "cost_centre_no": {
+          "type": "varchar",
+          "desc": "Cost centre number for budget allocation"
+        },
+        "borough": {
+          "type": "varchar",
+          "desc": "Borough for distribution"
+        },
+        "ward": {
+          "type": "varchar",
+          "desc": "Ward for distribution"
+        },
+        "street": {
+          "type": "varchar",
+          "desc": "Street location"
+        },
+        "description": {
+          "type": "varchar",
+          "desc": "Distribution description"
+        },
+        "distributed_amount": {
+          "type": "numeric",
+          "desc": "Amount allocated to this cost centre"
+        },
+        "c_status": {
+          "type": "integer"
+        }
+      }
+    },
+    "kmc_work_temp_estimate_hearder": {
+      "description": "Temporary/draft estimate header (before finalization)",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "estimate_header_id": {
+          "type": "varchar",
+          "desc": "Draft estimate ID"
+        },
+        "work_type": {
+          "type": "varchar"
+        },
+        "department": {
+          "type": "varchar"
+        },
+        "borough": {
+          "type": "varchar"
+        },
+        "ward": {
+          "type": "varchar"
+        },
+        "work_name": {
+          "type": "varchar"
+        },
+        "work_purpose": {
+          "type": "varchar"
+        },
+        "department_desc": {
+          "type": "varchar",
+          "desc": "Department description"
+        }
+      }
+    },
+    "kmc_work_temp_estimate_details": {
+      "description": "Line items of draft/temporary estimate",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "est_header_id": {
+          "type": "varchar",
+          "fk": "kmc_work_temp_estimate_hearder.estimate_header_id"
+        },
+        "item_no": {
+          "type": "varchar"
+        },
+        "item_name": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "item_rate": {
+          "type": "numeric"
+        },
+        "quantity": {
+          "type": "numeric"
+        },
+        "estimate_price": {
+          "type": "numeric"
+        },
+        "line_value": {
+          "type": "numeric"
+        },
+        "status": {
+          "type": "integer"
+        }
+      }
+    },
+    "engg_est_tender_master": {
+      "description": "Tender master \u2014 one row per tender linked to a work estimate",
+      "key_columns": {
+        "id": {
+          "type": "integer"
+        },
+        "tender_no": {
+          "type": "varchar",
+          "pk": true,
+          "desc": "Unique tender number \u2014 primary key, FK in all tender child tables"
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "estimate_no": {
+          "type": "varchar",
+          "desc": "Estimate reference number"
+        },
+        "estimate_header_id": {
+          "type": "varchar",
+          "fk": "kmc_work_estimate_hearder.estimate_header_id"
+        },
+        "publish_date": {
+          "type": "timestamp",
+          "desc": "Date tender was published"
+        },
+        "bidding_opening_date": {
+          "type": "timestamptz",
+          "desc": "Date bids are opened"
+        },
+        "sale_start_date": {
+          "type": "timestamp",
+          "desc": "Tender document sale start"
+        },
+        "sale_end_date": {
+          "type": "timestamp",
+          "desc": "Tender document sale end"
+        },
+        "bid_sub_start_date": {
+          "type": "timestamp",
+          "desc": "Bid submission start date"
+        },
+        "bid_sub_end_date": {
+          "type": "timestamp",
+          "desc": "Bid submission end date"
+        },
+        "tender_type": {
+          "type": "varchar",
+          "desc": "OPEN/LIMITED/SINGLE tender type"
+        },
+        "bid_type": {
+          "type": "varchar",
+          "desc": "FINANCIAL or ENGINEERING bid type"
+        },
+        "emd_value": {
+          "type": "varchar",
+          "desc": "Earnest Money Deposit value required"
+        },
+        "emd_type": {
+          "type": "varchar",
+          "desc": "EMD type (ONLINE/DD/CRN)"
+        },
+        "po_type": {
+          "type": "varchar",
+          "desc": "WORKS/SUPPLY/SERVICE"
+        },
+        "tender_bidders": {
+          "type": "integer",
+          "desc": "Number of bidders who participated"
+        },
+        "status": {
+          "type": "integer",
+          "desc": "Current tender status code"
+        },
+        "status_description": {
+          "type": "varchar",
+          "desc": "Human-readable tender status"
+        },
+        "cancel_remarks": {
+          "type": "varchar",
+          "desc": "Reason if tender was cancelled"
+        },
+        "cancelled_by": {
+          "type": "varchar",
+          "desc": "User who cancelled tender"
+        },
+        "cancelled_on": {
+          "type": "timestamp",
+          "desc": "Date tender was cancelled"
+        },
+        "c_status": {
+          "type": "smallint",
+          "desc": "1=Active, 0=Cancelled/Deleted"
+        },
+        "narration": {
+          "type": "varchar",
+          "desc": "Additional narration/notes"
+        }
+      }
+    },
+    "engg_tender_bidders": {
+      "description": "Bidders who participated in a tender",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "engg_contractor_name": {
+          "type": "varchar",
+          "desc": "Contractor/bidder company name"
+        },
+        "engg_contractor_phone": {
+          "type": "varchar",
+          "desc": "Contractor phone"
+        },
+        "engg_contractor_email": {
+          "type": "varchar",
+          "desc": "Contractor email"
+        },
+        "engg_contractor_code": {
+          "type": "varchar",
+          "desc": "Contractor registration code"
+        },
+        "bid_type": {
+          "type": "varchar",
+          "desc": "Type of bid submitted"
+        },
+        "bid_value": {
+          "type": "numeric",
+          "desc": "Total bid amount submitted"
+        },
+        "bid_submission_date": {
+          "type": "timestamp",
+          "desc": "Date bid was submitted"
+        },
+        "shortlisted_flag": {
+          "type": "varchar",
+          "desc": "Y=Shortlisted, N=Not shortlisted"
+        },
+        "status_description": {
+          "type": "varchar",
+          "desc": "Bidder status description"
+        },
+        "c_status": {
+          "type": "numeric",
+          "desc": "1=Active, 0=Inactive"
+        }
+      }
+    },
+    "engg_tender_docs": {
+      "description": "Documents attached to a tender",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar"
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "tender_doc1": {
+          "type": "varchar",
+          "desc": "Document 1 file path"
+        },
+        "tender_doc2": {
+          "type": "varchar",
+          "desc": "Document 2 file path"
+        },
+        "tender_doc3": {
+          "type": "varchar",
+          "desc": "Document 3 file path"
+        },
+        "c_status": {
+          "type": "varchar"
+        }
+      }
+    },
+    "engg_tender_contractor_crn_details": {
+      "description": "CRN (Contractor Registration Number) payment details for active tenders",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "estimate_no": {
+          "type": "varchar"
+        },
+        "file_no": {
+          "type": "varchar"
+        },
+        "engg_contractor_name": {
+          "type": "varchar",
+          "desc": "Contractor name"
+        },
+        "contractor_code": {
+          "type": "varchar",
+          "desc": "Contractor code"
+        },
+        "crn_number": {
+          "type": "varchar",
+          "desc": "CRN reference number"
+        },
+        "crn_amount": {
+          "type": "varchar",
+          "desc": "CRN payment amount"
+        },
+        "total_amount": {
+          "type": "numeric",
+          "desc": "Total amount paid via CRN"
+        },
+        "c_status": {
+          "type": "numeric"
+        }
+      }
+    },
+    "eng_tender_bidder_payment_dtls": {
+      "description": "EMD/bid payment details made by bidders for tenders",
+      "key_columns": {
+        "id": {
+          "type": "bigint",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "file_no": {
+          "type": "varchar"
+        },
+        "esitimation_no": {
+          "type": "varchar"
+        },
+        "contractor_name": {
+          "type": "varchar"
+        },
+        "payment_mode": {
+          "type": "varchar",
+          "desc": "ONLINE/DD/CRN"
+        },
+        "transaction_id": {
+          "type": "varchar"
+        },
+        "emd_amount": {
+          "type": "varchar",
+          "desc": "EMD amount"
+        },
+        "paid_amount": {
+          "type": "varchar",
+          "desc": "Amount paid"
+        },
+        "total_amount": {
+          "type": "varchar"
+        },
+        "dd_date": {
+          "type": "date"
+        },
+        "bank_name": {
+          "type": "varchar"
+        },
+        "tender_type": {
+          "type": "varchar"
+        }
+      }
+    },
+    "eng_cancelled_tender_bidder_payment_dtls": {
+      "description": "EMD payment details for cancelled tenders",
+      "key_columns": {
+        "id": {
+          "type": "bigint",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "file_no": {
+          "type": "varchar"
+        },
+        "contractor_name": {
+          "type": "varchar"
+        },
+        "payment_mode": {
+          "type": "varchar"
+        },
+        "emd_amount": {
+          "type": "varchar"
+        },
+        "paid_amount": {
+          "type": "varchar"
+        },
+        "total_amount": {
+          "type": "varchar"
+        },
+        "dd_date": {
+          "type": "date"
+        },
+        "dd_return_date": {
+          "type": "date",
+          "desc": "EMD return date"
+        },
+        "remarks": {
+          "type": "varchar"
+        }
+      }
+    },
+    "engg_cancelled_tender_contractor_crn_details": {
+      "description": "CRN details for cancelled tenders",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "file_no": {
+          "type": "varchar"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "contractor_code": {
+          "type": "varchar"
+        },
+        "crn_number": {
+          "type": "varchar"
+        },
+        "crn_amount": {
+          "type": "varchar"
+        },
+        "total_amount": {
+          "type": "numeric"
+        },
+        "c_status": {
+          "type": "numeric"
+        }
+      }
+    },
+    "engg_engineering_bidding_details": {
+      "description": "Engineering/item-rate bid details submitted by contractors",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "engg_contractor_code": {
+          "type": "varchar",
+          "desc": "Contractor code (from engg_tender_bidders)"
+        },
+        "bid_item_no": {
+          "type": "varchar",
+          "desc": "Bid line item number"
+        },
+        "item_name": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "bid_unit_price": {
+          "type": "numeric",
+          "desc": "Quoted unit price"
+        },
+        "estimate_price": {
+          "type": "numeric",
+          "desc": "Original estimate price"
+        },
+        "gst_percent": {
+          "type": "numeric"
+        },
+        "gst_amount": {
+          "type": "numeric"
+        },
+        "cess_percent": {
+          "type": "numeric"
+        },
+        "cess_amount": {
+          "type": "numeric"
+        },
+        "bid_quantity": {
+          "type": "numeric"
+        },
+        "total_bidding_estimate": {
+          "type": "numeric",
+          "desc": "Total bid value"
+        },
+        "round_no": {
+          "type": "varchar",
+          "desc": "Bidding round number"
+        },
+        "c_status": {
+          "type": "numeric"
+        }
+      }
+    },
+    "engg_engineering_bidding_po_details": {
+      "description": "PO-level engineering bidding info (post-award details)",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "engg_contractor_code": {
+          "type": "varchar"
+        },
+        "po_number": {
+          "type": "varchar",
+          "desc": "PO number linked"
+        },
+        "transaction_no": {
+          "type": "varchar"
+        },
+        "emd_amount": {
+          "type": "numeric"
+        },
+        "payment_mode": {
+          "type": "varchar"
+        },
+        "bank_name": {
+          "type": "varchar"
+        },
+        "lock_flag": {
+          "type": "varchar"
+        },
+        "c_status": {
+          "type": "numeric"
+        }
+      }
+    },
+    "engg_estimate_details_item_bid": {
+      "description": "Item-wise bid details and winner information per tender",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "est_header_id": {
+          "type": "varchar"
+        },
+        "item_no": {
+          "type": "varchar"
+        },
+        "item_name": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "item_rate": {
+          "type": "numeric"
+        },
+        "quantity": {
+          "type": "numeric"
+        },
+        "estimate_price": {
+          "type": "numeric"
+        },
+        "line_value": {
+          "type": "numeric"
+        },
+        "cgst_amount": {
+          "type": "numeric"
+        },
+        "sgst_amount": {
+          "type": "numeric"
+        },
+        "contractor_code": {
+          "type": "varchar"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "bid_winner": {
+          "type": "integer",
+          "desc": "1=Winner, 0=Not winner"
+        },
+        "final_rate": {
+          "type": "numeric",
+          "desc": "Final accepted rate"
+        },
+        "final_bid_price": {
+          "type": "varchar",
+          "desc": "Final total bid price"
+        },
+        "remaining_qty": {
+          "type": "numeric"
+        },
+        "active_flag": {
+          "type": "smallint"
+        },
+        "cancelled_status": {
+          "type": "integer"
+        },
+        "cancelled_on": {
+          "type": "timestamp"
+        },
+        "status_description": {
+          "type": "varchar"
+        }
+      }
+    },
+    "engg_estimate_details_item_bid_history": {
+      "description": "Audit history of item bid changes",
+      "key_columns": {
+        "id": {
+          "type": "integer"
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "file_no": {
+          "type": "varchar"
+        },
+        "est_header_id": {
+          "type": "varchar"
+        },
+        "item_no": {
+          "type": "varchar"
+        },
+        "item_name": {
+          "type": "varchar"
+        },
+        "item_rate": {
+          "type": "numeric"
+        },
+        "quantity": {
+          "type": "numeric"
+        },
+        "estimate_price": {
+          "type": "numeric"
+        },
+        "line_value": {
+          "type": "numeric"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "final_rate": {
+          "type": "numeric"
+        },
+        "bid_winner": {
+          "type": "integer"
+        },
+        "version_no": {
+          "type": "integer"
+        },
+        "audit_date": {
+          "type": "date"
+        },
+        "audit_action": {
+          "type": "varchar"
+        }
+      }
+    },
+    "engg_financial_bid_estimation": {
+      "description": "Financial bid estimation line items",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar"
+        },
+        "est_header_id": {
+          "type": "varchar"
+        },
+        "item_no": {
+          "type": "varchar"
+        },
+        "item_name": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "item_rate": {
+          "type": "numeric"
+        },
+        "quantity": {
+          "type": "numeric"
+        },
+        "estimate_price": {
+          "type": "numeric"
+        },
+        "line_value": {
+          "type": "numeric"
+        },
+        "cgst_percent": {
+          "type": "numeric"
+        },
+        "cgst_amount": {
+          "type": "numeric"
+        },
+        "sgst_percent": {
+          "type": "numeric"
+        },
+        "sgst_amount": {
+          "type": "numeric"
+        },
+        "finalrate": {
+          "type": "varchar",
+          "desc": "Finalized rate"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "fin_bid_id": {
+          "type": "bigint"
+        },
+        "bid_contractor_code": {
+          "type": "varchar"
+        }
+      }
+    },
+    "engg_financial_bidding_details": {
+      "description": "Financial bidding \u2014 overall bid value submitted by contractors per tender",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "engg_contractor_code": {
+          "type": "varchar"
+        },
+        "bid_value_1": {
+          "type": "varchar",
+          "desc": "Round 1 bid value"
+        },
+        "bid_date_1": {
+          "type": "timestamp",
+          "desc": "Round 1 bid date"
+        },
+        "bid_value_2": {
+          "type": "varchar"
+        },
+        "bid_value_3": {
+          "type": "varchar"
+        },
+        "total_bidding_estimate": {
+          "type": "numeric",
+          "desc": "Total financial bid estimate"
+        },
+        "bid_winner": {
+          "type": "varchar",
+          "desc": "Y=Winner, N=Not winner"
+        },
+        "department_name": {
+          "type": "varchar"
+        },
+        "department_code": {
+          "type": "varchar"
+        },
+        "po_type": {
+          "type": "varchar"
+        },
+        "input_type": {
+          "type": "varchar"
+        },
+        "status_description": {
+          "type": "varchar"
+        },
+        "c_status": {
+          "type": "numeric"
+        }
+      }
+    },
+    "engg_financial_bidding_details_history": {
+      "description": "Audit history of financial bidding changes",
+      "key_columns": {
+        "id": {
+          "type": "integer"
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "engg_contractor_code": {
+          "type": "varchar"
+        },
+        "total_bidding_estimate": {
+          "type": "numeric"
+        },
+        "bid_winner": {
+          "type": "varchar"
+        },
+        "department_code": {
+          "type": "varchar"
+        },
+        "audit_date": {
+          "type": "date"
+        },
+        "audit_action": {
+          "type": "varchar"
+        }
+      }
+    },
+    "engg_po_headers": {
+      "description": "Purchase Order (PO) header \u2014 one row per PO issued after tender award",
+      "key_columns": {
+        "id": {
+          "type": "integer"
+        },
+        "po_number": {
+          "type": "varchar",
+          "pk": true,
+          "desc": "Unique PO number \u2014 FK in all PO child tables"
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "estimate_no": {
+          "type": "varchar"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "engg_contractor_code": {
+          "type": "varchar"
+        },
+        "contractor_code": {
+          "type": "varchar"
+        },
+        "po_type": {
+          "type": "varchar",
+          "desc": "WORKS/SUPPLY/SERVICE"
+        },
+        "po_creation_date": {
+          "type": "timestamp",
+          "desc": "PO creation date"
+        },
+        "po_approval_date": {
+          "type": "timestamp",
+          "desc": "PO approval date"
+        },
+        "po_handover_date": {
+          "type": "timestamp",
+          "desc": "Site handover date"
+        },
+        "estimated_handover_date": {
+          "type": "timestamp"
+        },
+        "total_work_amount": {
+          "type": "numeric",
+          "desc": "Total PO amount"
+        },
+        "status_approval": {
+          "type": "varchar",
+          "desc": "PO approval status"
+        },
+        "status_description": {
+          "type": "varchar"
+        },
+        "crn_no": {
+          "type": "varchar"
+        },
+        "cgst": {
+          "type": "varchar"
+        },
+        "sgst": {
+          "type": "varchar"
+        },
+        "igst": {
+          "type": "varchar"
+        },
+        "cancelled_status": {
+          "type": "integer"
+        },
+        "cancelled_on": {
+          "type": "timestamp"
+        },
+        "c_status": {
+          "type": "numeric"
+        },
+        "lock_flag": {
+          "type": "integer"
+        },
+        "wf_pdf": {
+          "type": "varchar"
+        }
+      }
+    },
+    "engg_po_item_bidding_details": {
+      "description": "PO line items \u2014 work items included in a PO",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "po_number": {
+          "type": "varchar",
+          "fk": "engg_po_headers.po_number"
+        },
+        "tender_no": {
+          "type": "varchar"
+        },
+        "estimate_no": {
+          "type": "varchar"
+        },
+        "item_number": {
+          "type": "varchar"
+        },
+        "item_name": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "unit_price": {
+          "type": "numeric"
+        },
+        "quantity": {
+          "type": "numeric"
+        },
+        "total_estimate_price": {
+          "type": "numeric"
+        },
+        "total_line_amount": {
+          "type": "numeric"
+        },
+        "contractor_code": {
+          "type": "varchar"
+        },
+        "allocated_quantity": {
+          "type": "bigint"
+        },
+        "remaining_qty": {
+          "type": "bigint"
+        },
+        "gst": {
+          "type": "bigint"
+        },
+        "cess": {
+          "type": "bigint"
+        },
+        "measurement_quantity_ord": {
+          "type": "bigint",
+          "desc": "MB ordered quantity"
+        },
+        "measurement_quanity_received": {
+          "type": "bigint",
+          "desc": "MB received quantity"
+        },
+        "cancelled_status": {
+          "type": "integer"
+        },
+        "c_status": {
+          "type": "numeric"
+        }
+      }
+    },
+    "engg_po_estimation_details": {
+      "description": "Year-wise estimation values for PO items",
+      "key_columns": {
+        "id": {
+          "type": "bigint",
+          "pk": true
+        },
+        "po_number": {
+          "type": "varchar",
+          "fk": "engg_po_headers.po_number"
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "file_no": {
+          "type": "varchar"
+        },
+        "estimation_no": {
+          "type": "varchar"
+        },
+        "item_no": {
+          "type": "varchar"
+        },
+        "supplier_name": {
+          "type": "varchar"
+        },
+        "contractor_code": {
+          "type": "varchar"
+        },
+        "estimation_value": {
+          "type": "varchar",
+          "desc": "Estimated value for this PO item"
+        },
+        "po_qty": {
+          "type": "varchar"
+        },
+        "item_rate": {
+          "type": "numeric"
+        },
+        "cancelled_status": {
+          "type": "integer"
+        }
+      }
+    },
+    "engg_invoice_headers": {
+      "description": "Invoice (RA Bill) header \u2014 one row per invoice/bill submitted by contractor",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "po_number": {
+          "type": "varchar",
+          "fk": "engg_po_headers.po_number"
+        },
+        "estimate_no": {
+          "type": "varchar"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "bill_no": {
+          "type": "varchar",
+          "desc": "Bill/invoice number"
+        },
+        "bill_type": {
+          "type": "varchar",
+          "desc": "Type of bill"
+        },
+        "ra_bill_type": {
+          "type": "varchar",
+          "desc": "RA bill type (RUNNING/FINAL/EXTRA)"
+        },
+        "invoice_no": {
+          "type": "varchar"
+        },
+        "invoice_bill_amount": {
+          "type": "numeric",
+          "desc": "Total invoice amount"
+        },
+        "bill_date": {
+          "type": "timestamp"
+        },
+        "invoice_date": {
+          "type": "timestamp"
+        },
+        "status_approval": {
+          "type": "varchar"
+        },
+        "status_description": {
+          "type": "varchar"
+        },
+        "invoice_status": {
+          "type": "bigint"
+        },
+        "c_status": {
+          "type": "numeric"
+        },
+        "wf_pdf": {
+          "type": "varchar"
+        }
+      }
+    },
+    "engg_invoice_details": {
+      "description": "Invoice line items \u2014 work items billed in an invoice",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "po_number": {
+          "type": "varchar",
+          "fk": "engg_po_headers.po_number"
+        },
+        "invoice_no": {
+          "type": "varchar"
+        },
+        "bill_no": {
+          "type": "varchar"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "item_number": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "received_quantity": {
+          "type": "numeric",
+          "desc": "Quantity claimed in invoice"
+        },
+        "deduction_quantity": {
+          "type": "numeric",
+          "desc": "Quantity deducted"
+        },
+        "quantity_remaining": {
+          "type": "numeric"
+        },
+        "invoice_amount": {
+          "type": "numeric",
+          "desc": "Amount for this line item"
+        },
+        "total_invoice_amount": {
+          "type": "numeric"
+        },
+        "bill_date": {
+          "type": "timestamp"
+        },
+        "payment_status": {
+          "type": "bigint",
+          "desc": "1=Paid, 0=Unpaid"
+        },
+        "payment_value": {
+          "type": "bigint"
+        },
+        "payment_paid": {
+          "type": "bigint"
+        },
+        "receipt_header_id": {
+          "type": "bigint",
+          "fk": "engg_receipt_headers.id"
+        },
+        "c_status": {
+          "type": "numeric"
+        }
+      }
+    },
+    "engg_receipt_headers": {
+      "description": "Receipt/payment header \u2014 one row per payment made to contractor",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "po_number": {
+          "type": "varchar",
+          "fk": "engg_po_headers.po_number"
+        },
+        "estimate_no": {
+          "type": "varchar"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "bill_no": {
+          "type": "varchar"
+        },
+        "bill_amount": {
+          "type": "numeric",
+          "desc": "Total bill amount"
+        },
+        "status_approval": {
+          "type": "varchar"
+        },
+        "status_description": {
+          "type": "varchar"
+        },
+        "received_date": {
+          "type": "timestamp"
+        },
+        "received_by": {
+          "type": "varchar"
+        },
+        "payment_status": {
+          "type": "bigint",
+          "desc": "1=Paid, 0=Pending"
+        },
+        "payment_value": {
+          "type": "numeric",
+          "desc": "Total payment value"
+        },
+        "payment_paid": {
+          "type": "numeric",
+          "desc": "Amount already paid"
+        },
+        "receipt_paid_on": {
+          "type": "timestamp"
+        },
+        "c_status": {
+          "type": "numeric"
+        },
+        "wf_pdf": {
+          "type": "varchar"
+        }
+      }
+    },
+    "engg_receipt_details": {
+      "description": "Receipt line items \u2014 items received/measured for payment",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "tender_no": {
+          "type": "varchar",
+          "fk": "engg_est_tender_master.tender_no"
+        },
+        "po_number": {
+          "type": "varchar",
+          "fk": "engg_po_headers.po_number"
+        },
+        "estimate_no": {
+          "type": "varchar"
+        },
+        "engg_contractor_name": {
+          "type": "varchar"
+        },
+        "item_number": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "quantity_received": {
+          "type": "numeric",
+          "desc": "Quantity received/measured"
+        },
+        "quantity_ordered": {
+          "type": "numeric"
+        },
+        "quantity_remaining": {
+          "type": "numeric"
+        },
+        "received_quantity_price": {
+          "type": "numeric",
+          "desc": "Price for received quantity"
+        },
+        "remaining_quantity_price": {
+          "type": "numeric"
+        },
+        "receipt_date": {
+          "type": "timestamp"
+        },
+        "bill_no": {
+          "type": "varchar"
+        },
+        "is_deviation": {
+          "type": "varchar",
+          "desc": "Y=Deviation from PO, N=Normal"
+        },
+        "receipt_header_id": {
+          "type": "bigint",
+          "fk": "engg_receipt_headers.id"
+        },
+        "c_status": {
+          "type": "numeric"
+        }
+      }
+    },
+    "engg_concept_note": {
+      "description": "Concept note for proposed works (first stage of estimate workflow)",
+      "key_columns": {
+        "id": {
+          "type": "integer"
+        },
+        "file_no": {
+          "type": "varchar",
+          "pk": true,
+          "fk": "estimate_file_creations.file_no"
+        },
+        "version_no": {
+          "type": "integer",
+          "pk": true
+        },
+        "concept_note_no": {
+          "type": "varchar",
+          "desc": "Unique concept note number"
+        },
+        "note": {
+          "type": "varchar",
+          "desc": "Concept note text content"
+        },
+        "file_description": {
+          "type": "varchar"
+        },
+        "concept_note_status": {
+          "type": "smallint",
+          "desc": "0=Draft, 1=Submitted, 2=Approved, 3=Rejected"
+        },
+        "latitude": {
+          "type": "varchar"
+        },
+        "longitude": {
+          "type": "varchar"
+        },
+        "c_status": {
+          "type": "smallint"
+        }
+      }
+    },
+    "engg_dpr_approval_estimate": {
+      "description": "DPR (Detailed Project Report) approval tracking",
+      "key_columns": {
+        "id": {
+          "type": "integer"
+        },
+        "file_no": {
+          "type": "varchar",
+          "pk": true,
+          "fk": "estimate_file_creations.file_no"
+        },
+        "version_no": {
+          "type": "integer",
+          "pk": true
+        },
+        "dpr_no": {
+          "type": "varchar",
+          "desc": "DPR reference number"
+        },
+        "approval_stage": {
+          "type": "varchar",
+          "desc": "Current approval stage: SAE/AE/EE/DY_CE/DG"
+        },
+        "approver": {
+          "type": "varchar",
+          "desc": "Current approver user ID"
+        },
+        "dpr_status": {
+          "type": "varchar",
+          "desc": "INITIATED/PENDING/APPROVED/REJECTED"
+        },
+        "sae": {
+          "type": "varchar"
+        },
+        "ae": {
+          "type": "varchar"
+        },
+        "ee": {
+          "type": "varchar"
+        },
+        "dy_ce": {
+          "type": "varchar"
+        },
+        "dg": {
+          "type": "varchar"
+        },
+        "initiateddate": {
+          "type": "timestamp"
+        },
+        "approveddate": {
+          "type": "timestamp"
+        },
+        "uo_number": {
+          "type": "varchar",
+          "desc": "UO (Under Order) number"
+        },
+        "memo_number": {
+          "type": "varchar"
+        },
+        "memo_date": {
+          "type": "timestamp"
+        },
+        "status_description": {
+          "type": "varchar"
+        },
+        "c_status": {
+          "type": "smallint"
+        }
+      }
+    },
+    "engg_file_transfer": {
+      "description": "File transfer log \u2014 tracks which user/department a file was transferred to",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "user_id": {
+          "type": "integer"
+        },
+        "department": {
+          "type": "integer"
+        },
+        "borough": {
+          "type": "varchar"
+        },
+        "ward": {
+          "type": "varchar"
+        },
+        "designation": {
+          "type": "varchar",
+          "desc": "Sender designation"
+        },
+        "to_user": {
+          "type": "varchar",
+          "desc": "Receiver user"
+        },
+        "to_user_designation": {
+          "type": "varchar",
+          "desc": "Receiver designation"
+        },
+        "createdat": {
+          "type": "timestamp"
+        }
+      }
+    },
+    "kmc_work_annexture_estimate_details": {
+      "description": "Supplementary/annexture estimate line items",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "est_header_id": {
+          "type": "varchar",
+          "fk": "kmc_work_estimate_hearder.estimate_header_id"
+        },
+        "annexture_estimate_header_id": {
+          "type": "varchar"
+        },
+        "item_no": {
+          "type": "varchar"
+        },
+        "item_name": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "item_rate": {
+          "type": "numeric"
+        },
+        "quantity": {
+          "type": "numeric"
+        },
+        "estimate_price": {
+          "type": "numeric"
+        },
+        "line_value": {
+          "type": "numeric"
+        },
+        "cgst_amount": {
+          "type": "numeric"
+        },
+        "sgst_amount": {
+          "type": "numeric"
+        },
+        "status": {
+          "type": "numeric"
+        }
+      }
+    },
+    "kmc_work_annexture_estimate_distributions": {
+      "description": "Budget distribution for annexture/supplementary estimates",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "est_header_id": {
+          "type": "varchar"
+        },
+        "annexture_estimate_header_id": {
+          "type": "varchar"
+        },
+        "cost_centre_no": {
+          "type": "varchar"
+        },
+        "borough": {
+          "type": "varchar"
+        },
+        "ward": {
+          "type": "varchar"
+        },
+        "description": {
+          "type": "varchar"
+        },
+        "distributed_amount": {
+          "type": "numeric"
+        }
+      }
+    },
+    "kmc_work_estimate_annexture_hearder": {
+      "description": "Annexture estimate header (supplementary estimate linked to main estimate)",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "estimate_header_id": {
+          "type": "varchar",
+          "fk": "kmc_work_estimate_hearder.estimate_header_id"
+        },
+        "annexture_estimate_header_id": {
+          "type": "varchar"
+        },
+        "work_type": {
+          "type": "varchar"
+        },
+        "department": {
+          "type": "varchar"
+        },
+        "borough": {
+          "type": "varchar"
+        },
+        "ward": {
+          "type": "varchar"
+        },
+        "zone_no": {
+          "type": "varchar"
+        },
+        "work_name": {
+          "type": "varchar"
+        },
+        "total_estimate": {
+          "type": "numeric"
+        },
+        "total_job_value": {
+          "type": "numeric"
+        },
+        "est_approval_status": {
+          "type": "varchar"
+        },
+        "status_description": {
+          "type": "varchar"
+        },
+        "fund_type": {
+          "type": "varchar"
+        },
+        "lock_flag": {
+          "type": "integer"
+        },
+        "c_status": {
+          "type": "integer"
+        }
+      }
+    },
+    "rejected_kmc_work_estimate_details": {
+      "description": "Rejected estimate line items (moved here after rejection)",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "est_header_id": {
+          "type": "varchar",
+          "fk": "kmc_work_estimate_hearder.estimate_header_id"
+        },
+        "item_no": {
+          "type": "varchar"
+        },
+        "item_name": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "item_rate": {
+          "type": "numeric"
+        },
+        "quantity": {
+          "type": "numeric"
+        },
+        "estimate_price": {
+          "type": "numeric"
+        },
+        "line_value": {
+          "type": "numeric"
+        },
+        "finalrate": {
+          "type": "varchar"
+        }
+      }
+    },
+    "kmc_work_estimate_details_vendor": {
+      "description": "Vendor-based estimate details (rate sourced from vendor quotations)",
+      "key_columns": {
+        "id": {
+          "type": "integer",
+          "pk": true
+        },
+        "file_no": {
+          "type": "varchar",
+          "fk": "estimate_file_creations.file_no"
+        },
+        "est_header_id": {
+          "type": "varchar",
+          "fk": "kmc_work_estimate_hearder.estimate_header_id"
+        },
+        "item_no": {
+          "type": "varchar"
+        },
+        "item_name": {
+          "type": "varchar"
+        },
+        "item_desc": {
+          "type": "varchar"
+        },
+        "unitofmeasure": {
+          "type": "varchar"
+        },
+        "item_rate": {
+          "type": "numeric"
+        },
+        "quantity": {
+          "type": "numeric"
+        },
+        "estimate_price": {
+          "type": "numeric"
+        },
+        "line_value": {
+          "type": "numeric"
+        },
+        "vendor_party_id": {
+          "type": "numeric",
+          "desc": "Vendor party ID"
+        },
+        "vendor_estimation_price": {
+          "type": "numeric",
+          "desc": "Vendor quoted price"
+        }
+      }
+    }
+  }
+}

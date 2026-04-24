@@ -1,0 +1,347 @@
+{
+  "description": "Few-shot examples for NL-to-SQL. These are sent as part of the system prompt to teach the LLM how to generate correct SQL for the KMC Market Module. Examples use REAL table/column names (alias replacement happens separately).",
+  "version": "1.0",
+  "examples": [
+    {
+      "category": "Stallage Collection Reports",
+      "id": 1,
+      "question": "Show me total stallage collection for Ward 45 in March 2025",
+      "sql": "SELECT m.mrkt_name, m.common_ward_no, SUM(rh.mrkt_receipt_amount) AS total_collection, COUNT(DISTINCT rh.mrkt_receipt_no) AS receipt_count FROM mrkt_kmc2_data.mrkt_receipt_hdr rh JOIN mrkt_kmc2_data.mrkt_market_mst m ON rh.mrkt_code = m.mrkt_code WHERE m.common_ward_no = '45' AND rh.mrkt_receipt_date::date BETWEEN '2025-03-01' AND '2025-03-31' GROUP BY m.mrkt_name, m.common_ward_no ORDER BY total_collection DESC;"
+    },
+    {
+      "category": "Stallage Collection Reports",
+      "id": 2,
+      "question": "Market-wise collection for financial year 2024-2025",
+      "sql": "SELECT m.mrkt_code, m.mrkt_name, m.common_ward_no, SUM(rh.mrkt_receipt_amount) AS total_collection, COUNT(DISTINCT rh.mrkt_receipt_no) AS total_receipts FROM mrkt_kmc2_data.mrkt_receipt_hdr rh JOIN mrkt_kmc2_data.mrkt_market_mst m ON rh.mrkt_code = m.mrkt_code WHERE rh.mrkt_fin_year = '2024-2025' GROUP BY m.mrkt_code, m.mrkt_name, m.common_ward_no ORDER BY total_collection DESC;"
+    },
+    {
+      "category": "Stallage Collection Reports",
+      "id": 3,
+      "question": "Top 10 markets by collection this year",
+      "sql": "SELECT m.mrkt_code, m.mrkt_name, m.common_ward_no, SUM(rh.mrkt_receipt_amount) AS total_collection FROM mrkt_kmc2_data.mrkt_receipt_hdr rh JOIN mrkt_kmc2_data.mrkt_market_mst m ON rh.mrkt_code = m.mrkt_code WHERE rh.mrkt_fin_year = '2024-2025' GROUP BY m.mrkt_code, m.mrkt_name, m.common_ward_no ORDER BY total_collection DESC LIMIT 10;"
+    },
+    {
+      "category": "Stallage Collection Reports",
+      "id": 4,
+      "question": "Monthly collection trend for Gariahat Market in 2024-2025",
+      "sql": "SELECT EXTRACT(MONTH FROM rh.mrkt_receipt_date) AS month_no, TO_CHAR(rh.mrkt_receipt_date, 'Month') AS month_name, SUM(rh.mrkt_receipt_amount) AS monthly_collection, COUNT(DISTINCT rh.mrkt_receipt_no) AS receipt_count FROM mrkt_kmc2_data.mrkt_receipt_hdr rh JOIN mrkt_kmc2_data.mrkt_market_mst m ON rh.mrkt_code = m.mrkt_code WHERE m.mrkt_name ILIKE '%gariahat%' AND rh.mrkt_fin_year = '2024-2025' GROUP BY month_no, month_name ORDER BY month_no;"
+    },
+    {
+      "category": "Stallage Collection Reports",
+      "id": 5,
+      "question": "Day wise collection for market code 101 in January 2025",
+      "sql": "SELECT rh.mrkt_receipt_date::date AS collection_date, SUM(rh.mrkt_receipt_amount) AS daily_collection, COUNT(DISTINCT rh.mrkt_receipt_no) AS receipt_count FROM mrkt_kmc2_data.mrkt_receipt_hdr rh WHERE rh.mrkt_code = 101 AND rh.mrkt_receipt_date::date BETWEEN '2025-01-01' AND '2025-01-31' GROUP BY rh.mrkt_receipt_date::date ORDER BY collection_date;"
+    },
+    {
+      "category": "Stallage Collection Reports",
+      "id": 6,
+      "question": "Collection by payment mode for FY 2024-2025",
+      "sql": "SELECT rpd.mrkt_pay_mode, CASE rpd.mrkt_pay_mode WHEN 'C' THEN 'Cash' WHEN 'Q' THEN 'Cheque' WHEN 'D' THEN 'DD' WHEN 'O' THEN 'Online' ELSE rpd.mrkt_pay_mode END AS payment_mode, SUM(rpd.mrkt_amount) AS total_amount, COUNT(*) AS transaction_count FROM mrkt_kmc2_data.mrkt_receipt_pay_dtl rpd WHERE rpd.mrkt_receipt_year = '2024-2025' GROUP BY rpd.mrkt_pay_mode ORDER BY total_amount DESC;"
+    },
+    {
+      "category": "Outstanding / Dues Reports",
+      "id": 7,
+      "question": "Total outstanding dues across all markets",
+      "sql": "SELECT m.mrkt_code, m.mrkt_name, m.common_ward_no, SUM(dh.mrkt_outstanding_amt) AS total_outstanding, COUNT(DISTINCT dh.mrkt_stall_id) AS stalls_with_dues FROM mrkt_kmc2_data.mrkt_demand_hdr dh JOIN mrkt_kmc2_data.mrkt_market_mst m ON dh.mrkt_code = m.mrkt_code WHERE dh.mrkt_demand_status IN ('A','P','O') AND dh.mrkt_outstanding_amt > 0 GROUP BY m.mrkt_code, m.mrkt_name, m.common_ward_no ORDER BY total_outstanding DESC;"
+    },
+    {
+      "category": "Outstanding / Dues Reports",
+      "id": 8,
+      "question": "List stalls with outstanding above 50000 in Ward 62",
+      "sql": "SELECT s.mrkt_stall_id, s.mrkt_stall_no, m.mrkt_name, rr.mrkt_rph_name, rr.mrkt_trade_name, SUM(dh.mrkt_outstanding_amt) AS total_outstanding FROM mrkt_kmc2_data.mrkt_demand_hdr dh JOIN mrkt_kmc2_data.mrkt_stall_mst s ON dh.mrkt_stall_id = s.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_market_mst m ON dh.mrkt_code = m.mrkt_code JOIN mrkt_kmc2_data.mrkt_rent_roll_mst rr ON s.mrkt_stall_id = rr.mrkt_stall_id WHERE m.common_ward_no = '62' AND dh.mrkt_demand_status IN ('A','P','O') AND dh.mrkt_outstanding_amt > 0 GROUP BY s.mrkt_stall_id, s.mrkt_stall_no, m.mrkt_name, rr.mrkt_rph_name, rr.mrkt_trade_name HAVING SUM(dh.mrkt_outstanding_amt) > 50000 ORDER BY total_outstanding DESC;"
+    },
+    {
+      "category": "Outstanding / Dues Reports",
+      "id": 9,
+      "question": "Ward-wise outstanding summary for current year",
+      "sql": "SELECT m.common_ward_no AS ward, COUNT(DISTINCT m.mrkt_code) AS markets, COUNT(DISTINCT dh.mrkt_stall_id) AS stalls_with_dues, SUM(dh.mrkt_outstanding_amt) AS total_outstanding, SUM(dh.mrkt_demand_amount) AS total_demand, ROUND(SUM(dh.mrkt_outstanding_amt) * 100.0 / NULLIF(SUM(dh.mrkt_demand_amount), 0), 2) AS outstanding_pct FROM mrkt_kmc2_data.mrkt_demand_hdr dh JOIN mrkt_kmc2_data.mrkt_market_mst m ON dh.mrkt_code = m.mrkt_code WHERE dh.mrkt_fin_year = '2024-2025' AND dh.mrkt_demand_status IN ('A','P','O') AND dh.mrkt_outstanding_amt > 0 GROUP BY m.common_ward_no ORDER BY total_outstanding DESC;"
+    },
+    {
+      "category": "Outstanding / Dues Reports",
+      "id": 10,
+      "question": "Top 20 defaulters across all markets with highest pending dues",
+      "sql": "SELECT s.mrkt_stall_id, s.mrkt_stall_no, m.mrkt_name, m.common_ward_no, rr.mrkt_rph_name, rr.mrkt_phone, SUM(dh.mrkt_outstanding_amt) AS total_outstanding FROM mrkt_kmc2_data.mrkt_demand_hdr dh JOIN mrkt_kmc2_data.mrkt_stall_mst s ON dh.mrkt_stall_id = s.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_market_mst m ON dh.mrkt_code = m.mrkt_code JOIN mrkt_kmc2_data.mrkt_rent_roll_mst rr ON s.mrkt_stall_id = rr.mrkt_stall_id WHERE dh.mrkt_demand_status IN ('A','P','O') AND dh.mrkt_outstanding_amt > 0 GROUP BY s.mrkt_stall_id, s.mrkt_stall_no, m.mrkt_name, m.common_ward_no, rr.mrkt_rph_name, rr.mrkt_phone ORDER BY total_outstanding DESC LIMIT 20;"
+    },
+    {
+      "category": "Outstanding / Dues Reports",
+      "id": 11,
+      "question": "Stalls where no payment has been made in the last 6 months",
+      "sql": "SELECT s.mrkt_stall_id, s.mrkt_stall_no, m.mrkt_name, m.common_ward_no, rr.mrkt_rph_name, rr.mrkt_mon_stallage, MAX(rh.mrkt_receipt_date)::date AS last_payment_date FROM mrkt_kmc2_data.mrkt_stall_mst s JOIN mrkt_kmc2_data.mrkt_market_mst m ON s.mrkt_code = m.mrkt_code JOIN mrkt_kmc2_data.mrkt_rent_roll_mst rr ON s.mrkt_stall_id = rr.mrkt_stall_id LEFT JOIN mrkt_kmc2_data.mrkt_demand_hdr dh ON s.mrkt_stall_id = dh.mrkt_stall_id LEFT JOIN mrkt_kmc2_data.mrkt_receipt_hdr rh ON dh.mrkt_demand_serial_no = rh.mrkt_demand_serial_no AND dh.mrkt_code = rh.mrkt_code AND dh.mrkt_fin_year = rh.mrkt_fin_year WHERE rr.mrkt_status = 'O' AND s.status = 1 GROUP BY s.mrkt_stall_id, s.mrkt_stall_no, m.mrkt_name, m.common_ward_no, rr.mrkt_rph_name, rr.mrkt_mon_stallage HAVING MAX(rh.mrkt_receipt_date) < CURRENT_DATE - INTERVAL '6 months' OR MAX(rh.mrkt_receipt_date) IS NULL ORDER BY last_payment_date NULLS FIRST;"
+    },
+    {
+      "category": "Outstanding / Dues Reports",
+      "id": 12,
+      "question": "Demand vs collection comparison for FY 2024-2025",
+      "sql": "SELECT m.mrkt_code, m.mrkt_name, m.common_ward_no, SUM(dh.mrkt_demand_amount) AS total_demand, SUM(dh.mrkt_paid_amount) AS total_collected, SUM(dh.mrkt_outstanding_amt) AS total_outstanding, ROUND(SUM(dh.mrkt_paid_amount) * 100.0 / NULLIF(SUM(dh.mrkt_demand_amount), 0), 2) AS collection_pct FROM mrkt_kmc2_data.mrkt_demand_hdr dh JOIN mrkt_kmc2_data.mrkt_market_mst m ON dh.mrkt_code = m.mrkt_code WHERE dh.mrkt_fin_year = '2024-2025' GROUP BY m.mrkt_code, m.mrkt_name, m.common_ward_no ORDER BY total_demand DESC;"
+    },
+    {
+      "category": "Stall & Tenant Lookup",
+      "id": 13,
+      "question": "Show all stall details for market code 205",
+      "sql": "SELECT s.mrkt_stall_id, s.mrkt_stall_no, s.mrkt_stalldisplay_no, st.mrkt_stalltype_desc AS stall_type, s.mrkt_stall_area, ph.mrkt_phase_desc AS phase, bl.mrkt_block_desc AS block, rr.mrkt_rph_name, rr.mrkt_trade_name, rr.mrkt_mon_stallage, rr.mrkt_status FROM mrkt_kmc2_data.mrkt_stall_mst s JOIN mrkt_kmc2_data.mrkt_stalltype_mst st ON s.mrkt_stalltype_code = st.mrkt_stalltype_code LEFT JOIN mrkt_kmc2_data.mrkt_phase_mst ph ON s.mrkt_phase_code = ph.mrkt_phase_code AND s.mrkt_code = ph.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_block_mst bl ON s.mrkt_block_code = bl.mrkt_block_code AND s.mrkt_code = bl.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_rent_roll_mst rr ON s.mrkt_stall_id = rr.mrkt_stall_id WHERE s.mrkt_code = 205 AND s.status = 1 ORDER BY s.mrkt_stall_no;"
+    },
+    {
+      "category": "Stall & Tenant Lookup",
+      "id": 14,
+      "question": "How many active stalls are there in each market",
+      "sql": "SELECT m.mrkt_code, m.mrkt_name, m.common_ward_no, COUNT(s.mrkt_stall_id) AS total_stalls, SUM(s.mrkt_stall_area) AS total_area_sqft FROM mrkt_kmc2_data.mrkt_stall_mst s JOIN mrkt_kmc2_data.mrkt_market_mst m ON s.mrkt_code = m.mrkt_code WHERE s.status = 1 GROUP BY m.mrkt_code, m.mrkt_name, m.common_ward_no ORDER BY total_stalls DESC;"
+    },
+    {
+      "category": "Stall & Tenant Lookup",
+      "id": 15,
+      "question": "Find tenant details for stall ID 5432",
+      "sql": "SELECT rr.mrkt_rph_name, rr.mrkt_trade_name, rr.mrkt_business, rr.mrkt_phone, rr.mrkt_email, rr.mrkt_address_line1, rr.mrkt_gstin_no, rr.mrkt_trade_lic_no, rr.mrkt_mon_stallage, rr.mrkt_outstanding, rr.mrkt_occup_date::date AS occupation_date, rr.mrkt_lease_end_dt::date AS lease_end, rr.mrkt_status, at.mrkt_allottype_desc AS allotment_type, s.mrkt_stall_no, m.mrkt_name FROM mrkt_kmc2_data.mrkt_rent_roll_mst rr JOIN mrkt_kmc2_data.mrkt_stall_mst s ON rr.mrkt_stall_id = s.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_market_mst m ON s.mrkt_code = m.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_allottype_mst at ON rr.mrkt_allottype_code = at.mrkt_allottype_code WHERE rr.mrkt_stall_id = 5432;"
+    },
+    {
+      "category": "Stall & Tenant Lookup",
+      "id": 16,
+      "question": "List all vacant or cancelled stalls",
+      "sql": "SELECT s.mrkt_stall_id, s.mrkt_stall_no, m.mrkt_name, m.common_ward_no, st.mrkt_stalltype_desc, s.mrkt_stall_area, rr.mrkt_status AS tenant_status, rr.mrkt_rph_name FROM mrkt_kmc2_data.mrkt_stall_mst s JOIN mrkt_kmc2_data.mrkt_market_mst m ON s.mrkt_code = m.mrkt_code JOIN mrkt_kmc2_data.mrkt_stalltype_mst st ON s.mrkt_stalltype_code = st.mrkt_stalltype_code LEFT JOIN mrkt_kmc2_data.mrkt_rent_roll_mst rr ON s.mrkt_stall_id = rr.mrkt_stall_id WHERE s.status = 1 AND (rr.mrkt_stall_id IS NULL OR rr.mrkt_status IN ('C', 'S')) ORDER BY m.mrkt_name, s.mrkt_stall_no;"
+    },
+    {
+      "category": "Stall & Tenant Lookup",
+      "id": 17,
+      "question": "Search for tenant named Sharma",
+      "sql": "SELECT rr.mrkt_rph_name, rr.mrkt_trade_name, rr.mrkt_phone, s.mrkt_stall_id, s.mrkt_stall_no, m.mrkt_name, m.common_ward_no, rr.mrkt_mon_stallage, rr.mrkt_status FROM mrkt_kmc2_data.mrkt_rent_roll_mst rr JOIN mrkt_kmc2_data.mrkt_stall_mst s ON rr.mrkt_stall_id = s.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_market_mst m ON s.mrkt_code = m.mrkt_code WHERE rr.mrkt_rph_name ILIKE '%sharma%' ORDER BY rr.mrkt_rph_name;"
+    },
+    {
+      "category": "Stall & Tenant Lookup",
+      "id": 18,
+      "question": "Stall type wise count and area for all markets",
+      "sql": "SELECT st.mrkt_stalltype_desc AS stall_type, COUNT(s.mrkt_stall_id) AS stall_count, SUM(s.mrkt_stall_area) AS total_area, ROUND(AVG(s.mrkt_stall_area), 2) AS avg_area FROM mrkt_kmc2_data.mrkt_stall_mst s JOIN mrkt_kmc2_data.mrkt_stalltype_mst st ON s.mrkt_stalltype_code = st.mrkt_stalltype_code WHERE s.status = 1 GROUP BY st.mrkt_stalltype_desc ORDER BY stall_count DESC;"
+    },
+    {
+      "category": "Mutation & Permission Tracking",
+      "id": 19,
+      "question": "List all pending mutation applications",
+      "sql": "SELECT sm.application_number, sm.create_date::date AS applied_on, sm.mrkt_old_rph_name AS old_rph, sm.mrkt_old_trade_name AS old_trade, sm.statusdesc AS current_status, sm.workflow_status, sm.total_payable, s.mrkt_stall_no, m.mrkt_name FROM mrkt_kmc2_data.mrkt_stall_mutation sm JOIN mrkt_kmc2_data.mrkt_stall_mst s ON sm.mrkt_stall_id = s.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_market_mst m ON s.mrkt_code = m.mrkt_code WHERE sm.workflow_status NOT IN ('APPROVED', 'REJECTED', 'COMPLETED') ORDER BY sm.create_date DESC;"
+    },
+    {
+      "category": "Mutation & Permission Tracking",
+      "id": 20,
+      "question": "Mutations approved in the last 3 months",
+      "sql": "SELECT sm.application_number, sm.mrkt_approve_date::date AS approved_on, sm.mrkt_approve_auth AS approved_by, sm.mrkt_old_rph_name AS old_rph, rr.mrkt_rph_name AS new_rph, sm.total_sanction_fee, sm.total_payable, s.mrkt_stall_no, m.mrkt_name FROM mrkt_kmc2_data.mrkt_stall_mutation sm JOIN mrkt_kmc2_data.mrkt_stall_mst s ON sm.mrkt_stall_id = s.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_market_mst m ON s.mrkt_code = m.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_rent_roll_mst rr ON sm.mrkt_stall_id = rr.mrkt_stall_id WHERE sm.mrkt_approve_date >= CURRENT_DATE - INTERVAL '3 months' AND sm.workflow_status = 'APPROVED' ORDER BY sm.mrkt_approve_date DESC;"
+    },
+    {
+      "category": "Mutation & Permission Tracking",
+      "id": 21,
+      "question": "Permission wise count for current financial year",
+      "sql": "SELECT pm.permission_type, COUNT(*) AS total_permissions, SUM(CASE WHEN pm.workflow_status = 'APPROVED' THEN 1 ELSE 0 END) AS approved, SUM(CASE WHEN pm.workflow_status = 'REJECTED' THEN 1 ELSE 0 END) AS rejected, SUM(CASE WHEN pm.workflow_status NOT IN ('APPROVED','REJECTED','COMPLETED') THEN 1 ELSE 0 END) AS pending FROM mrkt_kmc2_data.mrkt_permission_master pm WHERE pm.permission_date >= '2024-04-01' GROUP BY pm.permission_type ORDER BY total_permissions DESC;"
+    },
+    {
+      "category": "Mutation & Permission Tracking",
+      "id": 22,
+      "question": "Total mutation fees collected this year",
+      "sql": "SELECT COUNT(*) AS total_mutations, SUM(sm.total_sanction_fee) AS total_fees, SUM(sm.total_penalty) AS total_penalties, SUM(sm.total_payable) AS total_payable FROM mrkt_kmc2_data.mrkt_stall_mutation sm WHERE sm.mrkt_approve_date >= '2024-04-01' AND sm.workflow_status = 'APPROVED';"
+    },
+    {
+      "category": "Demand Generation Reports",
+      "id": 23,
+      "question": "Total demand generated for FY 2024-2025 ward wise",
+      "sql": "SELECT m.common_ward_no AS ward, COUNT(DISTINCT dh.mrkt_stall_id) AS stalls_billed, SUM(dh.mrkt_demand_amount) AS total_demand, SUM(dh.mrkt_cgst_amt) AS total_cgst, SUM(dh.mrkt_sgst_amt) AS total_sgst, SUM(dh.mrkt_net_amount) AS net_demand FROM mrkt_kmc2_data.mrkt_demand_hdr dh JOIN mrkt_kmc2_data.mrkt_market_mst m ON dh.mrkt_code = m.mrkt_code WHERE dh.mrkt_fin_year = '2024-2025' AND dh.mrkt_demand_status NOT IN ('C','B') GROUP BY m.common_ward_no ORDER BY net_demand DESC;"
+    },
+    {
+      "category": "Demand Generation Reports",
+      "id": 24,
+      "question": "List all bad demands for market 101",
+      "sql": "SELECT dh.mrkt_demand_serial_no, dh.mrkt_demand_date::date, dh.mrkt_bad_demand_date::date AS bad_date, dh.mrkt_bad_demand_reason, dh.mrkt_demand_amount, dh.mrkt_stall_id, s.mrkt_stall_no, rr.mrkt_rph_name FROM mrkt_kmc2_data.mrkt_demand_hdr dh JOIN mrkt_kmc2_data.mrkt_stall_mst s ON dh.mrkt_stall_id = s.mrkt_stall_id LEFT JOIN mrkt_kmc2_data.mrkt_rent_roll_mst rr ON dh.mrkt_stall_id = rr.mrkt_stall_id WHERE dh.mrkt_code = 101 AND dh.mrkt_demand_status = 'B' ORDER BY dh.mrkt_bad_demand_date DESC;"
+    },
+    {
+      "category": "Futnani Reports",
+      "id": 25,
+      "question": "Total futnani collection and outstanding for all markets",
+      "sql": "SELECT m.mrkt_code, m.mrkt_name, SUM(fd.mrkt_demand_amount) AS total_demand, SUM(CASE WHEN fd.mrkt_demand_status IN ('P','F') THEN fd.mrkt_demand_amount ELSE 0 END) AS total_paid, SUM(fd.mrkt_outstanding_amt) AS total_outstanding FROM mrkt_kmc2_data.mrkt_futnani_demand_hdr fd JOIN mrkt_kmc2_data.mrkt_market_mst m ON fd.mrkt_code = m.mrkt_code WHERE fd.mrkt_fin_year = '2024-2025' GROUP BY m.mrkt_code, m.mrkt_name ORDER BY total_outstanding DESC;"
+    },
+    {
+      "category": "Regular Demand Report (Production Pattern)",
+      "id": 26,
+      "question": "Regular demand bill details for stall ID 2050101 in FY 2024-2025",
+      "sql": "SELECT xx.mrkt_stall_id, COALESCE(a.mrkt_rph_name,'-') AS rph_name, d.mrkt_stalltype_code, k.mrkt_stalltype_desc, d.mrkt_stalldisplay_no, (b.mrkt_name || '/' || c.mrkt_block_desc) AS market_block, COALESCE(d.mrkt_stall_area_original,0) AS stall_area, CASE WHEN a.mrkt_with_ac = '1' THEN 'AC' WHEN a.mrkt_with_ac = '2' THEN 'NON-AC' ELSE NULL END AS ac_status, ROUND(a.mrkt_mon_stallage,0) AS monthly_stallage, CASE a.mrkt_connection_type WHEN 'K' THEN 'METER' WHEN 'P' THEN 'POINT' WHEN 'C' THEN 'CESC' WHEN 'N' THEN 'NO ELECTRIC' ELSE NULL END AS connection_desc, a.mrkt_gstin_no, g.mrkt_demand_serial_no, g.mrkt_fin_year, COALESCE(a.mrkt_trade_name,' ') AS trade_name, COALESCE(a.mrkt_business,' ') AS business, TO_CHAR(g.mrkt_demand_date,'DD/MM/YYYY') AS demand_date, (g.mrkt_demand_amount + COALESCE(g.mrkt_penalty_amount,0) + COALESCE(g.mrkt_outstanding_amt,0) - COALESCE(g.mrkt_advance_amt,0)) AS total_demand_amount, g.mrkt_rebate_amount, g.mrkt_net_amount, g.mrkt_cgst_amt, g.mrkt_sgst_amt, g.mrkt_cgst_amt_os, g.mrkt_sgst_amt_os, TO_CHAR(g.mrkt_demand_due_date,'DD/MM/YYYY') AS due_date, TO_CHAR(g.mrkt_rebate_due_date,'DD/MM/YYYY') AS rebate_due_date FROM mrkt_kmc2_data.mrkt_demand_hdr g JOIN (SELECT kk.mrkt_code, kk.mrkt_stall_id, MAX(kk.mrkt_demand_serial_no) AS mrkt_demand_serial_no, kk.mrkt_fin_year FROM mrkt_kmc2_data.mrkt_demand_hdr kk WHERE kk.mrkt_demand_status IN ('A','P','O') AND kk.mrkt_stall_id = 2050101 AND kk.mrkt_fin_year = '2024-2025' GROUP BY kk.mrkt_code, kk.mrkt_stall_id, kk.mrkt_fin_year) xx ON g.mrkt_code = xx.mrkt_code AND g.mrkt_stall_id = xx.mrkt_stall_id AND g.mrkt_fin_year = xx.mrkt_fin_year AND g.mrkt_demand_serial_no = xx.mrkt_demand_serial_no JOIN mrkt_kmc2_data.mrkt_rent_roll_mst a ON g.mrkt_stall_id = a.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_market_mst b ON SUBSTR(CAST(a.mrkt_stall_id AS text),1,3) = CAST(b.mrkt_code AS text) JOIN mrkt_kmc2_data.mrkt_block_mst c ON c.mrkt_code = b.mrkt_code AND LPAD(CAST(c.mrkt_phase_code AS text),2,'0') || LPAD(CAST(c.mrkt_block_code AS text),2,'0') = SUBSTR(CAST(a.mrkt_stall_id AS text),4,4) JOIN mrkt_kmc2_data.mrkt_stall_mst d ON d.mrkt_stall_id = a.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_stalltype_mst k ON k.mrkt_stalltype_code = d.mrkt_stalltype_code WHERE a.mrkt_connection_type IN ('P','K','N','C') AND g.mrkt_demand_status IN ('A','P','O') AND g.mrkt_demand_type = 'R';"
+    },
+    {
+      "category": "Regular Demand Report (Production Pattern)",
+      "id": 27,
+      "question": "Bulk regular demand report for market 205 for charge month March in FY 2024-2025",
+      "sql": "SELECT xx.mrkt_stall_id, COALESCE(a.mrkt_rph_name,'-') AS rph_name, k.mrkt_stalltype_desc, d.mrkt_stalldisplay_no, (b.mrkt_name || '/' || c.mrkt_block_desc) AS market_block, COALESCE(d.mrkt_stall_area_original,0) AS stall_area, ROUND(a.mrkt_mon_stallage,0) AS monthly_stallage, g.mrkt_demand_serial_no, g.mrkt_fin_year, TO_CHAR(g.mrkt_demand_date,'DD/MM/YYYY') AS demand_date, (g.mrkt_demand_amount + COALESCE(g.mrkt_penalty_amount,0) + COALESCE(g.mrkt_outstanding_amt,0) - COALESCE(g.mrkt_advance_amt,0)) AS total_demand_amount, g.mrkt_rebate_amount, g.mrkt_net_amount, TO_CHAR(g.mrkt_demand_due_date,'DD/MM/YYYY') AS due_date FROM mrkt_kmc2_data.mrkt_demand_hdr g JOIN (SELECT kk.mrkt_code, kk.mrkt_stall_id, MAX(kk.mrkt_demand_serial_no) AS mrkt_demand_serial_no, kk.mrkt_fin_year FROM mrkt_kmc2_data.mrkt_demand_hdr kk WHERE kk.mrkt_demand_status IN ('A','P','O') AND kk.mrkt_code = 205 AND EXTRACT(MONTH FROM kk.mrkt_demand_date) = 3 AND kk.mrkt_fin_year = '2024-2025' GROUP BY kk.mrkt_code, kk.mrkt_stall_id, kk.mrkt_fin_year) xx ON g.mrkt_code = xx.mrkt_code AND g.mrkt_stall_id = xx.mrkt_stall_id AND g.mrkt_fin_year = xx.mrkt_fin_year AND g.mrkt_demand_serial_no = xx.mrkt_demand_serial_no JOIN mrkt_kmc2_data.mrkt_rent_roll_mst a ON g.mrkt_stall_id = a.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_market_mst b ON SUBSTR(CAST(a.mrkt_stall_id AS text),1,3) = CAST(b.mrkt_code AS text) JOIN mrkt_kmc2_data.mrkt_block_mst c ON c.mrkt_code = b.mrkt_code AND LPAD(CAST(c.mrkt_phase_code AS text),2,'0') || LPAD(CAST(c.mrkt_block_code AS text),2,'0') = SUBSTR(CAST(a.mrkt_stall_id AS text),4,4) JOIN mrkt_kmc2_data.mrkt_stall_mst d ON d.mrkt_stall_id = a.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_stalltype_mst k ON k.mrkt_stalltype_code = d.mrkt_stalltype_code WHERE a.mrkt_connection_type IN ('P','K','N','C') AND g.mrkt_demand_status IN ('A','P','O') AND g.mrkt_demand_type = 'R' ORDER BY xx.mrkt_stall_id;"
+    },
+    {
+      "category": "Regular Demand Report (Production Pattern)",
+      "id": 28,
+      "question": "Outstanding breakup by charge type (electricity vs stallage vs misc) for a demand",
+      "sql": "SELECT t.mrkt_code, t.mrkt_fin_year, t.mrkt_demand_serial_no, SUM(CASE WHEN t.mrkt_misc_chrg_code = '21' THEN COALESCE(t.mrkt_outstanding_amt,0) ELSE 0 END) AS outstanding_electricity, SUM(CASE WHEN t.mrkt_misc_chrg_code = '22' THEN COALESCE(t.mrkt_outstanding_amt,0) ELSE 0 END) AS outstanding_stallage, SUM(CASE WHEN t.mrkt_misc_chrg_code NOT IN ('21','22') OR t.mrkt_misc_chrg_code IS NULL THEN COALESCE(t.mrkt_outstanding_amt,0) ELSE 0 END) AS outstanding_misc, SUM(CASE WHEN t.mrkt_misc_chrg_code = '21' THEN COALESCE(t.mrkt_penalty_amount,0) ELSE 0 END) AS penalty_electricity, SUM(CASE WHEN t.mrkt_misc_chrg_code = '22' THEN COALESCE(t.mrkt_penalty_amount,0) ELSE 0 END) AS penalty_stallage, SUM(CASE WHEN t.mrkt_misc_chrg_code = '21' THEN COALESCE(t.mrkt_advance_amt,0) ELSE 0 END) AS advance_electricity, SUM(CASE WHEN t.mrkt_misc_chrg_code = '22' THEN COALESCE(t.mrkt_advance_amt,0) ELSE 0 END) AS advance_stallage FROM mrkt_kmc2_data.mrkt_demand_dtl t WHERE t.mrkt_fin_year = '2024-2025' AND t.mrkt_code = 205 AND t.mrkt_demand_serial_no = 100 GROUP BY t.mrkt_code, t.mrkt_fin_year, t.mrkt_demand_serial_no;"
+    },
+    {
+      "category": "Electricity / Meter Reports",
+      "id": 29,
+      "question": "Latest meter readings for stall 2050101",
+      "sql": "SELECT t.mrkt_supply_type, n.mrkt_meter_no, COALESCE(n.mrkt_cur_reading_val,0) AS current_reading, COALESCE(n.mrkt_prev_reading_val,0) AS previous_reading, COALESCE(n.mrkt_consumption_val,0) AS consumption, CASE n.mrkt_reading_basis WHEN 'C' THEN 'ACTUAL' WHEN 'A' THEN 'AVERAGE' ELSE NULL END AS reading_basis FROM mrkt_kmc2_data.mrkt_kmc_mtr_monchg n JOIN mrkt_kmc2_data.mrkt_kmc_meter_conn t ON t.mrkt_stall_id = n.mrkt_stall_id AND t.mrkt_active_flag = 'Y' WHERE n.mrkt_stall_id = 2050101 AND n.mrkt_active_flag = 'Y' AND n.mrkt_charge_mon = (SELECT EXTRACT(MONTH FROM MAX(m.mrkt_cur_reading_date)) FROM mrkt_kmc2_data.mrkt_kmc_mtr_monchg m WHERE m.mrkt_stall_id = n.mrkt_stall_id) AND n.mrkt_charge_year = (SELECT EXTRACT(YEAR FROM MAX(m.mrkt_cur_reading_date)) FROM mrkt_kmc2_data.mrkt_kmc_mtr_monchg m WHERE m.mrkt_stall_id = n.mrkt_stall_id) GROUP BY t.mrkt_supply_type, n.mrkt_meter_no, n.mrkt_cur_reading_val, n.mrkt_prev_reading_val, n.mrkt_consumption_val, n.mrkt_reading_basis;"
+    },
+    {
+      "category": "Electricity / Meter Reports",
+      "id": 30,
+      "question": "Meter readings for all stalls in market 205",
+      "sql": "SELECT n.mrkt_stall_id, t.mrkt_supply_type, n.mrkt_meter_no, COALESCE(n.mrkt_cur_reading_val,0) AS current_reading, COALESCE(n.mrkt_prev_reading_val,0) AS previous_reading, COALESCE(n.mrkt_consumption_val,0) AS consumption, CASE n.mrkt_reading_basis WHEN 'C' THEN 'ACTUAL' WHEN 'A' THEN 'AVERAGE' ELSE NULL END AS reading_basis FROM mrkt_kmc2_data.mrkt_kmc_mtr_monchg n JOIN mrkt_kmc2_data.mrkt_kmc_meter_conn t ON t.mrkt_stall_id = n.mrkt_stall_id AND t.mrkt_active_flag = 'Y' WHERE n.mrkt_stall_id IN (SELECT s.mrkt_stall_id FROM mrkt_kmc2_data.mrkt_stall_mst s WHERE s.mrkt_code = 205 AND s.status = 1) AND n.mrkt_active_flag = 'Y' AND n.mrkt_charge_mon = (SELECT EXTRACT(MONTH FROM MAX(m.mrkt_cur_reading_date)) FROM mrkt_kmc2_data.mrkt_kmc_mtr_monchg m WHERE m.mrkt_stall_id = n.mrkt_stall_id) AND n.mrkt_charge_year = (SELECT EXTRACT(YEAR FROM MAX(m.mrkt_cur_reading_date)) FROM mrkt_kmc2_data.mrkt_kmc_mtr_monchg m WHERE m.mrkt_stall_id = n.mrkt_stall_id) GROUP BY n.mrkt_stall_id, t.mrkt_supply_type, n.mrkt_meter_no, n.mrkt_cur_reading_val, n.mrkt_prev_reading_val, n.mrkt_consumption_val, n.mrkt_reading_basis ORDER BY n.mrkt_stall_id;"
+    },
+    {
+      "category": "Miscellaneous Charges (Production Pattern)",
+      "id": 31,
+      "question": "Miscellaneous charges (excluding electricity and stallage) for demand 100 in market 205, FY 2024-2025",
+      "sql": "SELECT s.mrkt_misc_chrg_name AS charge_name, t.mrkt_demand_amount AS charge_amount, t.mrkt_misc_chrg_code AS charge_code FROM mrkt_kmc2_data.mrkt_demand_dtl t JOIN mrkt_kmc2_data.mrkt_misc_charge_mst s ON t.mrkt_misc_chrg_code = s.mrkt_misc_chrg_code WHERE s.mrkt_misc_chrg_code NOT IN ('21','22') AND t.mrkt_demand_serial_no = 100 AND t.mrkt_fin_year = '2024-2025' AND t.mrkt_code = 205;"
+    },
+    {
+      "category": "Miscellaneous Charges (Production Pattern)",
+      "id": 32,
+      "question": "Charge-wise demand breakup for all demands in market 205 FY 2024-2025",
+      "sql": "SELECT s.mrkt_misc_chrg_name AS charge_name, s.mrkt_misc_chrg_code AS charge_code, COUNT(DISTINCT t.mrkt_demand_serial_no) AS demand_count, SUM(t.mrkt_demand_amount) AS total_demand, SUM(COALESCE(t.mrkt_paid_amount,0)) AS total_paid, SUM(COALESCE(t.mrkt_outstanding_amt,0)) AS total_outstanding FROM mrkt_kmc2_data.mrkt_demand_dtl t JOIN mrkt_kmc2_data.mrkt_misc_charge_mst s ON t.mrkt_misc_chrg_code = s.mrkt_misc_chrg_code WHERE t.mrkt_code = 205 AND t.mrkt_fin_year = '2024-2025' GROUP BY s.mrkt_misc_chrg_name, s.mrkt_misc_chrg_code ORDER BY total_demand DESC;"
+    },
+    {
+      "category": "Advance Adjustment Reports",
+      "id": 33,
+      "question": "Advance balance available for stall 2050101 by charge type",
+      "sql": "SELECT CASE t.mrkt_misc_charge_code WHEN '21' THEN 'Electricity' WHEN '22' THEN 'Stallage' ELSE 'Other' END AS charge_type, SUM(t.mrkt_balance_amt) AS advance_balance FROM mrkt_kmc2_data.mrkt_adjust_hdr t WHERE t.mrkt_stall_id = 2050101 AND COALESCE(t.mrkt_balance_amt,0) > 0 GROUP BY t.mrkt_misc_charge_code;"
+    },
+    {
+      "category": "Stall Rate Calculation (Production Pattern)",
+      "id": 34,
+      "question": "Stallage rate per sqft calculation for all stalls in market 205",
+      "sql": "SELECT d.mrkt_stall_id, d.mrkt_stalldisplay_no, COALESCE(d.mrkt_stall_area_original,0) AS stall_area, COALESCE(d.mrkt_subfloor_area,0) AS subfloor_area, COALESCE(d.mrkt_upperfloor_area,0) AS upper_floor_area, COALESCE(d.mrkt_stall_excess_area,0) AS excess_area, a.mrkt_mon_stallage, CASE WHEN a.mrkt_with_ac = '1' THEN 'AC' ELSE 'NON-AC' END AS ac_status, CASE WHEN COALESCE(d.mrkt_stall_area_original,0) = 0 THEN 0 WHEN a.mrkt_with_ac = '1' THEN ROUND((a.mrkt_mon_stallage - (a.mrkt_mon_stallage / 5.0)) / NULLIF((COALESCE(d.mrkt_stall_area_original,0) + COALESCE(d.mrkt_subfloor_area,0) + COALESCE(d.mrkt_upperfloor_area,0) + COALESCE(d.mrkt_stall_excess_area,0)),0), 2) ELSE ROUND(a.mrkt_mon_stallage / NULLIF((COALESCE(d.mrkt_stall_area_original,0) + COALESCE(d.mrkt_subfloor_area,0) + COALESCE(d.mrkt_upperfloor_area,0) + COALESCE(d.mrkt_stall_excess_area,0)),0), 2) END AS rate_per_sqft FROM mrkt_kmc2_data.mrkt_stall_mst d JOIN mrkt_kmc2_data.mrkt_rent_roll_mst a ON d.mrkt_stall_id = a.mrkt_stall_id WHERE d.mrkt_code = 205 AND d.status = 1 AND a.mrkt_status = 'A' ORDER BY d.mrkt_stalldisplay_no;"
+    },
+    {
+      "category": "Point Consumption / Meter Entry",
+      "id": 35,
+      "question": "List all stalls with active point-based electricity connections in market 205",
+      "sql": "SELECT f.mrkt_code, f.mrkt_name, d.mrkt_block_code, d.mrkt_block_desc, s.mrkt_stalldisplay_no, t.mrkt_stall_id, s.mrkt_phase_code FROM mrkt_kmc2_data.mrkt_point_consumption t JOIN mrkt_kmc2_data.mrkt_rent_roll_mst r ON r.mrkt_stall_id = t.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_stall_mst s ON s.mrkt_stall_id = t.mrkt_stall_id JOIN mrkt_kmc2_data.mrkt_market_mst f ON f.mrkt_code = s.mrkt_code JOIN mrkt_kmc2_data.mrkt_block_mst d ON d.mrkt_code = f.mrkt_code AND d.mrkt_phase_code = s.mrkt_phase_code AND d.mrkt_block_code = s.mrkt_block_code WHERE t.mrkt_active_flag = 'Y' AND t.mrkt_effective_to_year IS NULL AND t.mrkt_effect_to_month IS NULL AND f.mrkt_code = 205 ORDER BY t.mrkt_stall_id;"
+    },
+    {
+      "category": "Stall-wise Demand vs Collection (Production Pattern)",
+      "id": 36,
+      "question": "Month-wise demand and collection breakup for stall 2050101 in FY 2024-2025",
+      "sql": "SELECT TRIM(UPPER(TO_CHAR(t.mrkt_demand_date, 'MONTH'))) AS demand_month, COALESCE(b2.mrkt_demand_amount,0) + COALESCE(b5.mrkt_demand_amount,0) + COALESCE(b3.mrkt_demand_amount,0) AS stallage_amount, COALESCE(b6.mrkt_demand_amount,0) + COALESCE(b1.mrkt_demand_amount,0) + COALESCE(b4.mrkt_demand_amount,0) AS electric_charges, t.mrkt_demand_amount AS net_demand, COALESCE(b7.mrkt_demand_amount,0) AS maintenance_charge, COALESCE(b2.mrkt_outstanding_amt,0) + COALESCE(b5.mrkt_outstanding_amt,0) + COALESCE(b3.mrkt_outstanding_amt,0) - COALESCE(b2.mrkt_advance_amt,0) AS stallage_outstanding, COALESCE(b6.mrkt_outstanding_amt,0) + COALESCE(b1.mrkt_outstanding_amt,0) + COALESCE(b4.mrkt_outstanding_amt,0) - COALESCE(b1.mrkt_advance_amt,0) AS electric_outstanding, t.mrkt_outstanding_amt - COALESCE(t.mrkt_advance_amt,0) AS net_outstanding, t.mrkt_penalty_amount AS interest, COALESCE(a.mrkt_receipt_amount,0) AS receipt_amount, a.mrkt_receipt_date, t.mrkt_stall_id, t.mrkt_fin_year FROM mrkt_kmc2_data.mrkt_demand_hdr t LEFT JOIN mrkt_kmc2_data.mrkt_receipt_hdr a ON t.mrkt_fin_year = a.mrkt_fin_year AND t.mrkt_demand_serial_no = a.mrkt_demand_serial_no AND t.mrkt_code = a.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_demand_dtl b1 ON b1.mrkt_misc_chrg_code = '21' AND b1.mrkt_fin_year = t.mrkt_fin_year AND b1.mrkt_demand_serial_no = t.mrkt_demand_serial_no AND b1.mrkt_code = t.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_demand_dtl b2 ON b2.mrkt_misc_chrg_code = '22' AND b2.mrkt_fin_year = t.mrkt_fin_year AND b2.mrkt_demand_serial_no = t.mrkt_demand_serial_no AND b2.mrkt_code = t.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_demand_dtl b3 ON b3.mrkt_misc_chrg_code = '8' AND b3.mrkt_fin_year = t.mrkt_fin_year AND b3.mrkt_demand_serial_no = t.mrkt_demand_serial_no AND b3.mrkt_code = t.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_demand_dtl b4 ON b4.mrkt_misc_chrg_code = '23' AND b4.mrkt_fin_year = t.mrkt_fin_year AND b4.mrkt_demand_serial_no = t.mrkt_demand_serial_no AND b4.mrkt_code = t.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_demand_dtl b5 ON b5.mrkt_misc_chrg_code = '1' AND b5.mrkt_fin_year = t.mrkt_fin_year AND b5.mrkt_demand_serial_no = t.mrkt_demand_serial_no AND b5.mrkt_code = t.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_demand_dtl b6 ON b6.mrkt_misc_chrg_code = '6' AND b6.mrkt_fin_year = t.mrkt_fin_year AND b6.mrkt_demand_serial_no = t.mrkt_demand_serial_no AND b6.mrkt_code = t.mrkt_code LEFT JOIN mrkt_kmc2_data.mrkt_demand_dtl b7 ON b7.mrkt_misc_chrg_code = '37' AND b7.mrkt_fin_year = t.mrkt_fin_year AND b7.mrkt_demand_serial_no = t.mrkt_demand_serial_no AND b7.mrkt_code = t.mrkt_code WHERE t.mrkt_stall_id = 2050101 AND t.mrkt_fin_year = '2024-2025' AND t.mrkt_demand_status IN ('A','F','O','P') AND t.mrkt_demand_type = 'R' ORDER BY t.mrkt_demand_date;"
+    },
+    {
+      "category": "Market Monthly Mutation Report (Production Pattern)",
+      "id": 37,
+      "question": "Market-wise monthly mutation demand report from April to September 2024",
+      "sql": "SELECT mrkt_code, mrkt_name, SUM(mutation_amount_221) AS mutation_amount, SUM(difference_of_stallage_222) AS diff_stallage, SUM(misc_299) AS misc_amount, SUM(mutation_amount_221) + SUM(difference_of_stallage_222) + SUM(misc_299) AS total_amount FROM (SELECT t4.mrkt_code, t6.mrkt_name, SUM(t5.mrkt_demand_amount) AS mutation_amount_221, 0 AS difference_of_stallage_222, 0 AS misc_299 FROM mrkt_kmc2_data.mrkt_misc_demand_hdr t4 JOIN mrkt_kmc2_data.mrkt_misc_demand_dtl t5 ON t4.mrkt_fin_year = t5.mrkt_fin_year AND t4.mrkt_code = t5.mrkt_code AND t4.mrkt_demand_serial_no = t5.mrkt_demand_serial_no JOIN mrkt_kmc2_data.mrkt_market_mst t6 ON t5.mrkt_code = t6.mrkt_code WHERE t4.mrkt_demand_date BETWEEN '2024-04-01' AND '2024-09-30' AND t5.mrkt_misc_chrg_code IN ('18','24','25','27','28','31','32','33') AND COALESCE(t4.mrkt_demand_status,'A') NOT IN ('C','B') GROUP BY t4.mrkt_code, t6.mrkt_name UNION ALL SELECT t4.mrkt_code, t6.mrkt_name, 0, SUM(t5.mrkt_demand_amount), 0 FROM mrkt_kmc2_data.mrkt_misc_demand_hdr t4 JOIN mrkt_kmc2_data.mrkt_misc_demand_dtl t5 ON t4.mrkt_fin_year = t5.mrkt_fin_year AND t4.mrkt_code = t5.mrkt_code AND t4.mrkt_demand_serial_no = t5.mrkt_demand_serial_no JOIN mrkt_kmc2_data.mrkt_market_mst t6 ON t5.mrkt_code = t6.mrkt_code WHERE t4.mrkt_demand_date BETWEEN '2024-04-01' AND '2024-09-30' AND t5.mrkt_misc_chrg_code = '26' AND COALESCE(t4.mrkt_demand_status,'A') NOT IN ('C','B') GROUP BY t4.mrkt_code, t6.mrkt_name UNION ALL SELECT t4.mrkt_code, t6.mrkt_name, 0, 0, SUM(t5.mrkt_demand_amount) FROM mrkt_kmc2_data.mrkt_misc_demand_hdr t4 JOIN mrkt_kmc2_data.mrkt_misc_demand_dtl t5 ON t4.mrkt_fin_year = t5.mrkt_fin_year AND t4.mrkt_code = t5.mrkt_code AND t4.mrkt_demand_serial_no = t5.mrkt_demand_serial_no JOIN mrkt_kmc2_data.mrkt_market_mst t6 ON t5.mrkt_code = t6.mrkt_code WHERE t4.mrkt_demand_date BETWEEN '2024-04-01' AND '2024-09-30' AND t5.mrkt_misc_chrg_code IN ('10','11','12','13','14','15','16','17','2','29','3','30','4','5','6','7','8','9') AND COALESCE(t4.mrkt_demand_status,'A') NOT IN ('C','B') GROUP BY t4.mrkt_code, t6.mrkt_name) ss GROUP BY ss.mrkt_code, ss.mrkt_name ORDER BY ss.mrkt_code;"
+    },
+    {
+      "category": "Misc Demand Payment Report (Production Pattern)",
+      "id": 38,
+      "question": "Miscellaneous demand payment report (fully paid only) for April to June 2024",
+      "sql": "SELECT mrkt_code, mrkt_name, SUM(mutation_amount_221) AS mutation_amount, SUM(difference_of_stallage_222) AS diff_stallage, SUM(misc_299) AS misc_amount, SUM(mutation_amount_221) + SUM(difference_of_stallage_222) + SUM(misc_299) AS total_amount FROM (SELECT t4.mrkt_code, t6.mrkt_name, SUM(t5.mrkt_demand_amount) AS mutation_amount_221, 0 AS difference_of_stallage_222, 0 AS misc_299 FROM mrkt_kmc2_data.mrkt_misc_demand_hdr t4 JOIN mrkt_kmc2_data.mrkt_misc_demand_dtl t5 ON t4.mrkt_fin_year = t5.mrkt_fin_year AND t4.mrkt_code = t5.mrkt_code AND t4.mrkt_demand_serial_no = t5.mrkt_demand_serial_no JOIN mrkt_kmc2_data.mrkt_market_mst t6 ON t5.mrkt_code = t6.mrkt_code WHERE t4.mrkt_demand_date BETWEEN '2024-04-01' AND '2024-06-30' AND t5.mrkt_misc_chrg_code IN ('18','24','25','27','28','31','32','33') AND t4.mrkt_demand_status = 'F' GROUP BY t4.mrkt_code, t6.mrkt_name UNION ALL SELECT t4.mrkt_code, t6.mrkt_name, 0, SUM(t5.mrkt_demand_amount), 0 FROM mrkt_kmc2_data.mrkt_misc_demand_hdr t4 JOIN mrkt_kmc2_data.mrkt_misc_demand_dtl t5 ON t4.mrkt_fin_year = t5.mrkt_fin_year AND t4.mrkt_code = t5.mrkt_code AND t4.mrkt_demand_serial_no = t5.mrkt_demand_serial_no JOIN mrkt_kmc2_data.mrkt_market_mst t6 ON t5.mrkt_code = t6.mrkt_code WHERE t4.mrkt_demand_date BETWEEN '2024-04-01' AND '2024-06-30' AND t5.mrkt_misc_chrg_code = '26' AND t4.mrkt_demand_status = 'F' GROUP BY t4.mrkt_code, t6.mrkt_name UNION ALL SELECT t4.mrkt_code, t6.mrkt_name, 0, 0, SUM(t5.mrkt_demand_amount) FROM mrkt_kmc2_data.mrkt_misc_demand_hdr t4 JOIN mrkt_kmc2_data.mrkt_misc_demand_dtl t5 ON t4.mrkt_fin_year = t5.mrkt_fin_year AND t4.mrkt_code = t5.mrkt_code AND t4.mrkt_demand_serial_no = t5.mrkt_demand_serial_no JOIN mrkt_kmc2_data.mrkt_market_mst t6 ON t5.mrkt_code = t6.mrkt_code WHERE t4.mrkt_demand_date BETWEEN '2024-04-01' AND '2024-06-30' AND t5.mrkt_misc_chrg_code IN ('10','11','12','13','14','15','16','17','2','29','3','30','4','5','6','7','8','9') AND t4.mrkt_demand_status = 'F' GROUP BY t4.mrkt_code, t6.mrkt_name) ss GROUP BY ss.mrkt_code, ss.mrkt_name ORDER BY ss.mrkt_code;"
+    },
+    {
+      "category": "Market-wise BI Code Collection (Production Pattern)",
+      "id": 39,
+      "question": "Market-wise collection by budget code from coll_kmc1_data for April 2024",
+      "sql": "SELECT t.mrkt_bicode_prefix || '-' || t.mrkt_name AS market, t.code, SUM(t.coll_amount) AS collection_amount FROM (SELECT t.mrkt_name, t.mrkt_bicode_prefix, SUBSTRING(b.coll_budget_code FROM 6) AS code, b.coll_amount FROM mrkt_kmc2_data.mrkt_market_mst t, coll_kmc1_data.coll_daily_budget_colln b WHERE SUBSTRING(b.coll_budget_code FROM 1 FOR 4) = t.mrkt_bicode_prefix AND b.coll_colln_date BETWEEN '2024-04-01' AND '2024-04-30' UNION ALL SELECT t.mrkt_name, t.mrkt_bicode_prefix, SUBSTRING(g.coll_budget_code FROM 6) AS code, g.coll_amount FROM mrkt_kmc2_data.mrkt_market_mst t, coll_kmc1_data.coll_daily_budget_gm g WHERE SUBSTRING(g.coll_budget_code FROM 1 FOR 4) = t.mrkt_bicode_prefix AND g.coll_colln_date BETWEEN '2024-04-01' AND '2024-04-30' UNION ALL SELECT t.mrkt_name, t.mrkt_bicode_prefix, SUBSTRING(n.code2 FROM 6) AS code, n.chlnamt FROM mrkt_kmc2_data.mrkt_market_mst t, coll_kmc1_data.chln_ns_portal n WHERE SUBSTRING(n.code2 FROM 1 FOR 4) = t.mrkt_bicode_prefix AND n.cdate BETWEEN '2024-04-01' AND '2024-04-30') t GROUP BY t.mrkt_bicode_prefix || '-' || t.mrkt_name, t.code ORDER BY t.mrkt_bicode_prefix || '-' || t.mrkt_name, t.code;"
+    },
+    {
+      "category": "Collection Growth Comparison (Production Pattern)",
+      "id": 40,
+      "question": "Year-on-year collection growth comparison: current April-June 2024 vs previous April-June 2023",
+      "sql": "SELECT market, code, SUM(current_coll) AS current_year_collection, SUM(prev_coll) AS previous_year_collection, SUM(current_coll) - SUM(prev_coll) AS growth FROM (SELECT t.mrkt_bicode_prefix || '-' || t.mrkt_name AS market, SUBSTRING(b.coll_budget_code FROM 6) AS code, b.coll_amount AS current_coll, 0 AS prev_coll FROM mrkt_kmc2_data.mrkt_market_mst t, coll_kmc1_data.coll_daily_budget_colln b WHERE SUBSTRING(b.coll_budget_code FROM 1 FOR 4) = t.mrkt_bicode_prefix AND SUBSTRING(b.coll_budget_code FROM 6) NOT IN ('922','923','225','230') AND b.coll_colln_date BETWEEN '2024-04-01' AND '2024-06-30' UNION ALL SELECT t.mrkt_bicode_prefix || '-' || t.mrkt_name, SUBSTRING(b.coll_budget_code FROM 6), 0, b.coll_amount FROM mrkt_kmc2_data.mrkt_market_mst t, coll_kmc1_data.coll_daily_budget_colln b WHERE SUBSTRING(b.coll_budget_code FROM 1 FOR 4) = t.mrkt_bicode_prefix AND SUBSTRING(b.coll_budget_code FROM 6) NOT IN ('922','923','225','230') AND b.coll_colln_date BETWEEN '2023-04-01' AND '2023-06-30') t GROUP BY market, code ORDER BY market, code;"
+    },
+    {
+      "category": "Monthly Demand vs Collection (CTE Pattern)",
+      "id": 41,
+      "question": "Monthly demand vs collection for FY 2024-2025",
+      "sql": "WITH demand_monthly AS (SELECT EXTRACT(MONTH FROM d.mrkt_from_date) AS month_no, TRIM(TO_CHAR(d.mrkt_from_date, 'Month')) AS month_name, SUM(COALESCE(d.mrkt_demand_amount,0)) AS total_demand FROM mrkt_kmc2_data.mrkt_demand_hdr d WHERE d.mrkt_fin_year = '2024-2025' AND d.mrkt_demand_status NOT IN ('C','B') GROUP BY EXTRACT(MONTH FROM d.mrkt_from_date), TRIM(TO_CHAR(d.mrkt_from_date, 'Month'))), collection_monthly AS (SELECT EXTRACT(MONTH FROM r.mrkt_receipt_date) AS month_no, TRIM(TO_CHAR(r.mrkt_receipt_date, 'Month')) AS month_name, SUM(COALESCE(r.mrkt_receipt_amount,0)) AS total_collection FROM mrkt_kmc2_data.mrkt_receipt_hdr r WHERE r.mrkt_fin_year = '2024-2025' GROUP BY EXTRACT(MONTH FROM r.mrkt_receipt_date), TRIM(TO_CHAR(r.mrkt_receipt_date, 'Month'))) SELECT COALESCE(d.month_no, c.month_no) AS month_no, COALESCE(d.month_name, c.month_name) AS month_name, COALESCE(d.total_demand, 0) AS total_demand, COALESCE(c.total_collection, 0) AS total_collection FROM demand_monthly d FULL OUTER JOIN collection_monthly c ON d.month_no = c.month_no ORDER BY month_no"
+    },
+    {
+      "category": "Monthly Demand vs Collection (CTE Pattern)",
+      "id": 42,
+      "question": "Market-wise monthly demand vs collection comparison for FY 2024-2025",
+      "sql": "WITH demand_monthly AS (SELECT d.mrkt_code, EXTRACT(MONTH FROM d.mrkt_from_date) AS month_no, TRIM(TO_CHAR(d.mrkt_from_date, 'Month')) AS month_name, SUM(COALESCE(d.mrkt_demand_amount,0)) AS total_demand FROM mrkt_kmc2_data.mrkt_demand_hdr d WHERE d.mrkt_fin_year = '2024-2025' AND d.mrkt_demand_status NOT IN ('C','B') GROUP BY d.mrkt_code, EXTRACT(MONTH FROM d.mrkt_from_date), TRIM(TO_CHAR(d.mrkt_from_date, 'Month'))), collection_monthly AS (SELECT r.mrkt_code, EXTRACT(MONTH FROM r.mrkt_receipt_date) AS month_no, TRIM(TO_CHAR(r.mrkt_receipt_date, 'Month')) AS month_name, SUM(COALESCE(r.mrkt_receipt_amount,0)) AS total_collection FROM mrkt_kmc2_data.mrkt_receipt_hdr r WHERE r.mrkt_fin_year = '2024-2025' GROUP BY r.mrkt_code, EXTRACT(MONTH FROM r.mrkt_receipt_date), TRIM(TO_CHAR(r.mrkt_receipt_date, 'Month'))) SELECT m.mrkt_name, COALESCE(d.month_no, c.month_no) AS month_no, COALESCE(d.month_name, c.month_name) AS month_name, COALESCE(d.total_demand, 0) AS total_demand, COALESCE(c.total_collection, 0) AS total_collection FROM demand_monthly d FULL OUTER JOIN collection_monthly c ON d.mrkt_code = c.mrkt_code AND d.month_no = c.month_no JOIN mrkt_kmc2_data.mrkt_market_mst m ON m.mrkt_code = COALESCE(d.mrkt_code, c.mrkt_code) ORDER BY m.mrkt_name, month_no"
+    },
+    {
+      "id": 43,
+      "category": "General Reports",
+      "source": "feedback",
+      "queryId": "MKT-20260409-00002",
+      "addedAt": "2026-04-09T05:07:59.377Z",
+      "question": "get list of market",
+      "sql": "SELECT mrkt_code, mrkt_name, status FROM mrkt_kmc2_data.mrkt_market_mst ORDER BY mrkt_code LIMIT 5000"
+    },
+    {
+      "id": 44,
+      "category": "General Reports",
+      "source": "feedback",
+      "queryId": "MKT-20260416-00002",
+      "addedAt": "2026-04-16T10:39:52.481Z",
+      "question": "show in more detail",
+      "sql": "SELECT \n    COALESCE(mc.mrkt_misc_chrg_name, 'Unknown') AS charge_type,\n    SUM(COALESCE(rd.mrkt_receipt_amount, 0)) AS total_collection,\n    COUNT(DISTINCT rd.mrkt_receipt_no) AS receipt_count\nFROM mrkt_kmc2_data.mrkt_receipt_hdr rh\nJOIN mrkt_kmc2_data.mrkt_receipt_dtl rd \n    ON rh.mrkt_receipt_no = rd.mrkt_receipt_no \n    AND rh.mrkt_receipt_year = rd.mrkt_receipt_year \n    AND rh.mrkt_code = rd.mrkt_code\nLEFT JOIN mrkt_kmc2_data.mrkt_misc_charge_mst mc \n    ON CAST(rd.mrkt_misc_chrg_code AS varchar) = mc.mrkt_misc_chrg_code\nWHERE rh.mrkt_receipt_year = '2025-2026'\nGROUP BY COALESCE(mc.mrkt_misc_chrg_name, 'Unknown')\nORDER BY total_collection DESC\nLIMIT 5000"
+    },
+    {
+      "id": 45,
+      "category": "General Reports",
+      "source": "feedback",
+      "queryId": "MKT-20260416-00002",
+      "addedAt": "2026-04-16T13:04:05.637Z",
+      "question": "show me in detail as marketwise",
+      "sql": "SELECT \n    m.mrkt_code,\n    m.mrkt_name,\n    m.common_ward_no,\n    SUM(COALESCE(rh.mrkt_receipt_amount, 0)) AS total_stallage_collection,\n    COUNT(DISTINCT rh.mrkt_receipt_no) AS receipt_count\nFROM mrkt_kmc2_data.mrkt_receipt_hdr rh\nJOIN mrkt_kmc2_data.mrkt_market_mst m ON rh.mrkt_code = m.mrkt_code\nWHERE rh.mrkt_fin_year = '2025-2026'\nGROUP BY m.mrkt_code, m.mrkt_name, m.common_ward_no\nORDER BY total_stallage_collection DESC\nLIMIT 5000"
+    },
+    {
+      "id": 46,
+      "category": "Demand Reports",
+      "source": "feedback",
+      "queryId": "MKT-20260416-00002",
+      "addedAt": "2026-04-16T13:11:22.912Z",
+      "question": "List stalls with demand status (decoded)",
+      "sql": "SELECT DISTINCT ON (s.mrkt_stall_id)\n       s.mrkt_stall_id,\n       s.mrkt_stall_no,\n       m.mrkt_name,\n       dh.mrkt_demand_status AS demand_status_code,\n       CASE dh.mrkt_demand_status\n         WHEN 'A' THEN 'Active'\n         WHEN 'P' THEN 'Partially Paid'\n         WHEN 'F' THEN 'Fully Paid'\n         WHEN 'O' THEN 'Outstanding'\n         WHEN 'B' THEN 'Bad Demand'\n         WHEN 'C' THEN 'Canceled'\n         ELSE dh.mrkt_demand_status\n       END AS demand_status_desc\nFROM mrkt_kmc2_data.mrkt_stall_mst s\nJOIN mrkt_kmc2_data.mrkt_market_mst m ON s.mrkt_code = m.mrkt_code\nJOIN mrkt_kmc2_data.mrkt_rent_roll_mst rr ON s.mrkt_stall_id = rr.mrkt_stall_id\nJOIN mrkt_kmc2_data.mrkt_demand_hdr dh ON s.mrkt_stall_id = dh.mrkt_stall_id AND s.mrkt_code = dh.mrkt_code\nWHERE dh.mrkt_demand_status IS NOT NULL\nORDER BY s.mrkt_stall_id, dh.mrkt_demand_date DESC\nLIMIT 5000"
+    },
+    {
+      "id": 47,
+      "category": "Collection Reports",
+      "source": "feedback",
+      "queryId": "MKT-20260417-00027",
+      "addedAt": "2026-04-17T06:06:05.894Z",
+      "question": "show me with receipt no",
+      "sql": "SELECT m.mrkt_code, m.mrkt_name, m.common_ward_no, rh.mrkt_receipt_no, rh.mrkt_receipt_amount\nFROM mrkt_kmc2_data.mrkt_misc_receipt_hdr rh\nJOIN mrkt_kmc2_data.mrkt_market_mst m ON rh.mrkt_code = m.mrkt_code\nWHERE rh.mrkt_fin_year = '2026-2027'\nORDER BY rh.mrkt_receipt_no\nLIMIT 5000"
+    },
+    {
+      "id": 48,
+      "category": "Stallage Reports",
+      "source": "feedback",
+      "queryId": "MKT-20260417-00028",
+      "addedAt": "2026-04-17T06:08:51.810Z",
+      "question": "show me stalls from rentroll who have duplicate RPH names with block name and phase also",
+      "sql": "WITH dup_rph AS (\n  SELECT mrkt_rph_name\n  FROM mrkt_kmc2_data.mrkt_rent_roll_mst\n  GROUP BY mrkt_rph_name\n  HAVING COUNT(*) > 1\n)\nSELECT\n  rr.id AS rent_roll_id,\n  rr.mrkt_stall_id,\n  s.mrkt_stall_no,\n  rr.mrkt_rph_name,\n  COALESCE(s.mrkt_block_code, 0) AS block_code,\n  COALESCE(s.mrkt_phase_code, 0) AS phase_code\nFROM mrkt_kmc2_data.mrkt_rent_roll_mst rr\nJOIN dup_rph dr ON rr.mrkt_rph_name = dr.mrkt_rph_name\nJOIN mrkt_kmc2_data.mrkt_stall_mst s ON rr.mrkt_stall_id = s.mrkt_stall_id\nORDER BY rr.mrkt_rph_name, s.mrkt_stall_no\nLIMIT 5000"
+    },
+    {
+      "id": 49,
+      "question": "Yesterday I have made payment of miscellaneous demand, show me all the related detail",
+      "sql": "SELECT\n    rh.mrkt_receipt_no,\n    rh.mrkt_receipt_date::date                          AS receipt_date,\n    rh.mrkt_receipt_amount,\n    rh.mrkt_demand_serial_no,\n    rh.mrkt_fin_year,\n    rh.mrkt_code,\n    m.mrkt_name,\n    dh.mrkt_stall_id,\n    dh.mrkt_demand_date::date                           AS demand_date,\n    dh.mrkt_narration,\n    dh.mrkt_demand_amount,\n    COALESCE(dh.mrkt_penalty_amount, 0)                AS penalty_amount,\n    dh.mrkt_net_amount,\n    dh.mrkt_paid_amount,\n    dh.mrkt_demand_status,\n    CASE dh.mrkt_demand_status\n        WHEN 'A' THEN 'Active'\n        WHEN 'P' THEN 'Partially Paid'\n        WHEN 'F' THEN 'Fully Paid'\n        WHEN 'O' THEN 'Outstanding'\n        WHEN 'B' THEN 'Bad Demand'\n        WHEN 'C' THEN 'Canceled'\n        ELSE dh.mrkt_demand_status\n    END                                                 AS demand_status_desc,\n    dd.mrkt_misc_chrg_code,\n    dd.mrkt_demand_amount                               AS charge_amount,\n    dd.mrkt_narration                                   AS charge_narration,\n    rpd.mrkt_pay_mode,\n    CASE rpd.mrkt_pay_mode\n        WHEN 'C' THEN 'Cash'\n        WHEN 'Q' THEN 'Cheque'\n        WHEN 'D' THEN 'DD'\n        ELSE rpd.mrkt_pay_mode\n    END                                                 AS pay_mode_desc,\n    rpd.mrkt_amount                                     AS paid_amount\nFROM mrkt_kmc2_data.mrkt_misc_receipt_hdr rh\nJOIN mrkt_kmc2_data.mrkt_misc_demand_hdr dh\n    ON  rh.mrkt_demand_serial_no = dh.mrkt_demand_serial_no\n    AND rh.mrkt_fin_year         = dh.mrkt_fin_year\n    AND rh.mrkt_code             = dh.mrkt_code\nJOIN mrkt_kmc2_data.mrkt_market_mst m\n    ON rh.mrkt_code = m.mrkt_code\nLEFT JOIN mrkt_kmc2_data.mrkt_misc_demand_dtl dd\n    ON  dh.mrkt_demand_serial_no = dd.mrkt_demand_serial_no\n    AND dh.mrkt_fin_year         = dd.mrkt_fin_year\n    AND dh.mrkt_code             = dd.mrkt_code\nLEFT JOIN mrkt_kmc2_data.mrkt_misc_receipt_pay_dtl rpd\n    ON  rh.mrkt_demand_serial_no = rpd.mrkt_demand_serial_no\n    AND rh.mrkt_fin_year         = rpd.mrkt_fin_year\n    AND rh.mrkt_code             = rpd.mrkt_code\nWHERE rh.mrkt_receipt_date::date = CURRENT_DATE - INTERVAL\n'1 day'\n  AND (rh.cancel_flag IS NOT TRUE)\nORDER BY rh.mrkt_receipt_no",
+      "tags": [
+        "misc_demand",
+        "misc_receipt",
+        "payment",
+        "yesterday",
+        "misc_receipt_pay_dtl",
+        "verified"
+      ]
+    },
+    {
+      "category": "Stall & Tenant Lookup",
+      "id": 50,
+      "question": "Show all active stalls in market 101",
+      "sql": "SELECT s.mrkt_stall_id, s.mrkt_stall_no, s.mrkt_stalldisplay_no, st.mrkt_stalltype_desc AS stall_type, COALESCE(s.mrkt_stall_length, 0) AS mrkt_stall_length, COALESCE(s.mrkt_stall_width, 0) AS mrkt_stall_width, COALESCE(s.mrkt_stall_area, 0) AS mrkt_stall_area, s.mrkt_stall_corner, s.mrkt_stall_road_side FROM mrkt_kmc2_data.mrkt_stall_mst s JOIN mrkt_kmc2_data.mrkt_stalltype_mst st ON s.mrkt_stalltype_code = st.mrkt_stalltype_code WHERE s.mrkt_code = 101 AND s.status = 1 ORDER BY s.mrkt_stall_no LIMIT 5000;",
+      "notes": "IMPORTANT: stall active/inactive uses s.status (integer 1=Active, 0=Inactive) — NOT s.mrkt_status which does not exist in mrkt_stall_mst. Do not join rent_roll unless tenant data is explicitly requested.",
+      "tags": [
+        "active_stalls",
+        "stall_status",
+        "status_column",
+        "verified"
+      ]
+    },
+    {
+      "id": 51,
+      "category": "Stallage Reports",
+      "source": "feedback",
+      "queryId": "MKT-20260421-00002",
+      "addedAt": "2026-04-21T04:30:09.831Z",
+      "question": "Show all active stalls in market 101 and phase 1 and block 1",
+      "sql": "SELECT\n  s.mrkt_stall_id,\n  s.mrkt_stall_no,\n  s.mrkt_stalldisplay_no,\n  COALESCE(s.mrkt_stall_length, 0) AS mrkt_stall_length,\n  COALESCE(s.mrkt_stall_width, 0) AS mrkt_stall_width,\n  COALESCE(s.mrkt_stall_area, 0) AS mrkt_stall_area,\n  s.mrkt_stall_corner,\n  s.mrkt_stall_road_side\nFROM mrkt_kmc2_data.mrkt_stall_mst s\nWHERE s.mrkt_code = 101\n  AND s.mrkt_phase_code = 1\n  AND s.mrkt_block_code = 1\n  AND s.status = 1\nORDER BY s.mrkt_stall_no\nLIMIT 5000"
+    }
+  ]
+}

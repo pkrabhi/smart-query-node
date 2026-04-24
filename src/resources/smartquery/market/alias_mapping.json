@@ -1,0 +1,335 @@
+{
+  "description": "Alias mapping for schema security. Real table/column names are mapped to generic aliases before sending to external LLM API. The LLM generates SQL using aliases, then the backend replaces aliases with real names before execution.",
+  "version": "1.0",
+  "schema_alias": "data_schema",
+  "schema_real": "mrkt_kmc2_data",
+
+  "tables": {
+    "T_MARKET": {
+      "real_name": "mrkt_market_mst",
+      "columns": {
+        "C_MKT_ID": "mrkt_code",
+        "C_MKT_CLASS": "mrkt_class_no",
+        "C_WARD": "common_ward_no",
+        "C_MKT_NAME": "mrkt_name",
+        "C_MKT_ADDR": "mrkt_addrline1",
+        "C_MKT_PIN": "mrkt_pin_code",
+        "C_MKT_FLOORS": "mrkt_no_floors",
+        "C_MKT_PHONE": "mrkt_phone_no",
+        "C_MKT_FUND_AC": "mrkt_fund_account",
+        "C_STATUS": "status"
+      }
+    },
+    "T_STALL": {
+      "real_name": "mrkt_stall_mst",
+      "columns": {
+        "C_STALL_ID": "mrkt_stall_id",
+        "C_MKT_ID": "mrkt_code",
+        "C_PHASE": "mrkt_phase_code",
+        "C_BLOCK": "mrkt_block_code",
+        "C_STALL_NO": "mrkt_stall_no",
+        "C_STALL_DISPLAY": "mrkt_stalldisplay_no",
+        "C_STALL_TYPE": "mrkt_stalltype_code",
+        "C_AREA": "mrkt_stall_area",
+        "C_LENGTH": "mrkt_stall_length",
+        "C_WIDTH": "mrkt_stall_width",
+        "C_IS_CORNER": "mrkt_stall_corner",
+        "C_IS_ROADSIDE": "mrkt_stall_road_side",
+        "C_PRIMARY_AREA": "mrkt_stall_primary_area",
+        "C_EXCESS_AREA": "mrkt_stall_excess_area",
+        "C_STATUS": "status"
+      }
+    },
+    "T_TENANT": {
+      "real_name": "mrkt_rent_roll_mst",
+      "columns": {
+        "C_STALL_ID": "mrkt_stall_id",
+        "C_RPH_NAME": "mrkt_rph_name",
+        "C_TRADE_NAME": "mrkt_trade_name",
+        "C_BUSINESS": "mrkt_business",
+        "C_PHONE": "mrkt_phone",
+        "C_EMAIL": "mrkt_email",
+        "C_ADDR1": "mrkt_address_line1",
+        "C_ADDR2": "mrkt_address_line2",
+        "C_PIN": "mrkt_pin_code",
+        "C_MON_STALLAGE": "mrkt_mon_stallage",
+        "C_INIT_STALLAGE": "mrkt_init_stallage",
+        "C_OUTSTANDING": "mrkt_outstanding",
+        "C_TENANT_STATUS": "mrkt_status",
+        "C_OCCUP_DATE": "mrkt_occup_date",
+        "C_LEASE_END": "mrkt_lease_end_dt",
+        "C_ALLOT_TYPE": "mrkt_allottype_code",
+        "C_GSTIN": "mrkt_gstin_no",
+        "C_TRADE_LIC": "mrkt_trade_lic_no",
+        "C_BILL_GEN_UPTO": "mrkt_bill_gen_upto",
+        "C_BILL_PAID_UPTO": "mrkt_bill_paid_upto",
+        "C_EFF_MONTH": "mrkt_effective_month",
+        "C_EFF_YEAR": "mrkt_effective_year",
+        "C_DEMAND_FLAG": "mrkt_demand_flag",
+        "C_RENEWAL_FLAG": "mrkt_renewal_flag",
+        "C_RATE": "mrkt_rate",
+        "C_SUSPENSE_AMT": "suspenseamount",
+        "C_COLLECTED_AMT": "collectedamount",
+        "C_ADJUSTED_AMT": "adjustedamount",
+        "C_STATUS": "status"
+      }
+    },
+    "T_DEMAND": {
+      "real_name": "mrkt_demand_hdr",
+      "columns": {
+        "C_DEMAND_SRL": "mrkt_demand_serial_no",
+        "C_FIN_YEAR": "mrkt_fin_year",
+        "C_MKT_ID": "mrkt_code",
+        "C_STALL_ID": "mrkt_stall_id",
+        "C_DEMAND_DATE": "mrkt_demand_date",
+        "C_FROM_DATE": "mrkt_from_date",
+        "C_TO_DATE": "mrkt_to_date",
+        "C_DEMAND_AMT": "mrkt_demand_amount",
+        "C_NET_AMT": "mrkt_net_amount",
+        "C_OS_AMT": "mrkt_outstanding_amt",
+        "C_PAID_AMT": "mrkt_paid_amount",
+        "C_REBATE_AMT": "mrkt_rebate_amount",
+        "C_PENALTY_AMT": "mrkt_penalty_amount",
+        "C_DEMAND_STATUS": "mrkt_demand_status",
+        "C_DEMAND_TYPE": "mrkt_demand_type",
+        "C_DUE_DATE": "mrkt_demand_due_date",
+        "C_CGST": "mrkt_cgst_amt",
+        "C_SGST": "mrkt_sgst_amt",
+        "C_CGST_OS": "mrkt_cgst_amt_os",
+        "C_SGST_OS": "mrkt_sgst_amt_os",
+        "C_ADVANCE_AMT": "mrkt_advance_amt",
+        "C_PAYMENT_DATE": "mrkt_payment_date"
+      }
+    },
+    "T_DEMAND_DTL": {
+      "real_name": "mrkt_demand_dtl",
+      "columns": {
+        "C_DEMAND_SRL": "mrkt_demand_serial_no",
+        "C_MKT_ID": "mrkt_code",
+        "C_FIN_YEAR": "mrkt_fin_year",
+        "C_CHRG_CODE": "mrkt_misc_chrg_code",
+        "C_DEMAND_AMT": "mrkt_demand_amount",
+        "C_PAID_AMT": "mrkt_paid_amount",
+        "C_OS_AMT": "mrkt_outstanding_amt"
+      }
+    },
+    "T_RECEIPT": {
+      "real_name": "mrkt_receipt_hdr",
+      "columns": {
+        "C_RCPT_NO": "mrkt_receipt_no",
+        "C_RCPT_YEAR": "mrkt_receipt_year",
+        "C_RCPT_DATE": "mrkt_receipt_date",
+        "C_RCPT_AMT": "mrkt_receipt_amount",
+        "C_DEMAND_SRL": "mrkt_demand_serial_no",
+        "C_MKT_ID": "mrkt_code",
+        "C_FIN_YEAR": "mrkt_fin_year",
+        "C_COLL_OFFICE": "mrkt_coll_office",
+        "C_COUNTER": "mrkt_counter_no"
+      }
+    },
+    "T_RECEIPT_DTL": {
+      "real_name": "mrkt_receipt_dtl",
+      "columns": {
+        "C_RCPT_NO": "mrkt_receipt_no",
+        "C_RCPT_YEAR": "mrkt_receipt_year",
+        "C_MKT_ID": "mrkt_code",
+        "C_RCPT_DATE": "mrkt_receipt_date",
+        "C_RCPT_AMT": "mrkt_receipt_amount",
+        "C_CHRG_CODE": "mrkt_misc_chrg_code",
+        "C_REBATE_AMT": "mrkt_rebate_amt",
+        "C_PENALTY_AMT": "mrkt_penalty_amt"
+      }
+    },
+    "T_RECEIPT_PAY": {
+      "real_name": "mrkt_receipt_pay_dtl",
+      "columns": {
+        "C_RCPT_NO": "mrkt_receipt_no",
+        "C_RCPT_YEAR": "mrkt_receipt_year",
+        "C_MKT_ID": "mrkt_code",
+        "C_PAY_MODE": "mrkt_pay_mode",
+        "C_PAY_AMT": "mrkt_amount",
+        "C_CHEQUE_NO": "mrkt_cheque_no",
+        "C_CHEQUE_DATE": "mrkt_cheque_dd_date",
+        "C_BANK": "mrkt_bank_code",
+        "C_COLL_OFFICE": "mrkt_coll_office"
+      }
+    },
+    "T_FUT_DEMAND": {
+      "real_name": "mrkt_futnani_demand_hdr",
+      "columns": {
+        "C_DEMAND_SRL": "mrkt_demand_serial_no",
+        "C_FIN_YEAR": "mrkt_fin_year",
+        "C_MKT_ID": "mrkt_code",
+        "C_STALL_ID": "mrkt_stall_id",
+        "C_DEMAND_AMT": "mrkt_demand_amount",
+        "C_NET_AMT": "mrkt_net_amount",
+        "C_OS_AMT": "mrkt_outstanding_amt",
+        "C_DEMAND_STATUS": "mrkt_demand_status"
+      }
+    },
+    "T_FUT_RECEIPT": {
+      "real_name": "mrkt_futnani_receipt_hdr",
+      "columns": {
+        "C_RCPT_NO": "mrkt_receipt_no",
+        "C_RCPT_YEAR": "mrkt_receipt_year",
+        "C_RCPT_DATE": "mrkt_receipt_date",
+        "C_RCPT_AMT": "mrkt_receipt_amount",
+        "C_MKT_ID": "mrkt_code",
+        "C_FIN_YEAR": "mrkt_fin_year"
+      }
+    },
+    "T_MISC_DEMAND": {
+      "real_name": "mrkt_misc_demand_hdr",
+      "columns": {
+        "C_DEMAND_SRL": "mrkt_demand_serial_no",
+        "C_FIN_YEAR": "mrkt_fin_year",
+        "C_MKT_ID": "mrkt_code",
+        "C_STALL_ID": "mrkt_stall_id",
+        "C_DEMAND_AMT": "mrkt_demand_amount",
+        "C_NET_AMT": "mrkt_net_amount",
+        "C_PAID_AMT": "mrkt_paid_amount",
+        "C_DEMAND_STATUS": "mrkt_demand_status"
+      }
+    },
+    "T_MISC_RECEIPT": {
+      "real_name": "mrkt_misc_receipt_hdr",
+      "columns": {
+        "C_RCPT_NO": "mrkt_receipt_no",
+        "C_RCPT_YEAR": "mrkt_receipt_year",
+        "C_RCPT_DATE": "mrkt_receipt_date",
+        "C_RCPT_AMT": "mrkt_receipt_amount",
+        "C_MKT_ID": "mrkt_code",
+        "C_FIN_YEAR": "mrkt_fin_year"
+      }
+    },
+    "T_MUTATION": {
+      "real_name": "mrkt_stall_mutation",
+      "columns": {
+        "C_ID": "id",
+        "C_STALL_ID": "mrkt_stall_id",
+        "C_MUT_TYPE": "mutation_type",
+        "C_OLD_RPH": "mrkt_old_rph_name",
+        "C_OLD_TRADE": "mrkt_old_trade_name",
+        "C_OLD_BUSI": "mrkt_old_business",
+        "C_APPROVE_DATE": "mrkt_approve_date",
+        "C_APPROVE_AUTH": "mrkt_approve_auth",
+        "C_STATUS_ID": "statusid",
+        "C_STATUS_DESC": "statusdesc",
+        "C_APP_NO": "application_number",
+        "C_SANCTION_FEE": "total_sanction_fee",
+        "C_PENALTY": "total_penalty",
+        "C_PAYABLE": "total_payable",
+        "C_WF_STATUS": "workflow_status",
+        "C_CREATED": "create_date"
+      }
+    },
+    "T_PERMISSION": {
+      "real_name": "mrkt_permission_master",
+      "columns": {
+        "C_ID": "id",
+        "C_PERM_NO": "permission_number",
+        "C_PERM_DATE": "permission_date",
+        "C_PERM_TYPE": "permission_type",
+        "C_MKT_ID": "mrkt_code",
+        "C_STALL_ID": "mrkt_stall_id",
+        "C_RPH_NAME": "mrkt_rph_name",
+        "C_PERM_STATUS": "permission_status",
+        "C_APP_NO": "application_number",
+        "C_WF_STATUS": "workflow_status"
+      }
+    },
+    "T_BLOCK": {
+      "real_name": "mrkt_block_mst",
+      "columns": {
+        "C_BLOCK_CODE": "mrkt_block_code",
+        "C_PHASE": "mrkt_phase_code",
+        "C_MKT_ID": "mrkt_code",
+        "C_BLOCK_DESC": "mrkt_block_desc",
+        "C_STATUS": "status"
+      }
+    },
+    "T_PHASE": {
+      "real_name": "mrkt_phase_mst",
+      "columns": {
+        "C_PHASE_CODE": "mrkt_phase_code",
+        "C_MKT_ID": "mrkt_code",
+        "C_PHASE_DESC": "mrkt_phase_desc",
+        "C_STATUS": "status"
+      }
+    },
+    "T_STALL_TYPE": {
+      "real_name": "mrkt_stalltype_mst",
+      "columns": {
+        "C_TYPE_CODE": "mrkt_stalltype_code",
+        "C_TYPE_DESC": "mrkt_stalltype_desc",
+        "C_ACTIVE": "isactive"
+      }
+    },
+    "T_CLASS": {
+      "real_name": "mrkt_class_mst",
+      "columns": {
+        "C_CLASS_NO": "mrkt_class_no",
+        "C_CLASS_DESC": "mrkt_class_desc"
+      }
+    },
+    "T_ALLOT_TYPE": {
+      "real_name": "mrkt_allottype_mst",
+      "columns": {
+        "C_ALLOT_CODE": "mrkt_allottype_code",
+        "C_ALLOT_DESC": "mrkt_allottype_desc"
+      }
+    },
+    "T_BUSINESS": {
+      "real_name": "mrkt_business_mst",
+      "columns": {
+        "C_BUSI_CODE": "mrkt_busi_code",
+        "C_BUSI_NAME": "mrkt_busi_name",
+        "C_ARTICLES": "mrkt_busi_articles",
+        "C_STATUS": "status"
+      }
+    },
+    "T_CHARGE_TYPE": {
+      "real_name": "mrkt_misc_charge_mst",
+      "columns": {
+        "C_CHRG_CODE": "mrkt_misc_chrg_code",
+        "C_CHRG_NAME": "mrkt_misc_chrg_name",
+        "C_CHRG_GROUP": "mrkt_charge_group",
+        "C_ACCT_HEAD": "mrkt_account_head"
+      }
+    },
+    "T_RATE": {
+      "real_name": "mrkt_stallage_rate_mst",
+      "columns": {
+        "C_FIN_YEAR": "mrkt_fin_year",
+        "C_MKT_ID": "mrkt_code",
+        "C_STALL_TYPE": "mrkt_stalltype_code",
+        "C_PHASE": "mrkt_phase_code",
+        "C_BLOCK": "mrkt_block_code",
+        "C_RATE": "mrkt_rate",
+        "C_STATUS": "status"
+      }
+    },
+    "T_CANC_RECEIPT": {
+      "real_name": "mrkt_canc_receipt",
+      "columns": {
+        "C_RCPT_NO": "mrkt_receipt_no",
+        "C_RCPT_YEAR": "mrkt_receipt_year",
+        "C_RCPT_DATE": "mrkt_receipt_date",
+        "C_RCPT_AMT": "mrkt_receipt_amount",
+        "C_MKT_ID": "mrkt_code",
+        "C_FIN_YEAR": "mrkt_fin_year"
+      }
+    },
+    "T_PENALTY": {
+      "real_name": "mrkt_penalty",
+      "columns": {
+        "C_ID": "id",
+        "C_MKT_ID": "mrkt_code",
+        "C_STALL_ID": "stall_id",
+        "C_NAME": "name",
+        "C_VIOLATION_DATE": "violation_date",
+        "C_TRADE_NAME": "trade_name_entity"
+      }
+    }
+  }
+}

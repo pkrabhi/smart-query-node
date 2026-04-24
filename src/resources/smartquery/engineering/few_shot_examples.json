@@ -1,0 +1,180 @@
+{
+  "examples": [
+    {
+      "question": "Show all active work estimates",
+      "sql": "SELECT h.C_EST_ID, h.C_FILE_NO, h.C_WORK_NAME, h.C_DEPT, h.C_BOROUGH, h.C_WARD, h.C_TOTAL_EST, h.C_STATUS_DESC FROM data_schema.T_EST_HDR h WHERE h.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "List work estimates for department CIVIL",
+      "sql": "SELECT h.C_EST_ID, h.C_FILE_NO, h.C_WORK_NAME, h.C_WORK_TYPE, h.C_WARD, h.C_TOTAL_EST, h.C_STATUS_DESC FROM data_schema.T_EST_HDR h WHERE h.C_DEPT ILIKE '%CIVIL%' AND h.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show work estimates for ward 10",
+      "sql": "SELECT h.C_EST_ID, h.C_FILE_NO, h.C_WORK_NAME, h.C_DEPT, h.C_BOROUGH, h.C_TOTAL_EST, h.C_STATUS_DESC FROM data_schema.T_EST_HDR h WHERE h.C_WARD = '10' AND h.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show estimates for borough NORTH",
+      "sql": "SELECT h.C_EST_ID, h.C_FILE_NO, h.C_WORK_NAME, h.C_WARD, h.C_TOTAL_EST, h.C_TOTAL_JOB_VAL, h.C_STATUS_DESC FROM data_schema.T_EST_HDR h WHERE h.C_BOROUGH ILIKE '%NORTH%' AND h.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "What is the total estimated value of all active work estimates",
+      "sql": "SELECT COALESCE(SUM(h.C_TOTAL_EST), 0) AS total_estimate_value, COUNT(h.id) AS total_estimates FROM data_schema.T_EST_HDR h WHERE h.C_ACTIVE = 1"
+    },
+    {
+      "question": "Show work estimates with total value greater than 500000",
+      "sql": "SELECT h.C_EST_ID, h.C_FILE_NO, h.C_WORK_NAME, h.C_DEPT, h.C_BOROUGH, h.C_WARD, h.C_TOTAL_EST, h.C_TOTAL_JOB_VAL FROM data_schema.T_EST_HDR h WHERE h.C_TOTAL_EST > 500000 AND h.C_ACTIVE = 1 ORDER BY h.C_TOTAL_EST DESC LIMIT 5000"
+    },
+    {
+      "question": "List all electrical work estimates",
+      "sql": "SELECT h.C_EST_ID, h.C_FILE_NO, h.C_WORK_NAME, h.C_DEPT, h.C_WARD, h.C_TOTAL_EST, h.C_STATUS_DESC FROM data_schema.T_EST_HDR h WHERE h.C_WORK_TYPE ILIKE '%ELECTRICAL%' AND h.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show estimate details for estimate header id EST001",
+      "sql": "SELECT d.C_ITEM_NO, d.C_ITEM_NAME, d.C_ITEM_DESC, d.C_UOM, d.C_RATE, d.C_QTY, d.C_EST_PRICE, d.C_LINE_VAL FROM data_schema.T_EST_DTL d WHERE d.C_EST_HDR_ID = 'EST001' AND d.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show line items for work estimate with file number FILE001",
+      "sql": "SELECT d.C_ITEM_NO, d.C_ITEM_NAME, d.C_UOM, d.C_RATE, d.C_QTY, d.C_LINE_VAL, d.C_CGST_AMT, d.C_SGST_AMT FROM data_schema.T_EST_DTL d WHERE d.C_FILE_NO = 'FILE001' AND d.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show estimate fund type wise summary",
+      "sql": "SELECT h.C_FUND_TYPE, COUNT(h.id) AS estimate_count, COALESCE(SUM(h.C_TOTAL_EST), 0) AS total_value FROM data_schema.T_EST_HDR h WHERE h.C_ACTIVE = 1 GROUP BY h.C_FUND_TYPE ORDER BY total_value DESC LIMIT 5000"
+    },
+    {
+      "question": "Show all active tenders",
+      "sql": "SELECT t.C_TENDER_NO, t.C_FILE_NO, t.C_EST_NO, t.C_TENDER_TYPE, t.C_BID_TYPE, t.C_PUBLISH_DATE, t.C_BID_OPEN_DATE, t.C_STATUS_DESC FROM data_schema.T_TENDER t WHERE t.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "List open tenders with bidding open date this month",
+      "sql": "SELECT t.C_TENDER_NO, t.C_FILE_NO, t.C_TENDER_TYPE, t.C_EMD_VAL, t.C_BID_OPEN_DATE, t.C_STATUS_DESC FROM data_schema.T_TENDER t WHERE t.C_TENDER_TYPE = 'OPEN' AND t.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show cancelled tenders",
+      "sql": "SELECT t.C_TENDER_NO, t.C_FILE_NO, t.C_EST_NO, t.C_CANCEL_REMARKS, t.C_CANCELLED_BY, t.C_CANCELLED_ON FROM data_schema.T_TENDER t WHERE t.C_ACTIVE = 0 AND t.C_CANCELLED_ON IS NOT NULL LIMIT 5000"
+    },
+    {
+      "question": "Find tender details for tender number TND001",
+      "sql": "SELECT t.C_TENDER_NO, t.C_FILE_NO, t.C_EST_NO, t.C_TENDER_TYPE, t.C_BID_TYPE, t.C_EMD_VAL, t.C_PO_TYPE, t.C_PUBLISH_DATE, t.C_BID_OPEN_DATE, t.C_BIDDER_COUNT, t.C_STATUS_DESC FROM data_schema.T_TENDER t WHERE t.C_TENDER_NO = 'TND001'"
+    },
+    {
+      "question": "Show tenders with their work estimate details",
+      "sql": "SELECT t.C_TENDER_NO, t.C_FILE_NO, h.C_WORK_NAME, h.C_DEPT, h.C_BOROUGH, h.C_WARD, h.C_TOTAL_EST, t.C_STATUS_DESC FROM data_schema.T_TENDER t JOIN data_schema.T_EST_HDR h ON t.C_EST_HDR_ID = h.C_EST_ID WHERE t.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Count tenders by type",
+      "sql": "SELECT t.C_TENDER_TYPE, COUNT(t.id) AS tender_count FROM data_schema.T_TENDER t WHERE t.C_ACTIVE = 1 GROUP BY t.C_TENDER_TYPE ORDER BY tender_count DESC"
+    },
+    {
+      "question": "Show all bidders for tender TND001",
+      "sql": "SELECT b.C_CONT_NAME, b.C_CONT_CODE, b.C_CONT_PHONE, b.C_BID_VAL, b.C_BID_DATE, b.C_SHORTLISTED, b.C_STATUS_DESC FROM data_schema.T_BIDDER b WHERE b.C_TENDER_NO = 'TND001' AND b.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "List shortlisted bidders for all active tenders",
+      "sql": "SELECT b.C_TENDER_NO, b.C_CONT_NAME, b.C_CONT_CODE, b.C_BID_VAL, b.C_BID_DATE FROM data_schema.T_BIDDER b WHERE b.C_SHORTLISTED = 'Y' AND b.C_ACTIVE = 1 ORDER BY b.C_BID_DATE DESC LIMIT 5000"
+    },
+    {
+      "question": "Show lowest bid value for each tender",
+      "sql": "SELECT b.C_TENDER_NO, MIN(b.C_BID_VAL) AS lowest_bid, MAX(b.C_BID_VAL) AS highest_bid, COUNT(b.id) AS total_bidders FROM data_schema.T_BIDDER b WHERE b.C_ACTIVE = 1 GROUP BY b.C_TENDER_NO LIMIT 5000"
+    },
+    {
+      "question": "Find all tenders where contractor XYZ participated",
+      "sql": "SELECT b.C_TENDER_NO, t.C_TENDER_TYPE, b.C_BID_VAL, b.C_SHORTLISTED, b.C_STATUS_DESC FROM data_schema.T_BIDDER b JOIN data_schema.T_TENDER t ON b.C_TENDER_NO = t.C_TENDER_NO WHERE b.C_CONT_NAME ILIKE '%XYZ%' AND b.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show financial bid winners",
+      "sql": "SELECT f.C_TENDER_NO, f.C_CONT_NAME, f.C_CONT_CODE, f.C_TOTAL_BID, f.C_BID_VAL_1, f.C_DEPT_NAME, f.C_STATUS_DESC FROM data_schema.T_FIN_BID f WHERE f.C_BID_WINNER = 'Y' AND f.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show all financial bids for tender TND001",
+      "sql": "SELECT f.C_CONT_NAME, f.C_CONT_CODE, f.C_BID_VAL_1, f.C_BID_VAL_2, f.C_BID_VAL_3, f.C_TOTAL_BID, f.C_BID_WINNER, f.C_STATUS_DESC FROM data_schema.T_FIN_BID f WHERE f.C_TENDER_NO = 'TND001' ORDER BY f.C_TOTAL_BID ASC LIMIT 5000"
+    },
+    {
+      "question": "Show engineering bid winner items for tender TND001",
+      "sql": "SELECT ib.C_ITEM_NO, ib.C_ITEM_NAME, ib.C_CONT_NAME, ib.C_CONT_CODE, ib.C_FINAL_RATE, ib.C_QTY, ib.C_FINAL_BID_PRICE FROM data_schema.T_ITEM_BID ib WHERE ib.C_TENDER_NO = 'TND001' AND ib.C_BID_WINNER = 1 AND ib.C_CANCEL_STATUS = 0 LIMIT 5000"
+    },
+    {
+      "question": "Show all active purchase orders",
+      "sql": "SELECT p.C_PO_NO, p.C_TENDER_NO, p.C_CONT_NAME, p.C_CONT_CODE, p.C_PO_TYPE, p.C_PO_CREATE_DATE, p.C_TOTAL_AMT, p.C_STATUS_DESC FROM data_schema.T_PO_HDR p WHERE p.C_ACTIVE = 1 AND p.C_CANCEL_STATUS = 0 LIMIT 5000"
+    },
+    {
+      "question": "Show PO details for contractor ABC",
+      "sql": "SELECT p.C_PO_NO, p.C_TENDER_NO, p.C_EST_NO, p.C_PO_TYPE, p.C_PO_CREATE_DATE, p.C_PO_APPR_DATE, p.C_TOTAL_AMT, p.C_STATUS_DESC FROM data_schema.T_PO_HDR p WHERE p.C_CONT_NAME ILIKE '%ABC%' AND p.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show PO line items for PO number PO001",
+      "sql": "SELECT pi.C_ITEM_NO, pi.C_ITEM_NAME, pi.C_ITEM_DESC, pi.C_UOM, pi.C_UNIT_PRICE, pi.C_QTY, pi.C_TOTAL_LINE_AMT, pi.C_ALLOC_QTY, pi.C_REM_QTY FROM data_schema.T_PO_ITEM pi WHERE pi.C_PO_NO = 'PO001' AND pi.C_CANCEL_STATUS = 0 LIMIT 5000"
+    },
+    {
+      "question": "Show total PO value per contractor",
+      "sql": "SELECT p.C_CONT_NAME, p.C_CONT_CODE, COUNT(p.id) AS po_count, COALESCE(SUM(p.C_TOTAL_AMT), 0) AS total_po_value FROM data_schema.T_PO_HDR p WHERE p.C_ACTIVE = 1 AND p.C_CANCEL_STATUS = 0 GROUP BY p.C_CONT_NAME, p.C_CONT_CODE ORDER BY total_po_value DESC LIMIT 5000"
+    },
+    {
+      "question": "Show PO with work estimate and tender info",
+      "sql": "SELECT p.C_PO_NO, t.C_TENDER_NO, h.C_WORK_NAME, h.C_DEPT, h.C_BOROUGH, h.C_WARD, p.C_CONT_NAME, p.C_TOTAL_AMT, p.C_STATUS_DESC FROM data_schema.T_PO_HDR p JOIN data_schema.T_TENDER t ON p.C_TENDER_NO = t.C_TENDER_NO JOIN data_schema.T_EST_HDR h ON t.C_EST_HDR_ID = h.C_EST_ID WHERE p.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "List POs pending handover",
+      "sql": "SELECT p.C_PO_NO, p.C_TENDER_NO, p.C_CONT_NAME, p.C_PO_CREATE_DATE, p.C_PO_APPR_DATE, p.C_EST_HANDOVER, p.C_STATUS_DESC FROM data_schema.T_PO_HDR p WHERE p.C_PO_HANDOVER IS NULL AND p.C_ACTIVE = 1 AND p.C_CANCEL_STATUS = 0 LIMIT 5000"
+    },
+    {
+      "question": "Show all invoices for PO PO001",
+      "sql": "SELECT ih.C_BILL_NO, ih.C_INV_NO, ih.C_CONT_NAME, ih.C_RA_BILL_TYPE, ih.C_INV_AMT, ih.C_BILL_DATE, ih.C_STATUS_DESC FROM data_schema.T_INV_HDR ih WHERE ih.C_PO_NO = 'PO001' AND ih.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show invoice details for tender TND001",
+      "sql": "SELECT ih.C_BILL_NO, ih.C_INV_NO, ih.C_CONT_NAME, ih.C_PO_NO, ih.C_RA_BILL_TYPE, ih.C_INV_AMT, ih.C_INV_STATUS FROM data_schema.T_INV_HDR ih WHERE ih.C_TENDER_NO = 'TND001' AND ih.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show total invoice amount per contractor",
+      "sql": "SELECT ih.C_CONT_NAME, COUNT(ih.id) AS invoice_count, COALESCE(SUM(ih.C_INV_AMT), 0) AS total_invoiced FROM data_schema.T_INV_HDR ih WHERE ih.C_ACTIVE = 1 GROUP BY ih.C_CONT_NAME ORDER BY total_invoiced DESC LIMIT 5000"
+    },
+    {
+      "question": "Show unpaid invoices",
+      "sql": "SELECT id.C_TENDER_NO, id.C_PO_NO, id.C_BILL_NO, id.C_CONT_NAME, id.C_ITEM_DESC, id.C_INV_AMT, id.C_TOTAL_INV_AMT FROM data_schema.T_INV_DTL id WHERE id.C_PAY_STATUS = 0 AND id.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show all receipts for tender TND001",
+      "sql": "SELECT rh.C_BILL_NO, rh.C_CONT_NAME, rh.C_PO_NO, rh.C_BILL_AMT, rh.C_RECV_DATE, rh.C_PAY_STATUS, rh.C_PAY_VAL, rh.C_PAY_PAID FROM data_schema.T_RCPT_HDR rh WHERE rh.C_TENDER_NO = 'TND001' AND rh.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show paid receipts with payment details",
+      "sql": "SELECT rh.C_TENDER_NO, rh.C_PO_NO, rh.C_CONT_NAME, rh.C_BILL_NO, rh.C_BILL_AMT, rh.C_PAY_VAL, rh.C_PAY_PAID, rh.C_PAID_ON FROM data_schema.T_RCPT_HDR rh WHERE rh.C_PAY_STATUS = 1 AND rh.C_ACTIVE = 1 ORDER BY rh.C_PAID_ON DESC LIMIT 5000"
+    },
+    {
+      "question": "Show receipt line items for PO PO001",
+      "sql": "SELECT rd.C_ITEM_NO, rd.C_ITEM_DESC, rd.C_UOM, rd.C_QTY_ORD, rd.C_QTY_RECV, rd.C_QTY_REM, rd.C_RECV_PRICE, rd.C_RECV_DATE, rd.C_IS_DEV FROM data_schema.T_RCPT_DTL rd WHERE rd.C_PO_NO = 'PO001' AND rd.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show all approved DPRs",
+      "sql": "SELECT d.C_FILE_NO, d.C_DPR_NO, d.C_APPR_STAGE, d.C_APPROVER, d.C_APPROVED_DATE, d.C_UO_NO, d.C_STATUS_DESC FROM data_schema.T_DPR d WHERE d.C_DPR_STATUS = 'APPROVED' AND d.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show DPR pending at EE level",
+      "sql": "SELECT d.C_FILE_NO, d.C_DPR_NO, d.C_APPR_STAGE, d.C_EE, d.C_INITIATED_DATE, d.C_STATUS_DESC FROM data_schema.T_DPR d WHERE d.C_APPR_STAGE = 'EE' AND d.C_DPR_STATUS = 'PENDING' AND d.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show concept notes with approved status",
+      "sql": "SELECT c.C_FILE_NO, c.C_NOTE_NO, c.C_FILE_DESC, c.C_NOTE_TEXT, c.C_VERSION FROM data_schema.T_CONCEPT c WHERE c.C_NOTE_STATUS = 2 AND c.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show complete work order lifecycle from estimate to payment for file FILE001",
+      "sql": "SELECT h.C_WORK_NAME, h.C_TOTAL_EST, t.C_TENDER_NO, t.C_STATUS_DESC AS tender_status, p.C_PO_NO, p.C_TOTAL_AMT, ih.C_BILL_NO, ih.C_INV_AMT, rh.C_PAY_STATUS, rh.C_PAY_PAID FROM data_schema.T_EST_HDR h LEFT JOIN data_schema.T_TENDER t ON h.C_EST_ID = t.C_EST_HDR_ID LEFT JOIN data_schema.T_PO_HDR p ON t.C_TENDER_NO = p.C_TENDER_NO LEFT JOIN data_schema.T_INV_HDR ih ON p.C_PO_NO = ih.C_PO_NO LEFT JOIN data_schema.T_RCPT_HDR rh ON p.C_PO_NO = rh.C_PO_NO WHERE h.C_FILE_NO = 'FILE001' LIMIT 5000"
+    },
+    {
+      "question": "Show work estimate budget distribution for ward 5",
+      "sql": "SELECT h.C_WORK_NAME, h.C_DEPT, d.C_COST_CTR, d.C_BOROUGH, d.C_WARD, d.C_DIST_AMT FROM data_schema.T_EST_HDR h JOIN data_schema.T_EST_DIST d ON h.C_EST_ID = d.C_EST_HDR_ID WHERE d.C_WARD = '5' AND h.C_ACTIVE = 1 LIMIT 5000"
+    },
+    {
+      "question": "Show EMD payment details for active tenders",
+      "sql": "SELECT bp.C_TENDER_NO, bp.C_CONT_NAME, bp.C_PAY_MODE, bp.C_EMD_AMT, bp.C_PAID_AMT, bp.C_TOTAL_AMT, bp.C_DD_DATE, bp.C_BANK FROM data_schema.T_BIDDER_PAY bp LIMIT 5000"
+    },
+    {
+      "question": "Show cancelled tender EMD refund details",
+      "sql": "SELECT cp.C_TENDER_NO, cp.C_CONT_NAME, cp.C_EMD_AMT, cp.C_PAID_AMT, cp.C_DD_DATE, cp.C_DD_RETURN, cp.C_REMARKS FROM data_schema.T_CAN_BIDDER_PAY cp LIMIT 5000"
+    },
+    {
+      "question": "Show vendor rate estimates for estimate header EST002",
+      "sql": "SELECT v.C_ITEM_NO, v.C_ITEM_NAME, v.C_UOM, v.C_RATE, v.C_QTY, v.C_LINE_VAL, v.C_VENDOR_ID, v.C_VENDOR_PRICE FROM data_schema.T_EST_VENDOR v WHERE v.C_EST_HDR_ID = 'EST002' LIMIT 5000"
+    }
+  ]
+}

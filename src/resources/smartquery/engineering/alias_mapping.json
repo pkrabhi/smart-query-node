@@ -1,0 +1,607 @@
+{
+  "schema_real": "public",
+  "schema_alias": "data_schema",
+  "tables": {
+    "T_EST_HDR": {
+      "real_name": "kmc_work_estimate_hearder",
+      "columns": {
+        "C_EST_ID": "estimate_header_id",
+        "C_FILE_NO": "file_no",
+        "C_FILE_DESC": "file_description",
+        "C_WORK_TYPE": "work_type",
+        "C_DEPT": "department",
+        "C_BOROUGH": "borough",
+        "C_WARD": "ward",
+        "C_ZONE": "zone_no",
+        "C_WORK_NAME": "work_name",
+        "C_WORK_PURPOSE": "work_purpose",
+        "C_TOTAL_EST": "total_estimate",
+        "C_TOTAL_JOB_VAL": "total_job_value",
+        "C_EST_GST": "total_estimate_gst",
+        "C_GST_PCT": "gst_percent",
+        "C_CESS_PCT": "cess_percent",
+        "C_CONT_PCT": "contingency_percent",
+        "C_APPR_STATUS": "est_approval_status",
+        "C_STATUS_DESC": "status_description",
+        "C_FUND_TYPE": "fund_type",
+        "C_DPR_NO": "dpr_no",
+        "C_LOCK": "lock_flag",
+        "C_ACTIVE": "c_status",
+        "C_CREATED_AT": "createdAt",
+        "C_CREATED_BY": "createdby"
+      }
+    },
+    "T_EST_DTL": {
+      "real_name": "kmc_work_estimate_details",
+      "columns": {
+        "C_EST_HDR_ID": "est_header_id",
+        "C_FILE_NO": "file_no",
+        "C_ITEM_NO": "item_no",
+        "C_ITEM_NAME": "item_name",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_RATE": "item_rate",
+        "C_QTY": "quantity",
+        "C_EST_PRICE": "estimate_price",
+        "C_LINE_VAL": "line_value",
+        "C_CGST_AMT": "cgst_amount",
+        "C_SGST_AMT": "sgst_amount",
+        "C_SCHEDULE": "schedule_name",
+        "C_REM_QTY": "remaining_qty",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_EST_DIST": {
+      "real_name": "kmc_work_estimate_distributions",
+      "columns": {
+        "C_EST_HDR_ID": "est_header_id",
+        "C_FILE_NO": "file_no",
+        "C_COST_CTR": "cost_centre_no",
+        "C_BOROUGH": "borough",
+        "C_WARD": "ward",
+        "C_DIST_AMT": "distributed_amount",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_TEMP_HDR": {
+      "real_name": "kmc_work_temp_estimate_hearder",
+      "columns": {
+        "C_EST_ID": "estimate_header_id",
+        "C_FILE_NO": "file_no",
+        "C_FILE_DESC": "file_description",
+        "C_WORK_TYPE": "work_type",
+        "C_DEPT": "department",
+        "C_BOROUGH": "borough",
+        "C_WARD": "ward",
+        "C_WORK_NAME": "work_name"
+      }
+    },
+    "T_TEMP_DTL": {
+      "real_name": "kmc_work_temp_estimate_details",
+      "columns": {
+        "C_EST_HDR_ID": "est_header_id",
+        "C_FILE_NO": "file_no",
+        "C_ITEM_NO": "item_no",
+        "C_ITEM_NAME": "item_name",
+        "C_RATE": "item_rate",
+        "C_QTY": "quantity",
+        "C_EST_PRICE": "estimate_price",
+        "C_LINE_VAL": "line_value"
+      }
+    },
+    "T_TENDER": {
+      "real_name": "engg_est_tender_master",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_FILE_NO": "file_no",
+        "C_EST_NO": "estimate_no",
+        "C_EST_HDR_ID": "estimate_header_id",
+        "C_PUBLISH_DATE": "publish_date",
+        "C_BID_OPEN_DATE": "bidding_opening_date",
+        "C_SALE_START": "sale_start_date",
+        "C_SALE_END": "sale_end_date",
+        "C_BID_SUB_START": "bid_sub_start_date",
+        "C_BID_SUB_END": "bid_sub_end_date",
+        "C_TENDER_TYPE": "tender_type",
+        "C_BID_TYPE": "bid_type",
+        "C_EMD_VAL": "emd_value",
+        "C_EMD_TYPE": "emd_type",
+        "C_PO_TYPE": "po_type",
+        "C_BIDDER_COUNT": "tender_bidders",
+        "C_STATUS": "status",
+        "C_STATUS_DESC": "status_description",
+        "C_CANCEL_REMARKS": "cancel_remarks",
+        "C_CANCELLED_BY": "cancelled_by",
+        "C_CANCELLED_ON": "cancelled_on",
+        "C_ACTIVE": "c_status",
+        "C_NARRATION": "narration"
+      }
+    },
+    "T_BIDDER": {
+      "real_name": "engg_tender_bidders",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_CONT_PHONE": "engg_contractor_phone",
+        "C_CONT_EMAIL": "engg_contractor_email",
+        "C_CONT_CODE": "engg_contractor_code",
+        "C_BID_TYPE": "bid_type",
+        "C_BID_VAL": "bid_value",
+        "C_BID_DATE": "bid_submission_date",
+        "C_SHORTLISTED": "shortlisted_flag",
+        "C_STATUS_DESC": "status_description",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_TENDER_DOC": {
+      "real_name": "engg_tender_docs",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_FILE_NO": "file_no",
+        "C_DOC1": "tender_doc1",
+        "C_DOC2": "tender_doc2",
+        "C_DOC3": "tender_doc3",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_CRN": {
+      "real_name": "engg_tender_contractor_crn_details",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_EST_NO": "estimate_no",
+        "C_FILE_NO": "file_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_CONT_CODE": "contractor_code",
+        "C_CRN_NO": "crn_number",
+        "C_CRN_AMT": "crn_amount",
+        "C_TOTAL_AMT": "total_amount",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_BIDDER_PAY": {
+      "real_name": "eng_tender_bidder_payment_dtls",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_FILE_NO": "file_no",
+        "C_CONT_NAME": "contractor_name",
+        "C_PAY_MODE": "payment_mode",
+        "C_TXN_ID": "transaction_id",
+        "C_EMD_AMT": "emd_amount",
+        "C_PAID_AMT": "paid_amount",
+        "C_TOTAL_AMT": "total_amount",
+        "C_DD_DATE": "dd_date",
+        "C_BANK": "bank_name"
+      }
+    },
+    "T_CAN_BIDDER_PAY": {
+      "real_name": "eng_cancelled_tender_bidder_payment_dtls",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_FILE_NO": "file_no",
+        "C_CONT_NAME": "contractor_name",
+        "C_PAY_MODE": "payment_mode",
+        "C_EMD_AMT": "emd_amount",
+        "C_PAID_AMT": "paid_amount",
+        "C_TOTAL_AMT": "total_amount",
+        "C_DD_DATE": "dd_date",
+        "C_DD_RETURN": "dd_return_date",
+        "C_REMARKS": "remarks"
+      }
+    },
+    "T_CAN_CRN": {
+      "real_name": "engg_cancelled_tender_contractor_crn_details",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_FILE_NO": "file_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_CONT_CODE": "contractor_code",
+        "C_CRN_NO": "crn_number",
+        "C_CRN_AMT": "crn_amount",
+        "C_TOTAL_AMT": "total_amount",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_ENG_BID": {
+      "real_name": "engg_engineering_bidding_details",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_CONT_CODE": "engg_contractor_code",
+        "C_BID_ITEM_NO": "bid_item_no",
+        "C_ITEM_NAME": "item_name",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_BID_UNIT_PRICE": "bid_unit_price",
+        "C_EST_PRICE": "estimate_price",
+        "C_GST_PCT": "gst_percent",
+        "C_GST_AMT": "gst_amount",
+        "C_BID_QTY": "bid_quantity",
+        "C_TOTAL_BID": "total_bidding_estimate",
+        "C_ROUND_NO": "round_no",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_ENG_BID_PO": {
+      "real_name": "engg_engineering_bidding_po_details",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_CONT_CODE": "engg_contractor_code",
+        "C_PO_NO": "po_number",
+        "C_TXN_NO": "transaction_no",
+        "C_EMD_AMT": "emd_amount",
+        "C_PAY_MODE": "payment_mode",
+        "C_BANK": "bank_name",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_ITEM_BID": {
+      "real_name": "engg_estimate_details_item_bid",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_FILE_NO": "file_no",
+        "C_EST_HDR_ID": "est_header_id",
+        "C_ITEM_NO": "item_no",
+        "C_ITEM_NAME": "item_name",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_RATE": "item_rate",
+        "C_QTY": "quantity",
+        "C_EST_PRICE": "estimate_price",
+        "C_LINE_VAL": "line_value",
+        "C_CGST_AMT": "cgst_amount",
+        "C_SGST_AMT": "sgst_amount",
+        "C_CONT_CODE": "contractor_code",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_BID_WINNER": "bid_winner",
+        "C_FINAL_RATE": "final_rate",
+        "C_FINAL_BID_PRICE": "final_bid_price",
+        "C_REM_QTY": "remaining_qty",
+        "C_STATUS_DESC": "status_description",
+        "C_CANCEL_STATUS": "cancelled_status"
+      }
+    },
+    "T_ITEM_BID_HIST": {
+      "real_name": "engg_estimate_details_item_bid_history",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_FILE_NO": "file_no",
+        "C_ITEM_NO": "item_no",
+        "C_ITEM_NAME": "item_name",
+        "C_RATE": "item_rate",
+        "C_QTY": "quantity",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_FINAL_RATE": "final_rate",
+        "C_BID_WINNER": "bid_winner",
+        "C_AUDIT_DATE": "audit_date",
+        "C_AUDIT_ACTION": "audit_action"
+      }
+    },
+    "T_FIN_EST": {
+      "real_name": "engg_financial_bid_estimation",
+      "columns": {
+        "C_FILE_NO": "file_no",
+        "C_EST_HDR_ID": "est_header_id",
+        "C_ITEM_NO": "item_no",
+        "C_ITEM_NAME": "item_name",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_RATE": "item_rate",
+        "C_QTY": "quantity",
+        "C_EST_PRICE": "estimate_price",
+        "C_LINE_VAL": "line_value",
+        "C_CGST_AMT": "cgst_amount",
+        "C_SGST_AMT": "sgst_amount",
+        "C_FINAL_RATE": "finalrate",
+        "C_STATUS": "status",
+        "C_BID_CONT_CODE": "bid_contractor_code"
+      }
+    },
+    "T_FIN_BID": {
+      "real_name": "engg_financial_bidding_details",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_CONT_CODE": "engg_contractor_code",
+        "C_BID_VAL_1": "bid_value_1",
+        "C_BID_DATE_1": "bid_date_1",
+        "C_BID_VAL_2": "bid_value_2",
+        "C_BID_VAL_3": "bid_value_3",
+        "C_TOTAL_BID": "total_bidding_estimate",
+        "C_BID_WINNER": "bid_winner",
+        "C_DEPT_NAME": "department_name",
+        "C_DEPT_CODE": "department_code",
+        "C_PO_TYPE": "po_type",
+        "C_STATUS_DESC": "status_description",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_FIN_BID_HIST": {
+      "real_name": "engg_financial_bidding_details_history",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_CONT_CODE": "engg_contractor_code",
+        "C_TOTAL_BID": "total_bidding_estimate",
+        "C_BID_WINNER": "bid_winner",
+        "C_DEPT_CODE": "department_code",
+        "C_AUDIT_DATE": "audit_date",
+        "C_AUDIT_ACTION": "audit_action"
+      }
+    },
+    "T_PO_HDR": {
+      "real_name": "engg_po_headers",
+      "columns": {
+        "C_PO_NO": "po_number",
+        "C_TENDER_NO": "tender_no",
+        "C_EST_NO": "estimate_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_CONT_CODE": "contractor_code",
+        "C_PO_TYPE": "po_type",
+        "C_PO_CREATE_DATE": "po_creation_date",
+        "C_PO_APPR_DATE": "po_approval_date",
+        "C_PO_HANDOVER": "po_handover_date",
+        "C_EST_HANDOVER": "estimated_handover_date",
+        "C_TOTAL_AMT": "total_work_amount",
+        "C_APPR_STATUS": "status_approval",
+        "C_STATUS_DESC": "status_description",
+        "C_CRN_NO": "crn_no",
+        "C_CANCEL_STATUS": "cancelled_status",
+        "C_CANCELLED_ON": "cancelled_on",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_PO_ITEM": {
+      "real_name": "engg_po_item_bidding_details",
+      "columns": {
+        "C_PO_NO": "po_number",
+        "C_TENDER_NO": "tender_no",
+        "C_EST_NO": "estimate_no",
+        "C_ITEM_NO": "item_number",
+        "C_ITEM_NAME": "item_name",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_UNIT_PRICE": "unit_price",
+        "C_QTY": "quantity",
+        "C_TOTAL_EST_PRICE": "total_estimate_price",
+        "C_TOTAL_LINE_AMT": "total_line_amount",
+        "C_CONT_CODE": "contractor_code",
+        "C_ALLOC_QTY": "allocated_quantity",
+        "C_REM_QTY": "remaining_qty",
+        "C_MB_ORD_QTY": "measurement_quantity_ord",
+        "C_MB_RECV_QTY": "measurement_quanity_received",
+        "C_CANCEL_STATUS": "cancelled_status",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_PO_EST": {
+      "real_name": "engg_po_estimation_details",
+      "columns": {
+        "C_PO_NO": "po_number",
+        "C_TENDER_NO": "tender_no",
+        "C_FILE_NO": "file_no",
+        "C_EST_NO": "estimation_no",
+        "C_ITEM_NO": "item_no",
+        "C_SUPPLIER": "supplier_name",
+        "C_CONT_CODE": "contractor_code",
+        "C_EST_VAL": "estimation_value",
+        "C_PO_QTY": "po_qty",
+        "C_RATE": "item_rate",
+        "C_CANCEL_STATUS": "cancelled_status"
+      }
+    },
+    "T_INV_HDR": {
+      "real_name": "engg_invoice_headers",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_PO_NO": "po_number",
+        "C_EST_NO": "estimate_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_BILL_NO": "bill_no",
+        "C_BILL_TYPE": "bill_type",
+        "C_RA_BILL_TYPE": "ra_bill_type",
+        "C_INV_NO": "invoice_no",
+        "C_INV_AMT": "invoice_bill_amount",
+        "C_BILL_DATE": "bill_date",
+        "C_INV_DATE": "invoice_date",
+        "C_APPR_STATUS": "status_approval",
+        "C_STATUS_DESC": "status_description",
+        "C_INV_STATUS": "invoice_status",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_INV_DTL": {
+      "real_name": "engg_invoice_details",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_PO_NO": "po_number",
+        "C_INV_NO": "invoice_no",
+        "C_BILL_NO": "bill_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_ITEM_NO": "item_number",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_RECV_QTY": "received_quantity",
+        "C_DEDUCT_QTY": "deduction_quantity",
+        "C_QTY_REM": "quantity_remaining",
+        "C_INV_AMT": "invoice_amount",
+        "C_TOTAL_INV_AMT": "total_invoice_amount",
+        "C_BILL_DATE": "bill_date",
+        "C_PAY_STATUS": "payment_status",
+        "C_PAY_VAL": "payment_value",
+        "C_PAY_PAID": "payment_paid",
+        "C_RCPT_HDR_ID": "receipt_header_id",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_RCPT_HDR": {
+      "real_name": "engg_receipt_headers",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_PO_NO": "po_number",
+        "C_EST_NO": "estimate_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_BILL_NO": "bill_no",
+        "C_BILL_AMT": "bill_amount",
+        "C_APPR_STATUS": "status_approval",
+        "C_STATUS_DESC": "status_description",
+        "C_RECV_DATE": "received_date",
+        "C_RECV_BY": "received_by",
+        "C_PAY_STATUS": "payment_status",
+        "C_PAY_VAL": "payment_value",
+        "C_PAY_PAID": "payment_paid",
+        "C_PAID_ON": "receipt_paid_on",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_RCPT_DTL": {
+      "real_name": "engg_receipt_details",
+      "columns": {
+        "C_TENDER_NO": "tender_no",
+        "C_PO_NO": "po_number",
+        "C_EST_NO": "estimate_no",
+        "C_CONT_NAME": "engg_contractor_name",
+        "C_ITEM_NO": "item_number",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_QTY_RECV": "quantity_received",
+        "C_QTY_ORD": "quantity_ordered",
+        "C_QTY_REM": "quantity_remaining",
+        "C_RECV_PRICE": "received_quantity_price",
+        "C_RECV_DATE": "receipt_date",
+        "C_BILL_NO": "bill_no",
+        "C_IS_DEV": "is_deviation",
+        "C_RCPT_HDR_ID": "receipt_header_id",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_CONCEPT": {
+      "real_name": "engg_concept_note",
+      "columns": {
+        "C_FILE_NO": "file_no",
+        "C_VERSION": "version_no",
+        "C_NOTE_NO": "concept_note_no",
+        "C_NOTE_TEXT": "note",
+        "C_FILE_DESC": "file_description",
+        "C_NOTE_STATUS": "concept_note_status",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_DPR": {
+      "real_name": "engg_dpr_approval_estimate",
+      "columns": {
+        "C_FILE_NO": "file_no",
+        "C_VERSION": "version_no",
+        "C_DPR_NO": "dpr_no",
+        "C_APPR_STAGE": "approval_stage",
+        "C_APPROVER": "approver",
+        "C_DPR_STATUS": "dpr_status",
+        "C_SAE": "sae",
+        "C_AE": "ae",
+        "C_EE": "ee",
+        "C_DY_CE": "dy_ce",
+        "C_DG": "dg",
+        "C_INITIATED_DATE": "initiateddate",
+        "C_APPROVED_DATE": "approveddate",
+        "C_UO_NO": "uo_number",
+        "C_MEMO_NO": "memo_number",
+        "C_STATUS_DESC": "status_description",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_FILE_XFER": {
+      "real_name": "engg_file_transfer",
+      "columns": {
+        "C_FILE_NO": "file_no",
+        "C_USER_ID": "user_id",
+        "C_DEPT": "department",
+        "C_BOROUGH": "borough",
+        "C_WARD": "ward",
+        "C_DESIGNATION": "designation",
+        "C_TO_USER": "to_user",
+        "C_TO_DESIG": "to_user_designation",
+        "C_CREATED_AT": "createdat"
+      }
+    },
+    "T_ANX_HDR": {
+      "real_name": "kmc_work_estimate_annexture_hearder",
+      "columns": {
+        "C_FILE_NO": "file_no",
+        "C_EST_ID": "estimate_header_id",
+        "C_ANX_EST_ID": "annexture_estimate_header_id",
+        "C_WORK_TYPE": "work_type",
+        "C_DEPT": "department",
+        "C_BOROUGH": "borough",
+        "C_WARD": "ward",
+        "C_WORK_NAME": "work_name",
+        "C_TOTAL_EST": "total_estimate",
+        "C_TOTAL_JOB_VAL": "total_job_value",
+        "C_APPR_STATUS": "est_approval_status",
+        "C_STATUS_DESC": "status_description",
+        "C_FUND_TYPE": "fund_type",
+        "C_ACTIVE": "c_status"
+      }
+    },
+    "T_ANX_DTL": {
+      "real_name": "kmc_work_annexture_estimate_details",
+      "columns": {
+        "C_FILE_NO": "file_no",
+        "C_EST_HDR_ID": "est_header_id",
+        "C_ANX_EST_ID": "annexture_estimate_header_id",
+        "C_ITEM_NO": "item_no",
+        "C_ITEM_NAME": "item_name",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_RATE": "item_rate",
+        "C_QTY": "quantity",
+        "C_EST_PRICE": "estimate_price",
+        "C_LINE_VAL": "line_value",
+        "C_STATUS": "status"
+      }
+    },
+    "T_ANX_DIST": {
+      "real_name": "kmc_work_annexture_estimate_distributions",
+      "columns": {
+        "C_FILE_NO": "file_no",
+        "C_EST_HDR_ID": "est_header_id",
+        "C_ANX_EST_ID": "annexture_estimate_header_id",
+        "C_COST_CTR": "cost_centre_no",
+        "C_BOROUGH": "borough",
+        "C_WARD": "ward",
+        "C_DIST_AMT": "distributed_amount"
+      }
+    },
+    "T_REJ_DTL": {
+      "real_name": "rejected_kmc_work_estimate_details",
+      "columns": {
+        "C_FILE_NO": "file_no",
+        "C_EST_HDR_ID": "est_header_id",
+        "C_ITEM_NO": "item_no",
+        "C_ITEM_NAME": "item_name",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_RATE": "item_rate",
+        "C_QTY": "quantity",
+        "C_EST_PRICE": "estimate_price",
+        "C_LINE_VAL": "line_value"
+      }
+    },
+    "T_EST_VENDOR": {
+      "real_name": "kmc_work_estimate_details_vendor",
+      "columns": {
+        "C_FILE_NO": "file_no",
+        "C_EST_HDR_ID": "est_header_id",
+        "C_ITEM_NO": "item_no",
+        "C_ITEM_NAME": "item_name",
+        "C_ITEM_DESC": "item_desc",
+        "C_UOM": "unitofmeasure",
+        "C_RATE": "item_rate",
+        "C_QTY": "quantity",
+        "C_EST_PRICE": "estimate_price",
+        "C_LINE_VAL": "line_value",
+        "C_VENDOR_ID": "vendor_party_id",
+        "C_VENDOR_PRICE": "vendor_estimation_price"
+      }
+    }
+  }
+}

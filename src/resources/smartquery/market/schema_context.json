@@ -1,0 +1,615 @@
+{
+  "schema_name": "mrkt_kmc2_data",
+  "module": "Market Module",
+  "description": "KMC Market Module database for managing municipal markets, stalls, tenants (RPH holders), stallage demands, collections, mutations, and permissions across Kolkata Municipal Corporation.",
+
+  "important_rules": [
+    "Always prefix table names with schema: mrkt_kmc2_data.<table_name>",
+    "Financial year (mrkt_fin_year) format is 'YYYY-YYYY' e.g. '2024-2025'",
+    "Dates are stored as 'timestamp without time zone' — use ::date for date comparisons",
+    "mrkt_code is the primary key linking markets across all tables",
+    "mrkt_stall_id is the primary key linking stalls across demand, receipt, rent_roll tables",
+    "CRITICAL: mrkt_stall_id encodes location — first 3 digits = mrkt_code, digits 4-5 = phase_code, digits 6-7 = block_code. Example: stall_id 2050101 means market 205, phase 01, block 01",
+    "Join market_mst to stall: SUBSTR(CAST(stall_id AS text),1,3) = CAST(mrkt_code AS text)",
+    "Join block_mst to stall: LPAD(CAST(phase_code AS text),2,'0') || LPAD(CAST(block_code AS text),2,'0') = SUBSTR(CAST(stall_id AS text),4,4)",
+    "Ward number is stored in mrkt_market_mst.common_ward_no as VARCHAR, cast to integer for numeric comparisons",
+    "Demand status: 'A'=Active, 'P'=Partially Paid, 'F'=Fully Paid, 'O'=Outstanding, 'B'=Bad Demand, 'C'=Canceled. For demands that still have an outstanding balance use: mrkt_demand_status IN ('A','P','O'). For fully paid demands filter: mrkt_demand_status = 'F'. For all valid (non-cancelled, non-bad) demands use: mrkt_demand_status NOT IN ('C','B')",
+    "mrkt_demand_type: 'R'=Regular, 'S'=Supplementary",
+    "Charge codes in mrkt_demand_dtl.mrkt_misc_chrg_code: '22'=Stallage, '21'=Electricity, '1'=CGST on Stallage, '6'=CGST on Electricity, '8'=SGST on Stallage, '23'=SGST on Electricity, '26'=Difference of Stallage, '37'=Maintenance Charge. Mutation-related codes: '18','24','25','27','28','31','32','33'. Other misc codes: '2','3','4','5','7','9','10','11','12','13','14','15','16','17','29','30'",
+    "Stallage group = codes '22' + '1' + '8' (stallage + CGST + SGST). Electricity group = codes '21' + '6' + '23' (electricity + CGST + SGST). Mutation group = codes '18','24','25','27','28','31','32','33'. Diff of stallage = '26'. Maintenance = '37'",
+    "For stall-wise demand-collection reports that need all statuses (active + partially paid + fully paid + outstanding), use: mrkt_demand_status IN ('A','P','F','O'). This covers all non-cancelled and non-bad-demand records.",
+    "For misc demand (mrkt_misc_demand_hdr): demand_status filter uses COALESCE(mrkt_demand_status,'A') NOT IN ('C','B') to include NULLs as active. For paid misc demands filter: mrkt_demand_status = 'F'",
+    "CRITICAL TABLE DISTINCTION — mrkt_demand_hdr vs mrkt_misc_demand_hdr: (1) mrkt_demand_hdr (regular stallage) has mrkt_from_date (period start) and mrkt_to_date (period end). (2) mrkt_misc_demand_hdr (miscellaneous charges) does NOT have mrkt_from_date or mrkt_to_date — it has mrkt_demand_date (demand creation date) and mrkt_payment_date (payment date). NEVER use mrkt_from_date on mrkt_misc_demand_hdr.",
+    "CRITICAL TABLE DISTINCTION — misc receipts vs regular receipts: For MISCELLANEOUS demand receipts always use mrkt_misc_receipt_hdr (NOT mrkt_receipt_hdr). Join key is mrkt_demand_serial_no + mrkt_fin_year + mrkt_code. Payment mode for misc receipts is in mrkt_misc_receipt_pay_dtl (joined via mrkt_demand_serial_no + mrkt_fin_year + mrkt_code). Cancel filter: cancel_flag IS NOT TRUE — cancel_flag is BOOLEAN (true/false/null), NOT varchar. Never write COALESCE(cancel_flag,'N') != 'Y'",
+    "CRITICAL column absence in mrkt_misc_demand_hdr: This table does NOT have mrkt_outstanding_amt, mrkt_rebate_amount, mrkt_from_date, or mrkt_to_date. The exact column names with mrkt_ prefix are: mrkt_demand_amount, mrkt_penalty_amount, mrkt_net_amount, mrkt_paid_amount. NEVER write penalty_amount — the full name is mrkt_penalty_amount. NEVER write paid_amount — the full name is mrkt_paid_amount. Do not drop the mrkt_ prefix from any column in this table.",
+    "CRITICAL column absence in mrkt_misc_demand_dtl: This table ONLY has mrkt_demand_amount as an amount column. It does NOT have penalty_amount, mrkt_penalty_amount, mrkt_paid_amount, mrkt_outstanding_amt, or mrkt_rebate_amount. For penalty/paid/net totals always reference mrkt_misc_demand_hdr, not the detail table.",
+    "Cross-schema access: Collection budget data is in coll_kmc1_data schema (tables: coll_daily_budget_colln, coll_daily_budget_gm, chln_ns_portal). Joined via mrkt_bicode_prefix in mrkt_market_mst matching SUBSTRING(coll_budget_code FROM 1 FOR 4)",
+    "mrkt_bicode_prefix in mrkt_market_mst is the BI (Budget Item) code prefix used for financial reporting. Budget code format: first 4 chars = market prefix, chars 6+ = charge category code (221,222,223,224,226,299 etc.)",
+    "Point consumption: active points have mrkt_active_flag='Y' AND mrkt_effective_to_year IS NULL AND mrkt_effect_to_month IS NULL",
+    "Connection type in rent_roll_mst: 'K'=KMC Meter, 'P'=Point-based, 'C'=CESC meter, 'N'=No Electric",
+    "AC flag in rent_roll_mst: mrkt_with_ac '1'=AC, '2'=NON-AC, 'N'=NON-AC",
+    "RPH means Record of Permission Holder — the tenant/licensee of a stall",
+    "Stallage = monthly rent charged for a market stall",
+    "Futnani = footpath/pavement charges (separate demand/receipt tables)",
+    "Outstanding amount = mrkt_outstanding_amt in demand tables",
+    "Demand amount formula: mrkt_demand_amount + COALESCE(mrkt_penalty_amount,0) + COALESCE(mrkt_outstanding_amt,0) - COALESCE(mrkt_advance_amt,0)",
+    "Market code 504 has special handling — stall area shown as 'NA'",
+    "Stallage rate per sqft = mrkt_mon_stallage / (stall_area_original + subfloor_area + upperfloor_area + excess_area). For AC stalls subtract 1/5th AC surcharge first",
+    "Always use ONLY SELECT statements — never INSERT, UPDATE, DELETE, DROP",
+    "For active records check: status = 1 or status IS NULL (older records may not have status column)",
+    "Payment mode (mrkt_pay_mode): 'C'=Cash, 'Q'=Cheque, 'D'=DD (Demand Draft). Note: 'O'=Online is listed in schema but actual data only has C/D/Q",
+    "Meter reading basis: 'C'=Calculated from actual reading, 'A'=Average/estimated reading",
+    "Use COALESCE for nullable numeric fields to avoid NULL in calculations",
+    "Use ILIKE for case-insensitive text searches (e.g. tenant name, trade name)",
+    "Active tenant filter: mrkt_rent_roll_mst.mrkt_status = 'O' (Open). C=Closed means tenancy ended",
+    "CRITICAL COLUMN DISTINCTION — stall status vs tenant status: mrkt_stall_mst has NO column called mrkt_status. The stall active/inactive column in mrkt_stall_mst is simply `status` (integer: 1=Active, 0=Inactive). NEVER write stall_alias.mrkt_status — it does not exist and will cause a DB error. The column mrkt_status belongs ONLY to mrkt_rent_roll_mst. Correct usage: s.status = 1 for active stalls (mrkt_stall_mst); rr.mrkt_status = 'O' for active tenants (mrkt_rent_roll_mst).",
+    "Active demand generation: mrkt_rent_roll_mst.mrkt_demand_flag = 'R' (Regular). D=Defunct means no bill generated",
+    "Active electricity meter connection: mrkt_kmc_meter_conn.mrkt_active_flag = 'Y'",
+    "Active monthly meter reading: mrkt_kmc_mtr_monchg.mrkt_active_flag = 'Y'",
+    "mrkt_demand_hdr.mrkt_demand_type is always 'R' (Regular) for stallage — misc demands use mrkt_misc_demand_hdr with type 'M'",
+    "mrkt_demand_hdr.mrk_outstanding_flag: 'O'=Open/unpaid demand, 'C'=Closed/fully paid",
+    "For electricity consumption queries: join mrkt_kmc_meter_conn (active_flag='Y') → mrkt_kmc_mtr_monchg (active_flag='Y') via mrkt_stall_id. Consumption = mrkt_consumption_val units; charge rate from mrkt_meter_unit_rate_mst by mrkt_supply_type",
+    "Point-based electricity: stalls with mrkt_rent_roll_mst.mrkt_connection_type='P' use mrkt_point_consumption (active_flag='Y' AND mrkt_effective_to_year IS NULL) — no individual meter",
+    "mrkt_rent_roll_mst.mrkt_endreason_flag end reason codes: 0=No reason, B=Bankruptcy, W=Willful surrender, O=Other, A=Abandonment, D=Death, M=Mutation/transfer, K=KMC reclaimed, L=Legal eviction",
+    "mrkt_rent_roll_mst.mrkt_allot_basis: U=Unlicensed, P=Permission, F=Free hold, I=Inherited, T=Tender",
+    "mrkt_rent_roll_mst.mrkt_with_ac: '1'=Air Conditioned stall, '2'=Non-AC, 'N'=Non-AC (legacy)",
+    "Financial year range in data: 2005-2006 through 2025-2026. Current FY is 2025-2026",
+    "Markets appear as mrkt_code numeric: 101,102,103,104,105,201,202,203,305,306,307,314,401,417 etc. Market 417=Futnani market (footpath traders)"
+  ],
+
+  "tables": {
+    "mrkt_market_mst": {
+      "description": "Master list of all KMC markets",
+      "key_columns": {
+        "mrkt_code": { "type": "numeric", "desc": "Unique market code (PK)" },
+        "mrkt_name": { "type": "varchar", "desc": "Market name" },
+        "common_ward_no": { "type": "varchar", "desc": "Ward number (cast to int for comparisons)" },
+        "mrkt_class_no": { "type": "numeric", "desc": "Market class code (FK to mrkt_class_mst)" },
+        "mrkt_addrline1": { "type": "varchar", "desc": "Market address" },
+        "mrkt_pin_code": { "type": "numeric", "desc": "PIN code" },
+        "mrkt_no_floors": { "type": "numeric", "desc": "Number of floors" },
+        "status": { "type": "integer", "desc": "1=Active, 0=Inactive" }
+      },
+      "joins_to": ["mrkt_class_mst via mrkt_class_no", "mrkt_stall_mst via mrkt_code", "mrkt_block_mst via mrkt_code", "mrkt_phase_mst via mrkt_code"]
+    },
+
+    "mrkt_stall_mst": {
+      "description": "Master list of all stalls in markets",
+      "key_columns": {
+        "mrkt_stall_id": { "type": "numeric", "desc": "Unique stall ID (PK)" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code (FK to mrkt_market_mst)" },
+        "mrkt_phase_code": { "type": "numeric", "desc": "Phase code (FK to mrkt_phase_mst)" },
+        "mrkt_block_code": { "type": "numeric", "desc": "Block code (FK to mrkt_block_mst)" },
+        "mrkt_stall_no": { "type": "varchar", "desc": "Stall number (display)" },
+        "mrkt_stalldisplay_no": { "type": "varchar", "desc": "Display stall number" },
+        "mrkt_stalltype_code": { "type": "numeric", "desc": "Stall type code (FK to mrkt_stalltype_mst)" },
+        "mrkt_stall_area": { "type": "numeric", "desc": "Stall area in sq ft" },
+        "mrkt_stall_length": { "type": "numeric", "desc": "Stall length" },
+        "mrkt_stall_width": { "type": "numeric", "desc": "Stall width" },
+        "mrkt_stall_corner": { "type": "varchar", "desc": "Corner stall flag (Y/N)" },
+        "mrkt_stall_road_side": { "type": "varchar", "desc": "Road-side stall flag (Y/N)" },
+        "status": { "type": "integer", "desc": "1=Active, 0=Inactive" }
+      },
+      "joins_to": ["mrkt_market_mst via mrkt_code", "mrkt_rent_roll_mst via mrkt_stall_id", "mrkt_demand_hdr via mrkt_stall_id", "mrkt_stalltype_mst via mrkt_stalltype_code", "mrkt_block_mst via mrkt_block_code AND mrkt_code", "mrkt_phase_mst via mrkt_phase_code AND mrkt_code"]
+    },
+
+    "mrkt_rent_roll_mst": {
+      "description": "Tenant/RPH (Record of Permission Holder) details for each stall — the person/business occupying the stall",
+      "key_columns": {
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID (FK to mrkt_stall_mst)" },
+        "mrkt_rph_name": { "type": "varchar", "desc": "RPH holder name (tenant name)" },
+        "mrkt_trade_name": { "type": "varchar", "desc": "Trade/business name" },
+        "mrkt_business": { "type": "varchar", "desc": "Business type code" },
+        "mrkt_phone": { "type": "varchar", "desc": "Contact phone" },
+        "mrkt_email": { "type": "varchar", "desc": "Contact email" },
+        "mrkt_address_line1": { "type": "varchar", "desc": "RPH address line 1" },
+        "mrkt_mon_stallage": { "type": "numeric", "desc": "Current monthly stallage amount" },
+        "mrkt_init_stallage": { "type": "numeric", "desc": "Initial stallage amount at allotment" },
+        "mrkt_outstanding": { "type": "numeric", "desc": "Outstanding balance" },
+        "mrkt_status": { "type": "varchar", "desc": "O=Open/Active tenant, C=Closed/Ended tenancy" },
+        "mrkt_occup_date": { "type": "timestamp", "desc": "Occupation/allotment date" },
+        "mrkt_lease_end_dt": { "type": "timestamp", "desc": "Lease end date" },
+        "mrkt_allottype_code": { "type": "numeric", "desc": "Allotment type (FK to mrkt_allottype_mst)" },
+        "mrkt_gstin_no": { "type": "varchar", "desc": "GSTIN number" },
+        "mrkt_trade_lic_no": { "type": "varchar", "desc": "Trade license number" },
+        "mrkt_bill_gen_upto": { "type": "timestamp", "desc": "Bill generated up to date" },
+        "mrkt_bill_paid_upto": { "type": "timestamp", "desc": "Bill paid up to date" },
+        "mrkt_effective_month": { "type": "numeric", "desc": "Effective month (1-12)" },
+        "mrkt_effective_year": { "type": "numeric", "desc": "Effective year" },
+        "mrkt_demand_flag": { "type": "varchar", "desc": "Demand generation flag" },
+        "mrkt_renewal_flag": { "type": "varchar", "desc": "Renewal status flag" },
+        "mrkt_rate": { "type": "numeric", "desc": "Current stallage rate" },
+        "suspenseamount": { "type": "numeric", "desc": "Suspense amount" },
+        "collectedamount": { "type": "numeric", "desc": "Total collected amount" },
+        "adjustedamount": { "type": "numeric", "desc": "Adjusted amount" },
+        "status": { "type": "integer", "desc": "1=Active, 0=Inactive" }
+      },
+      "joins_to": ["mrkt_stall_mst via mrkt_stall_id", "mrkt_allottype_mst via mrkt_allottype_code"]
+    },
+
+    "mrkt_demand_hdr": {
+      "description": "Stallage demand headers — monthly/periodic bills generated for stall holders",
+      "key_columns": {
+        "mrkt_demand_serial_no": { "type": "numeric", "desc": "Demand serial number" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year e.g. '2024-2025'" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code (FK)" },
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID (FK)" },
+        "mrkt_demand_date": { "type": "timestamp", "desc": "Demand generation date" },
+        "mrkt_from_date": { "type": "timestamp", "desc": "Demand period start" },
+        "mrkt_to_date": { "type": "timestamp", "desc": "Demand period end" },
+        "mrkt_demand_amount": { "type": "numeric", "desc": "Total demand amount" },
+        "mrkt_net_amount": { "type": "numeric", "desc": "Net amount after rebate/penalty" },
+        "mrkt_outstanding_amt": { "type": "numeric", "desc": "Outstanding amount still due" },
+        "mrkt_paid_amount": { "type": "numeric", "desc": "Amount paid so far" },
+        "mrkt_rebate_amount": { "type": "numeric", "desc": "Rebate/discount amount" },
+        "mrkt_penalty_amount": { "type": "numeric", "desc": "Penalty amount" },
+        "mrkt_demand_status": { "type": "varchar", "desc": "A=Active/Approved (current demand), F=Finalized/Fully paid, O=Old/Outstanding, P=Partial payment, B=Bad debt, C=Cancelled. Unpaid filter: IN ('A','F','O')" },
+        "mrkt_demand_type": { "type": "varchar", "desc": "R=Regular stallage demand (only value in active data)" },
+        "mrk_outstanding_flag": { "type": "varchar", "desc": "O=Open/unpaid demand, C=Closed/paid demand" },
+        "mrkt_demand_due_date": { "type": "timestamp", "desc": "Payment due date" },
+        "mrkt_cgst_amt": { "type": "numeric", "desc": "CGST component" },
+        "mrkt_sgst_amt": { "type": "numeric", "desc": "SGST component" },
+        "mrkt_cgst_amt_os": { "type": "numeric", "desc": "CGST outstanding" },
+        "mrkt_sgst_amt_os": { "type": "numeric", "desc": "SGST outstanding" },
+        "mrkt_advance_amt": { "type": "numeric", "desc": "Advance amount adjusted" },
+        "mrkt_payment_date": { "type": "timestamp", "desc": "Actual payment date" }
+      },
+      "joins_to": ["mrkt_market_mst via mrkt_code", "mrkt_stall_mst via mrkt_stall_id", "mrkt_demand_dtl via mrkt_demand_serial_no AND mrkt_code AND mrkt_fin_year", "mrkt_receipt_hdr via mrkt_demand_serial_no AND mrkt_code AND mrkt_fin_year"]
+    },
+
+    "mrkt_demand_dtl": {
+      "description": "Demand line items — breakup of charges within a demand",
+      "key_columns": {
+        "mrkt_demand_serial_no": { "type": "numeric", "desc": "Demand serial (FK to demand_hdr)" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year" },
+        "mrkt_misc_chrg_code": { "type": "varchar", "desc": "Charge type code (FK to misc_charge_mst)" },
+        "mrkt_demand_amount": { "type": "numeric", "desc": "Charge amount" },
+        "mrkt_paid_amount": { "type": "numeric", "desc": "Paid amount for this charge" },
+        "mrkt_outstanding_amt": { "type": "numeric", "desc": "Outstanding for this charge" }
+      },
+      "joins_to": ["mrkt_demand_hdr via mrkt_demand_serial_no AND mrkt_code AND mrkt_fin_year", "mrkt_misc_charge_mst via mrkt_misc_chrg_code"]
+    },
+
+    "mrkt_receipt_hdr": {
+      "description": "Payment receipt headers — records of payments made against demands",
+      "key_columns": {
+        "mrkt_receipt_no": { "type": "varchar", "desc": "Receipt number" },
+        "mrkt_receipt_year": { "type": "varchar", "desc": "Receipt year" },
+        "mrkt_receipt_date": { "type": "timestamp", "desc": "Payment date" },
+        "mrkt_receipt_amount": { "type": "numeric", "desc": "Total receipt amount" },
+        "mrkt_demand_serial_no": { "type": "numeric", "desc": "Linked demand serial (FK)" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year" },
+        "mrkt_coll_office": { "type": "numeric", "desc": "Collection office code" },
+        "mrkt_counter_no": { "type": "varchar", "desc": "Counter number" }
+      },
+      "joins_to": ["mrkt_demand_hdr via mrkt_demand_serial_no AND mrkt_code AND mrkt_fin_year", "mrkt_receipt_dtl via mrkt_receipt_no AND mrkt_receipt_year AND mrkt_code", "mrkt_receipt_pay_dtl via mrkt_receipt_no AND mrkt_receipt_year AND mrkt_code"]
+    },
+
+    "mrkt_receipt_dtl": {
+      "description": "Receipt line items — breakup of payment across charge types",
+      "key_columns": {
+        "mrkt_receipt_no": { "type": "varchar", "desc": "Receipt number (FK)" },
+        "mrkt_receipt_year": { "type": "varchar", "desc": "Receipt year" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_receipt_date": { "type": "timestamp", "desc": "Receipt date" },
+        "mrkt_receipt_amount": { "type": "numeric", "desc": "Amount for this charge type" },
+        "mrkt_misc_chrg_code": { "type": "numeric", "desc": "Charge type code" },
+        "mrkt_rebate_amt": { "type": "numeric", "desc": "Rebate applied" },
+        "mrkt_penalty_amt": { "type": "numeric", "desc": "Penalty applied" }
+      },
+      "joins_to": ["mrkt_receipt_hdr via mrkt_receipt_no AND mrkt_receipt_year AND mrkt_code"]
+    },
+
+    "mrkt_receipt_pay_dtl": {
+      "description": "Payment mode details — how the payment was made (cash/cheque/DD/online)",
+      "key_columns": {
+        "mrkt_receipt_no": { "type": "varchar", "desc": "Receipt number (FK)" },
+        "mrkt_receipt_year": { "type": "varchar", "desc": "Receipt year" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_pay_mode": { "type": "varchar", "desc": "C=Cash, Q=Cheque, D=DD, O=Online" },
+        "mrkt_amount": { "type": "numeric", "desc": "Amount paid in this mode" },
+        "mrkt_cheque_no": { "type": "varchar", "desc": "Cheque/DD number" },
+        "mrkt_cheque_dd_date": { "type": "timestamp", "desc": "Cheque/DD date" },
+        "mrkt_bank_code": { "type": "numeric", "desc": "Bank code" }
+      },
+      "joins_to": ["mrkt_receipt_hdr via mrkt_receipt_no AND mrkt_receipt_year AND mrkt_code"]
+    },
+
+    "mrkt_futnani_demand_hdr": {
+      "description": "Futnani (footpath/pavement) charge demand headers — same structure as stallage demands",
+      "key_columns": {
+        "mrkt_demand_serial_no": { "type": "numeric", "desc": "Demand serial number" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID" },
+        "mrkt_demand_amount": { "type": "numeric", "desc": "Demand amount" },
+        "mrkt_net_amount": { "type": "numeric", "desc": "Net amount" },
+        "mrkt_outstanding_amt": { "type": "numeric", "desc": "Outstanding amount" },
+        "mrkt_demand_status": { "type": "varchar", "desc": "G/P/B/C status" }
+      },
+      "joins_to": ["mrkt_market_mst via mrkt_code", "mrkt_stall_mst via mrkt_stall_id"]
+    },
+
+    "mrkt_futnani_receipt_hdr": {
+      "description": "Futnani payment receipts",
+      "key_columns": {
+        "mrkt_receipt_no": { "type": "varchar", "desc": "Receipt number" },
+        "mrkt_receipt_year": { "type": "varchar", "desc": "Receipt year" },
+        "mrkt_receipt_date": { "type": "timestamp", "desc": "Payment date" },
+        "mrkt_receipt_amount": { "type": "numeric", "desc": "Receipt amount" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year" }
+      },
+      "joins_to": ["mrkt_futnani_demand_hdr via mrkt_demand_serial_no AND mrkt_code AND mrkt_fin_year"]
+    },
+
+    "mrkt_misc_demand_hdr": {
+      "description": "Miscellaneous charges demand headers. DOES NOT have mrkt_from_date, mrkt_to_date, mrkt_outstanding_amt, or mrkt_rebate_amount. Use mrkt_demand_date for date filtering. Amount columns: mrkt_demand_amount, mrkt_penalty_amount, mrkt_net_amount, mrkt_paid_amount only.",
+      "key_columns": {
+        "mrkt_demand_serial_no": { "type": "numeric", "desc": "Demand serial (PK, join key)" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year (join key)" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code (join key)" },
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID" },
+        "mrkt_demand_date": { "type": "timestamp", "desc": "Demand creation date — USE THIS for date filtering (NOT mrkt_from_date)" },
+        "mrkt_payment_date": { "type": "timestamp", "desc": "Date when demand was paid" },
+        "mrkt_demand_due_date": { "type": "timestamp", "desc": "Payment due date" },
+        "mrkt_bad_demand_date": { "type": "timestamp", "desc": "Date marked as bad demand" },
+        "mrkt_demand_amount": { "type": "numeric", "desc": "Total demand amount" },
+        "mrkt_penalty_amount": { "type": "numeric", "desc": "Penalty amount — exact column name is mrkt_penalty_amount (NOT penalty_amount). Use COALESCE(mrkt_penalty_amount, 0)" },
+        "mrkt_net_amount": { "type": "numeric", "desc": "Net amount after penalty" },
+        "mrkt_paid_amount": { "type": "numeric", "desc": "Amount paid so far" },
+        "mrkt_narration": { "type": "varchar", "desc": "Demand narration/description" },
+        "mrkt_demand_status": { "type": "varchar", "desc": "A=Active, P=Partially Paid, F=Fully Paid, O=Outstanding, B=Bad Demand, C=Canceled" },
+        "mrkt_demand_type": { "type": "varchar", "desc": "M=Miscellaneous (always M in this table)" },
+        "mrkt_bad_demand_reason": { "type": "varchar", "desc": "Reason for marking as bad demand" }
+      },
+      "ABSENT_columns": "mrkt_from_date, mrkt_to_date, mrkt_outstanding_amt, mrkt_rebate_amount — these do NOT exist in this table",
+      "joins_to": ["mrkt_market_mst via mrkt_code", "mrkt_stall_mst via mrkt_stall_id", "mrkt_misc_receipt_hdr via mrkt_demand_serial_no AND mrkt_fin_year AND mrkt_code", "mrkt_misc_demand_dtl via mrkt_demand_serial_no AND mrkt_fin_year AND mrkt_code"]
+    },
+
+    "mrkt_misc_demand_dtl": {
+      "description": "Miscellaneous demand line items — charge code breakup for each misc demand. One row per charge type per demand. ONLY amount column is mrkt_demand_amount. Does NOT have penalty_amount, mrkt_penalty_amount, mrkt_paid_amount, mrkt_outstanding_amt, or mrkt_rebate_amount.",
+      "key_columns": {
+        "mrkt_demand_serial_no": { "type": "numeric", "desc": "Demand serial (FK to mrkt_misc_demand_hdr, join key)" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code (join key)" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year (join key)" },
+        "mrkt_misc_chrg_code": { "type": "varchar", "desc": "Charge type code (FK to mrkt_misc_charge_mst)" },
+        "mrkt_demand_amount": { "type": "numeric", "desc": "Charge amount for this line item — ONLY amount column in this table" },
+        "mrkt_narration": { "type": "varchar", "desc": "Line item narration" },
+        "misc_demand_hdr_id": { "type": "bigint", "desc": "Alternate FK to mrkt_misc_demand_hdr.id" },
+        "id": { "type": "bigint", "desc": "Row ID (PK)" }
+      },
+      "ABSENT_columns": "penalty_amount, mrkt_penalty_amount, mrkt_paid_amount, mrkt_outstanding_amt, mrkt_rebate_amount — these do NOT exist in mrkt_misc_demand_dtl. For penalty/paid/net amounts use mrkt_misc_demand_hdr.",
+      "joins_to": ["mrkt_misc_demand_hdr via mrkt_demand_serial_no AND mrkt_fin_year AND mrkt_code", "mrkt_misc_charge_mst via mrkt_misc_chrg_code"]
+    },
+
+    "mrkt_misc_receipt_hdr": {
+      "description": "Miscellaneous charges payment receipts. USE THIS table (NOT mrkt_receipt_hdr) for misc demand receipts. Join to mrkt_misc_demand_hdr via mrkt_demand_serial_no + mrkt_fin_year + mrkt_code.",
+      "key_columns": {
+        "mrkt_receipt_no": { "type": "varchar", "desc": "Receipt number" },
+        "mrkt_receipt_year": { "type": "varchar", "desc": "Receipt year" },
+        "mrkt_receipt_date": { "type": "timestamp", "desc": "Payment date — use ::date for date comparisons" },
+        "mrkt_receipt_amount": { "type": "numeric", "desc": "Receipt amount" },
+        "mrkt_demand_serial_no": { "type": "numeric", "desc": "Linked demand serial (join key to mrkt_misc_demand_hdr)" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code (join key)" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year (join key)" },
+        "cancel_flag": { "type": "boolean", "desc": "TRUE=Cancelled receipt. Filter MUST be: cancel_flag IS NOT TRUE (it is BOOLEAN not varchar — do NOT use COALESCE with 'N' or compare to 'Y')" },
+        "cancelled_by": { "type": "varchar", "desc": "User who cancelled the receipt" },
+        "cancelled_date": { "type": "timestamp", "desc": "Cancellation date" }
+      },
+      "joins_to": ["mrkt_misc_demand_hdr via mrkt_demand_serial_no AND mrkt_fin_year AND mrkt_code", "mrkt_misc_receipt_pay_dtl via mrkt_demand_serial_no AND mrkt_fin_year AND mrkt_code"]
+    },
+
+    "mrkt_misc_receipt_pay_dtl": {
+      "description": "Payment mode details for miscellaneous demand receipts — how the misc payment was made. Join via mrkt_demand_serial_no + mrkt_fin_year + mrkt_code.",
+      "key_columns": {
+        "mrkt_demand_serial_no": { "type": "numeric", "desc": "Demand serial (join key)" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year (join key)" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code (join key)" },
+        "mrkt_pay_mode": { "type": "varchar", "desc": "C=Cash, Q=Cheque, D=DD (Demand Draft)" },
+        "mrkt_amount": { "type": "numeric", "desc": "Amount paid in this mode" },
+        "mrkt_cheque_no": { "type": "varchar", "desc": "Cheque/DD number" },
+        "mrkt_cheque_dd_date": { "type": "timestamp", "desc": "Cheque/DD date" },
+        "mrkt_bank_code": { "type": "numeric", "desc": "Bank code" }
+      },
+      "joins_to": ["mrkt_misc_receipt_hdr via mrkt_demand_serial_no AND mrkt_fin_year AND mrkt_code"]
+    },
+
+    "mrkt_stall_mutation": {
+      "description": "Stall mutation/transfer records — change of RPH holder, trade name, business type",
+      "key_columns": {
+        "id": { "type": "integer", "desc": "Mutation ID (PK)" },
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID" },
+        "mutation_type": { "type": "integer", "desc": "Type of mutation" },
+        "mrkt_old_rph_name": { "type": "varchar", "desc": "Previous RPH name" },
+        "mrkt_old_trade_name": { "type": "varchar", "desc": "Previous trade name" },
+        "mrkt_old_business": { "type": "varchar", "desc": "Previous business type" },
+        "mrkt_approve_date": { "type": "timestamp", "desc": "Approval date" },
+        "mrkt_approve_auth": { "type": "varchar", "desc": "Approving authority" },
+        "statusid": { "type": "integer", "desc": "Workflow status ID" },
+        "statusdesc": { "type": "varchar", "desc": "Status description" },
+        "application_number": { "type": "varchar", "desc": "Application number" },
+        "total_sanction_fee": { "type": "numeric", "desc": "Total mutation fee" },
+        "total_penalty": { "type": "numeric", "desc": "Total penalty charged" },
+        "total_payable": { "type": "numeric", "desc": "Total payable amount" },
+        "workflow_status": { "type": "varchar", "desc": "Current workflow status" },
+        "create_date": { "type": "timestamp", "desc": "Application date" }
+      },
+      "joins_to": ["mrkt_stall_mst via mrkt_stall_id"]
+    },
+
+    "mrkt_permission_master": {
+      "description": "Permission records — issued after mutation/transfer approval",
+      "key_columns": {
+        "id": { "type": "integer", "desc": "Permission ID (PK)" },
+        "permission_number": { "type": "varchar", "desc": "Permission number" },
+        "permission_date": { "type": "timestamp", "desc": "Permission issue date" },
+        "permission_type": { "type": "integer", "desc": "Type of permission" },
+        "mrkt_code": { "type": "integer", "desc": "Market code" },
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID" },
+        "mrkt_rph_name": { "type": "varchar", "desc": "New RPH name" },
+        "permission_status": { "type": "integer", "desc": "Status of permission" },
+        "application_number": { "type": "varchar", "desc": "Linked application number" },
+        "workflow_status": { "type": "varchar", "desc": "Current workflow status" }
+      },
+      "joins_to": ["mrkt_stall_mst via mrkt_stall_id", "mrkt_market_mst via mrkt_code"]
+    },
+
+    "mrkt_block_mst": {
+      "description": "Block/section master within a market phase",
+      "key_columns": {
+        "mrkt_block_code": { "type": "numeric", "desc": "Block code (PK within market)" },
+        "mrkt_phase_code": { "type": "numeric", "desc": "Phase code" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_block_desc": { "type": "varchar", "desc": "Block description/name" },
+        "status": { "type": "integer", "desc": "1=Active" }
+      },
+      "joins_to": ["mrkt_market_mst via mrkt_code", "mrkt_phase_mst via mrkt_phase_code AND mrkt_code"]
+    },
+
+    "mrkt_phase_mst": {
+      "description": "Phase/floor master within a market",
+      "key_columns": {
+        "mrkt_phase_code": { "type": "numeric", "desc": "Phase code (PK within market)" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_phase_desc": { "type": "varchar", "desc": "Phase description (e.g. Ground Floor, 1st Floor)" },
+        "status": { "type": "integer", "desc": "1=Active" }
+      },
+      "joins_to": ["mrkt_market_mst via mrkt_code"]
+    },
+
+    "mrkt_stalltype_mst": {
+      "description": "Stall type master (e.g. Shop, Godown, Open, Cabin)",
+      "key_columns": {
+        "mrkt_stalltype_code": { "type": "numeric", "desc": "Stall type code (PK)" },
+        "mrkt_stalltype_desc": { "type": "varchar", "desc": "Stall type description" },
+        "isactive": { "type": "boolean", "desc": "Active flag" }
+      }
+    },
+
+    "mrkt_class_mst": {
+      "description": "Market class/category master",
+      "key_columns": {
+        "mrkt_class_no": { "type": "numeric", "desc": "Class number (PK)" },
+        "mrkt_class_desc": { "type": "varchar", "desc": "Class description" }
+      }
+    },
+
+    "mrkt_allottype_mst": {
+      "description": "Allotment type master (e.g. Tender, Allotment, Heritage)",
+      "key_columns": {
+        "mrkt_allottype_code": { "type": "numeric", "desc": "Allotment type code (PK)" },
+        "mrkt_allottype_desc": { "type": "varchar", "desc": "Allotment type description" }
+      }
+    },
+
+    "mrkt_business_mst": {
+      "description": "Business type master (e.g. Fish, Vegetable, Grocery, Cloth)",
+      "key_columns": {
+        "mrkt_busi_code": { "type": "numeric", "desc": "Business code (PK)" },
+        "mrkt_busi_name": { "type": "varchar", "desc": "Business name" },
+        "mrkt_busi_articles": { "type": "varchar", "desc": "Articles/items sold" },
+        "status": { "type": "integer", "desc": "1=Active" }
+      }
+    },
+
+    "mrkt_misc_charge_mst": {
+      "description": "Miscellaneous charge type master (stallage, electricity, water, etc.)",
+      "key_columns": {
+        "mrkt_misc_chrg_code": { "type": "varchar", "desc": "Charge code (PK)" },
+        "mrkt_misc_chrg_name": { "type": "varchar", "desc": "Charge name" },
+        "mrkt_charge_group": { "type": "varchar", "desc": "Charge group" },
+        "mrkt_account_head": { "type": "varchar", "desc": "Account head for finance" }
+      }
+    },
+
+    "mrkt_stallage_rate_mst": {
+      "description": "Stallage rate master — rate per sq ft by market, stall type, financial year",
+      "key_columns": {
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_stalltype_code": { "type": "numeric", "desc": "Stall type code" },
+        "mrkt_phase_code": { "type": "numeric", "desc": "Phase code" },
+        "mrkt_block_code": { "type": "numeric", "desc": "Block code" },
+        "mrkt_rate": { "type": "numeric", "desc": "Rate per sq ft" },
+        "status": { "type": "integer", "desc": "1=Active" }
+      }
+    },
+
+    "mrkt_daily_journal": {
+      "description": "Daily accounting journal entries for market collections",
+      "key_columns": {
+        "mrkt_date": { "type": "timestamp", "desc": "Journal date" },
+        "mrkt_journal_type": { "type": "varchar", "desc": "Journal type" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "common_ward_no": { "type": "varchar", "desc": "Ward number" },
+        "mrkt_gross_amount": { "type": "numeric", "desc": "Gross amount" },
+        "mrkt_net_amount": { "type": "numeric", "desc": "Net amount" },
+        "mrkt_transfer_flag": { "type": "varchar", "desc": "Transferred to finance flag" }
+      }
+    },
+
+    "mrkt_penalty": {
+      "description": "Penalty records for market violations",
+      "key_columns": {
+        "id": { "type": "integer", "desc": "Penalty ID" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "stall_id": { "type": "numeric", "desc": "Stall ID" },
+        "name": { "type": "varchar", "desc": "Violator name" },
+        "violation_date": { "type": "timestamp", "desc": "Date of violation" },
+        "trade_name_entity": { "type": "varchar", "desc": "Trade name/entity" }
+      }
+    },
+
+    "mrkt_canc_receipt": {
+      "description": "Cancelled receipt headers",
+      "key_columns": {
+        "mrkt_receipt_no": { "type": "varchar", "desc": "Cancelled receipt number" },
+        "mrkt_receipt_year": { "type": "varchar", "desc": "Receipt year" },
+        "mrkt_receipt_date": { "type": "timestamp", "desc": "Original receipt date" },
+        "mrkt_receipt_amount": { "type": "numeric", "desc": "Cancelled amount" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "mrkt_fin_year": { "type": "varchar", "desc": "Financial year" }
+      }
+    },
+
+    "mrkt_kmc_meter_conn": {
+      "description": "KMC electricity meter connections for stalls — 6,489 active/inactive connections. Contains meter number, supply type (AC/DC), ampere rating, installation date, security deposit",
+      "key_columns": {
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID (FK to mrkt_stall_mst)" },
+        "mrkt_meter_no": { "type": "numeric", "desc": "Meter number" },
+        "mrkt_supply_type": { "type": "varchar", "desc": "AC=Alternating Current, DC=Direct Current" },
+        "mrkt_active_flag": { "type": "varchar", "desc": "Y=Active connection, N=Disconnected" },
+        "mrkt_meter_install_dt": { "type": "timestamp", "desc": "Meter installation date" },
+        "mrkt_meter_ampere": { "type": "numeric", "desc": "Meter ampere rating" },
+        "mrkt_meter_initread": { "type": "numeric", "desc": "Initial/starting meter reading" },
+        "mrkt_sec_deposit": { "type": "numeric", "desc": "Security deposit amount" },
+        "mrkt_meter_range": { "type": "numeric", "desc": "Meter range (rollover limit: 1000/10000/100000 etc.)" }
+      },
+      "joins_to": ["mrkt_stall_mst via mrkt_stall_id", "mrkt_kmc_mtr_monchg via mrkt_stall_id"]
+    },
+
+    "mrkt_kmc_mtr_monchg": {
+      "description": "Monthly KMC electricity meter readings and consumption charges — 1,010,933 rows, one row per stall per month. Use this for electricity consumption queries, unit calculation, and billing",
+      "key_columns": {
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID (FK to mrkt_stall_mst)" },
+        "mrkt_meter_no": { "type": "numeric", "desc": "Meter number" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code (FK to mrkt_market_mst)" },
+        "mrkt_phase_code": { "type": "numeric", "desc": "Phase code within market (values: 1,2,3)" },
+        "mrkt_charge_mon": { "type": "numeric", "desc": "Charge month 1-12" },
+        "mrkt_charge_year": { "type": "numeric", "desc": "Charge year e.g. 2024" },
+        "mrkt_cur_reading_val": { "type": "numeric", "desc": "Current meter reading value" },
+        "mrkt_prev_reading_val": { "type": "numeric", "desc": "Previous meter reading value" },
+        "mrkt_consumption_val": { "type": "numeric", "desc": "Units consumed = cur_reading - prev_reading (adjusted for rollover)" },
+        "mrkt_reading_basis": { "type": "varchar", "desc": "C=Calculated from actual reading, A=Average/estimated" },
+        "mrkt_cur_reading_date": { "type": "timestamp", "desc": "Date when current reading was taken" },
+        "mrkt_active_flag": { "type": "varchar", "desc": "Y=Active/valid record, N=Superseded" },
+        "mrkt_charge_amount": { "type": "numeric", "desc": "Electricity charge amount for this month" }
+      },
+      "joins_to": ["mrkt_kmc_meter_conn via mrkt_stall_id AND mrkt_meter_no", "mrkt_stall_mst via mrkt_stall_id", "mrkt_market_mst via mrkt_code"]
+    },
+
+    "mrkt_point_consumption": {
+      "description": "Point-based electricity consumption for stalls with point connections",
+      "key_columns": {
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID" },
+        "mrkt_noof_points": { "type": "numeric", "desc": "Number of electricity points" },
+        "mrkt_active_flag": { "type": "varchar", "desc": "Y=Active" },
+        "mrkt_effective_from_year": { "type": "varchar", "desc": "Effective from year" },
+        "mrkt_effect_from_month": { "type": "numeric", "desc": "Effective from month" },
+        "mrkt_effective_to_year": { "type": "varchar", "desc": "Effective to year" },
+        "mrkt_effect_to_month": { "type": "numeric", "desc": "Effective to month" }
+      },
+      "joins_to": ["mrkt_stall_mst via mrkt_stall_id"]
+    },
+
+    "mrkt_adjust_hdr": {
+      "description": "Demand adjustment headers — 41,639 rows. Tracks positive/negative adjustments to demands. mrkt_adjustment_type: P=Positive (credit), N=Negative (debit). mrkt_plus_minus_flag: + or -",
+      "key_columns": {
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID (FK)" },
+        "mrkt_misc_charge_code": { "type": "varchar", "desc": "Charge code (22=stallage, 21=electricity)" },
+        "mrkt_balance_amt": { "type": "numeric", "desc": "Remaining advance/adjustment balance" },
+        "mrkt_adjustment_type": { "type": "varchar", "desc": "P=Positive adjustment (credit), N=Negative (debit)" },
+        "mrkt_plus_minus_flag": { "type": "varchar", "desc": "+ or - sign for adjustment direction" },
+        "mrkt_adj_year": { "type": "varchar", "desc": "Adjustment financial year" },
+        "mrkt_adj_amount": { "type": "numeric", "desc": "Adjustment amount" }
+      },
+      "joins_to": ["mrkt_stall_mst via mrkt_stall_id"]
+    },
+
+    "mrkt_meter_unit_rate_mst": {
+      "description": "KMC electricity meter unit rate master — 2 rows, one per supply type (AC/DC). Contains per-unit electricity charge rate used to compute electricity bills from consumption",
+      "key_columns": {
+        "mrkt_supply_type": { "type": "varchar", "desc": "AC or DC supply type" },
+        "mrkt_unit_rate": { "type": "numeric", "desc": "Rate per unit of electricity consumption" },
+        "mrkt_min_charge": { "type": "numeric", "desc": "Minimum charge even if consumption is zero" },
+        "mrkt_effect_from_year": { "type": "numeric", "desc": "Effective from year" },
+        "mrkt_effct_from_month": { "type": "numeric", "desc": "Effective from month" }
+      }
+    },
+
+    "mrkt_rentroll_stallage_dtl": {
+      "description": "Stallage rate history per rent roll — 27,629 rows. Tracks stallage rate changes over time with effective year/month. Used to find historical rate at a given date",
+      "key_columns": {
+        "mrkt_stall_id": { "type": "numeric", "desc": "Stall ID (FK)" },
+        "mrkt_effective_year": { "type": "numeric", "desc": "Year from which this rate is effective" },
+        "mrkt_effective_month": { "type": "numeric", "desc": "Month from which this rate is effective" },
+        "mrkt_stallage_rate": { "type": "numeric", "desc": "Stallage rate amount for this period" },
+        "mrkt_stall_increase_code": { "type": "numeric", "desc": "Rate increase code (0,1,2,3)" }
+      },
+      "joins_to": ["mrkt_rent_roll_mst via mrkt_stall_id", "mrkt_stall_mst via mrkt_stall_id"]
+    },
+
+    "mrkt_point_charg_mst": {
+      "description": "Point-based electricity charge rates master — 126 rows. Defines charge per point type for stalls with point connections (no individual meter)",
+      "key_columns": {
+        "mrkt_pointtype_code": { "type": "varchar", "desc": "Point type code (FK to mrkt_pointtype_mst)" },
+        "mrkt_charge_rate": { "type": "numeric", "desc": "Charge rate per point per month" },
+        "mrkt_effect_from_year": { "type": "numeric", "desc": "Effective from year (2004 or 2012)" },
+        "mrkt_effct_from_month": { "type": "numeric", "desc": "Effective from month (April=4)" }
+      },
+      "joins_to": ["mrkt_pointtype_mst via mrkt_pointtype_code"]
+    },
+
+    "mrkt_insp_rpt_hdr": {
+      "description": "Market inspection report headers — 358 inspections. mrkt_type: Private/KMC/Others market ownership",
+      "key_columns": {
+        "id": { "type": "integer", "desc": "Inspection ID (PK)" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code (FK)" },
+        "mrkt_type": { "type": "varchar", "desc": "Market ownership: Private, KMC, Others" },
+        "mrkt_insp_date": { "type": "timestamp", "desc": "Inspection date" },
+        "mrkt_bldg_comp": { "type": "varchar", "desc": "Building complete: Yes/No" },
+        "mrkt_fire_safety": { "type": "varchar", "desc": "Fire safety: Yes/No" },
+        "mrkt_fire_clearance": { "type": "varchar", "desc": "Fire clearance: Yes/No" }
+      },
+      "joins_to": ["mrkt_market_mst via mrkt_code", "mrkt_insp_bldg_dtl via id", "mrkt_insp_other_dtl via id"]
+    },
+
+    "mrkt_event_permission_applications": {
+      "description": "Event permission applications for conducting events in markets",
+      "key_columns": {
+        "id": { "type": "integer", "desc": "Application ID" },
+        "mrkt_code": { "type": "numeric", "desc": "Market code" },
+        "event_type": { "type": "varchar", "desc": "Type of event" },
+        "event_name": { "type": "varchar", "desc": "Event name" },
+        "organizer_name": { "type": "varchar", "desc": "Organizer name" },
+        "start_date": { "type": "date", "desc": "Event start date" },
+        "end_date": { "type": "date", "desc": "Event end date" },
+        "sanction_fee": { "type": "numeric", "desc": "Sanction fee" },
+        "status": { "type": "integer", "desc": "Application status" }
+      }
+    }
+  },
+
+  "common_aggregations": {
+    "total_collection": "SUM(mrkt_receipt_amount)",
+    "total_demand": "SUM(mrkt_demand_amount)",
+    "total_outstanding": "SUM(mrkt_outstanding_amt)",
+    "stall_count": "COUNT(DISTINCT mrkt_stall_id)",
+    "market_count": "COUNT(DISTINCT mrkt_code)",
+    "avg_stallage": "AVG(mrkt_mon_stallage)"
+  }
+}
