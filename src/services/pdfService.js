@@ -16,6 +16,27 @@ const PDFDocument = require('pdfkit');
 const path = require('path');
 const fs   = require('fs');
 
+// ── Convert question to a meaningful filename slug ───────
+const STOP_WORDS = new Set([
+    'what','how','many','show','me','get','list','find','give','display','fetch',
+    'all','the','a','an','of','in','for','to','with','and','or','is','are',
+    'was','were','be','been','have','has','had','do','does','did','will','would',
+    'could','should','that','this','these','those','from','by','on','at','as',
+    'into','during','before','after','between','each','every','some','no','not',
+    'where','which','who','when','why','per','its','their','our','my','your',
+]);
+
+function questionToSlug(question, maxWords = 6) {
+    const words = question
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .split(/\s+/)
+        .filter(w => w.length > 1 && !STOP_WORDS.has(w))
+        .slice(0, maxWords)
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1));
+    return words.length > 0 ? words.join('_') : 'Report';
+}
+
 // ── Asset paths ──────────────────────────────────────────
 //    Accepts any of these filenames (jpg or png, with/without suffix)
 const ASSETS_DIR = path.join(__dirname, '../resources/assets');
@@ -231,8 +252,9 @@ function generatePdf(res, opts) {
         compress: true,
     });
 
-    const safeId   = (queryId || 'report').replace(/[^a-zA-Z0-9_-]/g, '_');
-    const filename = `KMC_SmartQuery_${safeId}_${now.toISOString().slice(0,10)}.pdf`;
+    const slug     = questionToSlug(question || queryId || 'Report');
+    const date     = now.toISOString().slice(0, 10).replace(/-/g, '');
+    const filename = `KMC_${slug}_${date}.pdf`;
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     doc.pipe(res);

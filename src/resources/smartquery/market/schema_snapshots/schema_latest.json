@@ -1,13 +1,13 @@
 {
   "module": "MARKET",
   "schema_name": "mrkt_kmc2_data",
-  "discovered_at": "2026-04-21T11:41:16.646Z",
-  "table_count": 161,
+  "discovered_at": "2026-05-07T06:02:54.388Z",
+  "table_count": 162,
   "tables": {
     "application_number_sequence": {
       "real_name": "application_number_sequence",
-      "description": "Application number sequence (39 rows) — entity prefix, date key, sequence, created on",
-      "row_count": 39,
+      "description": "Application number sequence (45 rows) — entity prefix, date key, sequence, created on",
+      "row_count": 45,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -745,8 +745,8 @@
     },
     "addition_of_subfloor": {
       "real_name": "mrkt_addition_of_subfloor",
-      "description": "Addition of subfloor (6 rows) — stall, file refno, trade name, name of lbs esc, date of blueprint approval, business, approve auth, approve date",
-      "row_count": 6,
+      "description": "Addition of subfloor (8 rows) — stall, file refno, trade name, name of lbs esc, date of blueprint approval, business, approve auth, approve date",
+      "row_count": 8,
       "key_columns": {
         "id": {
           "type": "int",
@@ -929,6 +929,15 @@
           "type": "numeric"
         },
         "mrkt_roof_hight": {
+          "type": "numeric"
+        },
+        "mrkt_sub_floor_area_old": {
+          "type": "numeric"
+        },
+        "mrkt_upper_floor_area_old": {
+          "type": "numeric"
+        },
+        "mrkt_roof_hight_old": {
           "type": "numeric"
         }
       }
@@ -1441,8 +1450,8 @@
     },
     "block": {
       "real_name": "mrkt_block_mst",
-      "description": "Block master (456 rows) — block code, phase code, block desc, elec basis flag, code, create uid, create date, modified uid",
-      "row_count": 456,
+      "description": "Block master (467 rows) — block code, phase code, block desc, elec basis flag, code, create uid, create date, modified uid",
+      "row_count": 467,
       "key_columns": {
         "mrkt_block_code": {
           "type": "numeric"
@@ -1735,8 +1744,8 @@
     },
     "business": {
       "real_name": "mrkt_business_mst",
-      "description": "Business master (492 rows) — busi code, busi name, busi articles, create uid, create date, modified uid, modified date, version",
-      "row_count": 492,
+      "description": "Business master (493 rows) — busi code, busi name, busi articles, create uid, create date, modified uid, modified date, version",
+      "row_count": 493,
       "key_columns": {
         "mrkt_busi_code": {
           "type": "numeric"
@@ -2346,8 +2355,8 @@
     },
     "change_of_permit": {
       "real_name": "mrkt_change_of_permit",
-      "description": "Change of permit (5 rows) — code, applicant, permit type, remarks, status, submitted on, modified date, create date",
-      "row_count": 5,
+      "description": "Change of permit (6 rows) — code, applicant, permit type, remarks, status, submitted on, modified date, create date",
+      "row_count": 6,
       "key_columns": {
         "id": {
           "type": "int",
@@ -2468,6 +2477,10 @@
         },
         "new_monthly_stallage": {
           "type": "numeric"
+        },
+        "mrkt_original_allottype_code": {
+          "type": "numeric",
+          "fk": "mrkt_allottype_mst.mrkt_allottype_code"
         }
       }
     },
@@ -2685,8 +2698,8 @@
     },
     "demand_category": {
       "real_name": "mrkt_demand_category",
-      "description": "Demand category (8 rows) — category, category name, table name, entity name, entity prefix, entity type",
-      "row_count": 8,
+      "description": "Demand category (10 rows) — category, category name, table name, entity name, entity prefix, entity type, enable disable",
+      "row_count": 10,
       "key_columns": {
         "category_id": {
           "type": "numeric",
@@ -2706,13 +2719,17 @@
         },
         "entity_type": {
           "type": "varchar"
+        },
+        "enable_disable": {
+          "type": "numeric",
+          "required": true
         }
       }
     },
     "demand_detail": {
       "real_name": "mrkt_demand_dtl",
-      "description": "Demand detail (7,373,751 rows) — misc chrg code, demand amount, rebate amount, penalty amount, paid amount, demand serial, code, fin year",
-      "row_count": 7373751,
+      "description": "Demand detail (7,373,799 rows) — misc chrg code, demand amount, rebate amount, penalty amount, paid amount, demand serial, code, fin year",
+      "row_count": 7373799,
       "key_columns": {
         "mrkt_misc_chrg_code": {
           "type": "varchar",
@@ -2958,27 +2975,27 @@
     },
     "demand_header": {
       "real_name": "mrkt_demand_hdr",
-      "description": "Demand header (2,697,549 rows) — fin year, demand serial, demand date, from date, to date, demand due date, rebate due date, demand amount",
-      "row_count": 2697549,
+      "description": "Demand header (2,678,145 rows) — fin year, demand serial, demand date, from date, to date, demand due date, rebate due date, demand amount",
+      "row_count": 2678145,
       "key_columns": {
         "mrkt_fin_year": {
           "type": "varchar",
           "values": [
-            "2025-2026",
-            "2022-2023",
-            "2017-2018",
-            "2021-2022",
             "2024-2025",
-            "2018-2019",
             "2023-2024",
-            "2020-2021",
-            "2019-2020",
-            "2015-2016",
+            "2017-2018",
+            "2022-2023",
             "2016-2017",
+            "2018-2019",
+            "2019-2020",
+            "2021-2022",
+            "2025-2026",
+            "2015-2016",
             "2014-2015",
             "2013-2014",
-            "2010-2011",
-            "2012-2013"
+            "2020-2021",
+            "2012-2013",
+            "2008-2009"
           ]
         },
         "mrkt_demand_serial_no": {
@@ -3029,7 +3046,7 @@
         },
         "modified_uid": {
           "type": "varchar",
-          "nullRate": "39%"
+          "nullRate": "38%"
         },
         "mrkt_stall_id": {
           "type": "numeric"
@@ -3049,7 +3066,7 @@
         },
         "modified_date": {
           "type": "timestamp",
-          "nullRate": "39%"
+          "nullRate": "38%"
         },
         "mrkt_remarks": {
           "type": "varchar",
@@ -3081,7 +3098,7 @@
         },
         "mrkt_prtreq_tmpstmp": {
           "type": "timestamp",
-          "nullRate": "91%"
+          "nullRate": "92%"
         },
         "mrkt_prt_count": {
           "type": "numeric",
@@ -3092,11 +3109,11 @@
         },
         "mrkt_prtreq_userid": {
           "type": "varchar",
-          "nullRate": "91%",
+          "nullRate": "92%",
           "values": [
             "24308",
-            "41930",
             "20272",
+            "41930",
             "21298",
             "28440",
             "25085",
@@ -3107,27 +3124,27 @@
         },
         "mrkt_cgst_amt": {
           "type": "numeric",
-          "nullRate": "56%"
+          "nullRate": "57%"
         },
         "mrkt_sgst_amt": {
           "type": "numeric",
-          "nullRate": "56%"
+          "nullRate": "57%"
         },
         "mrkt_cgst_amt_os": {
           "type": "numeric",
-          "nullRate": "56%"
+          "nullRate": "57%"
         },
         "mrkt_sgst_amt_os": {
           "type": "numeric",
-          "nullRate": "56%"
+          "nullRate": "57%"
         },
         "mrkt_cgst_amt_not_added_bill": {
           "type": "numeric",
-          "nullRate": "75%"
+          "nullRate": "76%"
         },
         "mrkt_sgst_amt_not_added_bill": {
           "type": "numeric",
-          "nullRate": "75%"
+          "nullRate": "76%"
         },
         "id": {
           "type": "bigint",
@@ -3157,8 +3174,7 @@
           "nullRate": "100%"
         },
         "netamountvalue": {
-          "type": "numeric",
-          "nullRate": "100%"
+          "type": "numeric"
         },
         "adjustedsuspenseamt": {
           "type": "numeric",
@@ -3561,8 +3577,8 @@
     },
     "event_permission_applications": {
       "real_name": "mrkt_event_permission_applications",
-      "description": "Event permission applications — code, event type, event name, organizer name, organizer address, organizer contact, start date, end date",
-      "row_count": 0,
+      "description": "Event permission applications (2 rows) — code, event type, event name, organizer name, organizer address, organizer contact, start date, end date",
+      "row_count": 2,
       "key_columns": {
         "id": {
           "type": "int",
@@ -3752,8 +3768,8 @@
     },
     "futnani_demand_detail": {
       "real_name": "mrkt_futnani_demand_dtl",
-      "description": "Futnani demand detail (25,884 rows) — misc chrg code, demand amount, rebate amount, penalty amount, paid amount, demand serial, code, fin year",
-      "row_count": 25884,
+      "description": "Futnani demand detail (25,899 rows) — misc chrg code, demand amount, rebate amount, penalty amount, paid amount, demand serial, code, fin year",
+      "row_count": 25899,
       "key_columns": {
         "mrkt_misc_chrg_code": {
           "type": "varchar",
@@ -3880,8 +3896,8 @@
     },
     "futnani_demand_header": {
       "real_name": "mrkt_futnani_demand_hdr",
-      "description": "Futnani demand header (13,887 rows) — fin year, demand serial, demand date, from date, to date, demand due date, rebate due date, demand amount",
-      "row_count": 13887,
+      "description": "Futnani demand header (13,891 rows) — fin year, demand serial, demand date, from date, to date, demand due date, rebate due date, demand amount",
+      "row_count": 13891,
       "key_columns": {
         "mrkt_fin_year": {
           "type": "varchar",
@@ -4649,8 +4665,8 @@
     },
     "insp_bldg_detail": {
       "real_name": "mrkt_insp_bldg_dtl",
-      "description": "Insp bldg detail (362 rows) — code, bldg cond, sanc plan, sanc type, is shop, is resi, is cctv, cctv type",
-      "row_count": 362,
+      "description": "Insp bldg detail (363 rows) — code, bldg cond, sanc plan, sanc type, is shop, is resi, is cctv, cctv type",
+      "row_count": 363,
       "key_columns": {
         "mrkt_code": {
           "type": "numeric"
@@ -5201,8 +5217,8 @@
     },
     "insp_other_detail": {
       "real_name": "mrkt_insp_other_dtl",
-      "description": "Insp other detail (362 rows) — code, shop, godown, with ce, without ce, toxic, hazard, inflam",
-      "row_count": 362,
+      "description": "Insp other detail (363 rows) — code, shop, godown, with ce, without ce, toxic, hazard, inflam",
+      "row_count": 363,
       "key_columns": {
         "mrkt_code": {
           "type": "numeric"
@@ -5599,8 +5615,8 @@
     },
     "insp_rpt_header": {
       "real_name": "mrkt_insp_rpt_hdr",
-      "description": "Insp rpt header (362 rows) — code, name, prem, ward, st code, mail addr, location, ps name",
-      "row_count": 362,
+      "description": "Insp rpt header (363 rows) — code, name, prem, ward, st code, mail addr, location, ps name",
+      "row_count": 363,
       "key_columns": {
         "mrkt_code": {
           "type": "numeric"
@@ -6034,8 +6050,8 @@
     },
     "kmc_meter_conn": {
       "real_name": "mrkt_kmc_meter_conn",
-      "description": "Kmc meter conn (6,489 rows) — meter install dt, meter initread dt, meter, meter appl dt, sec deposit, supply type, create uid, stall",
-      "row_count": 6489,
+      "description": "Kmc meter conn (6,490 rows) — meter install dt, meter initread dt, meter, meter appl dt, sec deposit, supply type, create uid, stall",
+      "row_count": 6490,
       "key_columns": {
         "mrkt_meter_install_dt": {
           "type": "timestamp",
@@ -6139,8 +6155,8 @@
     },
     "kmc_mtr_monchg": {
       "real_name": "mrkt_kmc_mtr_monchg",
-      "description": "Kmc mtr monchg (1,010,933 rows) — meter, charge mon, charge year, cur reading date, reading basis, cur reading val, prev reading val, charge remarks",
-      "row_count": 1010933,
+      "description": "Kmc mtr monchg (1,010,935 rows) — meter, charge mon, charge year, cur reading date, reading basis, cur reading val, prev reading val, charge remarks",
+      "row_count": 1010935,
       "key_columns": {
         "mrkt_meter_no": {
           "type": "numeric"
@@ -6275,8 +6291,8 @@
     },
     "market": {
       "real_name": "mrkt_market_mst",
-      "description": "Market master (57 rows) — code, class, common ward, common street code, name, premises, addrline1, pin code",
-      "row_count": 57,
+      "description": "Market master (59 rows) — code, class, common ward, common street code, name, premises, addrline1, pin code",
+      "row_count": 59,
       "key_columns": {
         "mrkt_code": {
           "type": "numeric"
@@ -6610,8 +6626,8 @@
     },
     "misc_demand_detail": {
       "real_name": "mrkt_misc_demand_dtl",
-      "description": "Misc demand detail (18,468 rows) — demand serial, code, fin year, misc chrg code, demand amount, narration, create uid, create date",
-      "row_count": 18468,
+      "description": "Misc demand detail (18,471 rows) — demand serial, code, fin year, misc chrg code, demand amount, narration, create uid, create date",
+      "row_count": 18471,
       "key_columns": {
         "mrkt_demand_serial_no": {
           "type": "numeric"
@@ -6686,8 +6702,8 @@
     },
     "misc_demand_header": {
       "real_name": "mrkt_misc_demand_hdr",
-      "description": "Misc demand header (9,990 rows) — fin year, code, demand serial, demand date, payment date, demand due date, demand amount, penalty amount",
-      "row_count": 9990,
+      "description": "Misc demand header (9,993 rows) — fin year, code, demand serial, demand date, payment date, demand due date, demand amount, penalty amount",
+      "row_count": 9993,
       "key_columns": {
         "mrkt_fin_year": {
           "type": "varchar",
@@ -7496,8 +7512,8 @@
     },
     "misc_request": {
       "real_name": "mrkt_misc_request",
-      "description": "Misc request (9,986 rows) — code, stall, demand serial, fin year, request, request year, request date, phase",
-      "row_count": 9986,
+      "description": "Misc request (9,989 rows) — code, stall, demand serial, fin year, request, request year, request date, phase",
+      "row_count": 9989,
       "key_columns": {
         "mrkt_code": {
           "type": "numeric"
@@ -7866,6 +7882,56 @@
         }
       }
     },
+    "offline_vendor_collection": {
+      "real_name": "mrkt_offline_vendor_collection",
+      "description": "Offline vendor collection — demand serial, market code, fin year, demand amount, demand date, user, create date, create uid",
+      "row_count": 0,
+      "key_columns": {
+        "id": {
+          "type": "bigint",
+          "pk": true
+        },
+        "mrkt_demand_serial_no": {
+          "type": "numeric"
+        },
+        "mrkt_market_code": {
+          "type": "numeric"
+        },
+        "mrkt_fin_year": {
+          "type": "varchar"
+        },
+        "mrkt_demand_amount": {
+          "type": "numeric"
+        },
+        "mrkt_demand_date": {
+          "type": "timestamp"
+        },
+        "mrkt_user_id": {
+          "type": "varchar"
+        },
+        "create_date": {
+          "type": "timestamp"
+        },
+        "create_uid": {
+          "type": "varchar"
+        },
+        "cancel_status": {
+          "type": "varchar"
+        },
+        "modified_date": {
+          "type": "timestamp"
+        },
+        "modified_uid": {
+          "type": "varchar"
+        },
+        "remarks": {
+          "type": "varchar"
+        },
+        "paymentstatus": {
+          "type": "bigint"
+        }
+      }
+    },
     "outstanding_gst_3m": {
       "real_name": "mrkt_outstanding_gst_3m",
       "description": "Outstanding gst 3m (2,464 rows) — stall, name, block desc, stalldisplay, stallage amount, outstanding amount",
@@ -8057,8 +8123,8 @@
     },
     "permission": {
       "real_name": "mrkt_permission_master",
-      "description": "Permission master (12 rows) — permission type, permission number, permission date, code, phase code, block code, stall, rent roll",
-      "row_count": 12,
+      "description": "Permission master (13 rows) — permission type, permission number, permission date, code, phase code, block code, stall, rent roll",
+      "row_count": 13,
       "key_columns": {
         "id": {
           "type": "int",
@@ -8185,8 +8251,8 @@
     },
     "phase": {
       "real_name": "mrkt_phase_mst",
-      "description": "Phase master (68 rows) — phase code, phase desc, code, create uid, create date, modified uid, modified date, status",
-      "row_count": 68,
+      "description": "Phase master (71 rows) — phase code, phase desc, code, create uid, create date, modified uid, modified date, status",
+      "row_count": 71,
       "key_columns": {
         "mrkt_phase_code": {
           "type": "numeric"
@@ -8417,8 +8483,8 @@
     },
     "point_consumption": {
       "real_name": "mrkt_point_consumption",
-      "description": "Point consumption (85,929 rows) — effect from month, effective from year, pointtype code, effective to year, stall, point wattage, effect to month, noof points",
-      "row_count": 85929,
+      "description": "Point consumption (85,932 rows) — effect from month, effective from year, pointtype code, effective to year, stall, point wattage, effect to month, noof points",
+      "row_count": 85932,
       "key_columns": {
         "mrkt_effect_from_month": {
           "type": "numeric",
@@ -8600,8 +8666,8 @@
     },
     "receipt_detail": {
       "real_name": "mrkt_receipt_dtl",
-      "description": "Receipt detail (4,694,886 rows) — misc chrg code, receipt date, receipt amount, remarks, order, order date, order by, receipt",
-      "row_count": 4694886,
+      "description": "Receipt detail (4,694,899 rows) — misc chrg code, receipt date, receipt amount, remarks, order, order date, order by, receipt",
+      "row_count": 4694899,
       "key_columns": {
         "mrkt_misc_chrg_code": {
           "type": "numeric",
@@ -8818,8 +8884,8 @@
     },
     "receipt_dtl_new": {
       "real_name": "mrkt_receipt_dtl_new",
-      "description": "Receipt dtl new (38 rows) — misc chrg code, receipt date, receipt amount, remarks, order, order date, order by, receipt",
-      "row_count": 38,
+      "description": "Receipt dtl new (51 rows) — misc chrg code, receipt date, receipt amount, remarks, order, order date, order by, receipt",
+      "row_count": 51,
       "key_columns": {
         "mrkt_misc_chrg_code": {
           "type": "numeric"
@@ -8831,40 +8897,63 @@
           "type": "numeric"
         },
         "mrkt_remarks": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "mrkt_order_no": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "mrkt_order_date": {
-          "type": "timestamp"
+          "type": "timestamp",
+          "nullRate": "100%"
         },
         "mrkt_order_by": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "mrkt_receipt_no": {
           "type": "varchar"
         },
         "mrkt_receipt_year": {
-          "type": "varchar"
+          "type": "varchar",
+          "values": [
+            "2025-2026",
+            "2026-2027"
+          ]
         },
         "mrkt_code": {
-          "type": "numeric"
+          "type": "numeric",
+          "values": [
+            "101",
+            "507",
+            "509",
+            "306",
+            "401"
+          ]
         },
         "create_uid": {
-          "type": "varchar"
+          "type": "varchar",
+          "values": [
+            "PORTAL"
+          ]
         },
         "create_date": {
           "type": "timestamp"
         },
         "modified_uid": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "modified_date": {
-          "type": "timestamp"
+          "type": "timestamp",
+          "nullRate": "100%"
         },
         "mrkt_rebate_amt": {
-          "type": "numeric"
+          "type": "numeric",
+          "values": [
+            "0.00"
+          ]
         },
         "mrkt_penalty_amt": {
           "type": "numeric"
@@ -8873,19 +8962,26 @@
           "type": "numeric"
         },
         "mrkt_advance_amt": {
-          "type": "numeric"
+          "type": "numeric",
+          "values": [
+            "0.00"
+          ]
         },
         "mrkt_adj_srl_no": {
-          "type": "numeric"
+          "type": "numeric",
+          "nullRate": "100%"
         },
         "mrkt_adj_year": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "mrkt_coll_office": {
-          "type": "numeric"
+          "type": "numeric",
+          "nullRate": "100%"
         },
         "mrkt_counter_no": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "id": {
           "type": "bigint",
@@ -8895,8 +8991,8 @@
     },
     "receipt_header": {
       "real_name": "mrkt_receipt_hdr",
-      "description": "Receipt header (1,641,876 rows) — receipt year, receipt, receipt date, receipt amount, remarks, demand serial, create uid, code",
-      "row_count": 1641876,
+      "description": "Receipt header (1,641,878 rows) — receipt year, receipt, receipt date, receipt amount, remarks, demand serial, create uid, code",
+      "row_count": 1641878,
       "key_columns": {
         "mrkt_receipt_year": {
           "type": "varchar",
@@ -9063,8 +9159,8 @@
     },
     "receipt_hdr_new": {
       "real_name": "mrkt_receipt_hdr_new",
-      "description": "Receipt hdr new (8 rows) — receipt year, receipt, receipt date, receipt amount, remarks, demand serial, create uid, code",
-      "row_count": 8,
+      "description": "Receipt hdr new (10 rows) — receipt year, receipt, receipt date, receipt amount, remarks, demand serial, create uid, code",
+      "row_count": 10,
       "key_columns": {
         "mrkt_receipt_year": {
           "type": "varchar"
@@ -9354,8 +9450,8 @@
     },
     "rent_roll_history": {
       "real_name": "mrkt_rent_roll_hist",
-      "description": "Rent roll history (49,722 rows) — effective month, effective year, stall, mod srl, file refno, tender, trade name, approve auth",
-      "row_count": 49722,
+      "description": "Rent roll history (49,733 rows) — effective month, effective year, stall, mod srl, file refno, tender, trade name, approve auth",
+      "row_count": 49733,
       "key_columns": {
         "mrkt_effective_month": {
           "type": "numeric",
@@ -9976,8 +10072,8 @@
     },
     "rent_roll": {
       "real_name": "mrkt_rent_roll_mst",
-      "description": "Rent roll master (15,017 rows) — effective month, effective year, stall, file refno, tender, trade name, approve auth, init stall paydt",
-      "row_count": 15017,
+      "description": "Rent roll master (15,019 rows) — effective month, effective year, stall, file refno, tender, trade name, approve auth, init stall paydt",
+      "row_count": 15019,
       "key_columns": {
         "mrkt_effective_month": {
           "type": "numeric",
@@ -13120,8 +13216,8 @@
     },
     "repair_and_maintenance": {
       "real_name": "mrkt_repair_and_maintenance",
-      "description": "Repair and maintenance — stall, description, lbs ese name, requested start date, estimated duration days, applicant estimated cost, blueprint doc, blueprint approval date",
-      "row_count": 0,
+      "description": "Repair and maintenance (1 rows) — stall, description, lbs ese name, requested start date, estimated duration days, applicant estimated cost, blueprint doc, blueprint approval date",
+      "row_count": 1,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -13203,13 +13299,16 @@
         },
         "workflow_status": {
           "type": "varchar"
+        },
+        "paymentstatus": {
+          "type": "bigint"
         }
       }
     },
     "repair_request_category": {
       "real_name": "mrkt_repair_request_category",
-      "description": "Repair request category — repair and maintenance, category, per category estimated cost, per category remarks, created by, created on",
-      "row_count": 0,
+      "description": "Repair request category (2 rows) — repair and maintenance, category, per category estimated cost, per category remarks, created by, created on",
+      "row_count": 2,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -13328,8 +13427,8 @@
     },
     "mrkt_sequence_mst": {
       "real_name": "mrkt_sequence_mst",
-      "description": "Sequence master (1,530 rows) — year, context, sequence, create uid, create date, modified uid, modified date, code",
-      "row_count": 1530,
+      "description": "Sequence master (1,531 rows) — year, context, sequence, create uid, create date, modified uid, modified date, code",
+      "row_count": 1531,
       "key_columns": {
         "mrkt_year": {
           "type": "varchar"
@@ -13599,8 +13698,8 @@
     },
     "stall": {
       "real_name": "mrkt_stall_mst",
-      "description": "Stall master (15,684 rows) — stall, code, phase code, block code, stall length, last billing date, stall width",
-      "row_count": 15684,
+      "description": "Stall master (15,687 rows) — stall, code, phase code, block code, stall length, last billing date, stall width",
+      "row_count": 15687,
       "key_columns": {
         "mrkt_stall_id": {
           "type": "numeric"
@@ -14436,6 +14535,9 @@
         },
         "enhanced_monthly_stallage": {
           "type": "numeric"
+        },
+        "original_stall_front_width": {
+          "type": "numeric"
         }
       }
     },
@@ -14559,8 +14661,8 @@
     },
     "stallage_rate": {
       "real_name": "mrkt_stallage_rate_mst",
-      "description": "Stallage rate master (27,644 rows) — fin year, stalltype code, rate, code, create uid, create date, modified uid, modified date",
-      "row_count": 27644,
+      "description": "Stallage rate master (27,649 rows) — fin year, stalltype code, rate, code, create uid, create date, modified uid, modified date",
+      "row_count": 27649,
       "key_columns": {
         "mrkt_fin_year": {
           "type": "varchar",
@@ -15416,8 +15518,8 @@
     },
     "permission_number_sequence": {
       "real_name": "permission_number_sequence",
-      "description": "Permission number sequence (12 rows) — entity prefix, date key, sequence, created on",
-      "row_count": 12,
+      "description": "Permission number sequence (13 rows) — entity prefix, date key, sequence, created on",
+      "row_count": 13,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -15772,12 +15874,12 @@
     "mrkt_demand_dtl_hist.mrkt_mod_serial_no distinct values (5): '1', '2', '3', '4', '5'",
     "mrkt_demand_dtl_hist.mrkt_fin_year distinct values (21): '2005-2006', '2006-2007', '2007-2008', '2008-2009', '2013-2014', '2009-2010', '2012-2013', '2022-2023', '2023-2024', '2010-2011'",
     "mrkt_demand_dtl_hist.mrkt_misc_chrg_code distinct values (9): '22', '21', '6', '35', '34', '23', '8', '37', '1'",
-    "mrkt_demand_hdr.mrkt_fin_year distinct values (21): '2025-2026', '2022-2023', '2017-2018', '2021-2022', '2024-2025', '2018-2019', '2023-2024', '2020-2021', '2019-2020', '2015-2016'",
+    "mrkt_demand_hdr.mrkt_fin_year distinct values (21): '2024-2025', '2023-2024', '2017-2018', '2022-2023', '2016-2017', '2018-2019', '2019-2020', '2021-2022', '2025-2026', '2015-2016'",
     "mrkt_demand_hdr.mrkt_demand_status distinct values (5): 'F', 'O', 'P', 'B', 'A'",
     "mrkt_demand_hdr.mrkt_demand_type distinct values (1): 'R'",
     "mrkt_demand_hdr.mrk_outstanding_flag distinct values (2): 'O', 'C'",
     "mrkt_demand_hdr.mrkt_print_flag distinct values (2): 'Y', 'N'",
-    "mrkt_demand_hdr.mrkt_prtreq_userid distinct values (9): '24308', '41930', '20272', '21298', '28440', '25085', '20267', '23772', '29340'",
+    "mrkt_demand_hdr.mrkt_prtreq_userid distinct values (9): '24308', '20272', '41930', '21298', '28440', '25085', '20267', '23772', '29340'",
     "mrkt_error_log.mrkt_phase_code distinct values (5): '1', '2', '3', '4', '5'",
     "mrkt_error_log.mrkt_sql_error distinct values (5): 'CHECK RENT ROLL END DATE /DEMAND FLAG/ELECTRIC CONNECTION TYPE', 'BILL ALREADY EXISTS', '\"-1', 'ENTER CESC RATE BEFORE DEMAND GENERATION', 'ERR IN TABLE CESC_BLOCK_AMOUNT\"'",
     "mrkt_error_log.mrkt_demand_year distinct values (7): '2025', '2023', '2024', '2022', '2021', '2026', '2006'",
@@ -16027,6 +16129,11 @@
     "mrkt_receipt_dtl.mrkt_advance_amt distinct values (1): '0.00'",
     "mrkt_receipt_dtl.mrkt_adj_year distinct values (3): '2005-2006', '2006-2007', '2007-2008'",
     "mrkt_receipt_dtl.mrkt_counter_no distinct values (16): '99', '1', '2', '3', '4', '9999', '5', '6', '7', '9'",
+    "mrkt_receipt_dtl_new.mrkt_receipt_year distinct values (2): '2025-2026', '2026-2027'",
+    "mrkt_receipt_dtl_new.mrkt_code distinct values (5): '101', '507', '509', '306', '401'",
+    "mrkt_receipt_dtl_new.create_uid distinct values (1): 'PORTAL'",
+    "mrkt_receipt_dtl_new.mrkt_rebate_amt distinct values (1): '0.00'",
+    "mrkt_receipt_dtl_new.mrkt_advance_amt distinct values (1): '0.00'",
     "mrkt_receipt_hdr.mrkt_receipt_year distinct values (21): '2024-2025', '2023-2024', '2014-2015', '2015-2016', '2018-2019', '2022-2023', '2016-2017', '2013-2014', '2017-2018', '2019-2020'",
     "mrkt_receipt_hdr.mrkt_fin_year distinct values (21): '2024-2025', '2023-2024', '2014-2015', '2015-2016', '2018-2019', '2022-2023', '2016-2017', '2013-2014', '2017-2018', '2019-2020'",
     "mrkt_receipt_hdr.mrkt_counter_no distinct values (16): '99', '1', '2', '3', '4', '9999', '5', '6', '7', '8'",
@@ -16725,6 +16832,10 @@
         "real_name": "mrkt_offline_coll_bulk",
         "columns": {}
       },
+      "offline_vendor_collection": {
+        "real_name": "mrkt_offline_vendor_collection",
+        "columns": {}
+      },
       "outstanding_gst_3m": {
         "real_name": "mrkt_outstanding_gst_3m",
         "columns": {}
@@ -17019,5 +17130,5 @@
       }
     }
   },
-  "_hash": "480a651606935daea580b030cc3a0bfb"
+  "_hash": "71fc6d91a834ba41543c0e2a349ad38e"
 }

@@ -1,0 +1,63 @@
+# Niyantrak governance-as-code policy
+# Version: 1.0
+# Loaded at server start. Hot-reloadable via SIGHUP (v2).
+
+actions:
+  arrear_notice:
+    requires_approval: true
+    max_per_batch: 50
+    allowed_languages: [en, bn]
+    audit_required: true
+    rate_limit_per_user_per_day: 10
+    requires_role: [MARKET_OFFICER, WARD_OFFICER, demo_user]
+
+  inspection_notice:
+    requires_approval: true
+    max_per_batch: 30
+    audit_required: true
+
+  mutation_approval:
+    requires_approval: true
+    max_per_batch: 1
+    audit_required: true
+    requires_role: [MUTATION_OFFICER]
+
+agents:
+  orchestrator:
+    model: nvidia/nemotron-3-super-120b-a12b
+    temperature: 0.0
+    max_tokens: 1024
+    timeout_ms: 30000
+
+  query:
+    model: nvidia/nemotron-3-super-120b-a12b
+    temperature: 0.0
+    max_tokens: 2048
+    timeout_ms: 60000
+
+  triage:
+    model: nvidia/nemotron-3-super-120b-a12b
+    temperature: 0.0
+    max_tokens: 2048
+    timeout_ms: 30000
+
+  action:
+    model: nvidia/nemotron-3-super-120b-a12b
+    temperature: 0.3
+    max_tokens: 4096
+    timeout_ms: 60000
+
+audit:
+  enabled: true
+  hash_algorithm: sha256
+  chain_verify_on_read: true
+  retention_days: null  # null = forever
+
+bhashini:
+  enabled: false
+  api_url: https://meity-auth.ulcacontrib.org/ulca/apis/v0/model/compute
+  pipeline_id: null
+
+run_limits:
+  max_concurrent_runs_per_user: 3
+  max_run_duration_seconds: 300

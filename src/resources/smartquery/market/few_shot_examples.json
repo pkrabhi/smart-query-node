@@ -342,6 +342,15 @@
       "addedAt": "2026-04-21T04:30:09.831Z",
       "question": "Show all active stalls in market 101 and phase 1 and block 1",
       "sql": "SELECT\n  s.mrkt_stall_id,\n  s.mrkt_stall_no,\n  s.mrkt_stalldisplay_no,\n  COALESCE(s.mrkt_stall_length, 0) AS mrkt_stall_length,\n  COALESCE(s.mrkt_stall_width, 0) AS mrkt_stall_width,\n  COALESCE(s.mrkt_stall_area, 0) AS mrkt_stall_area,\n  s.mrkt_stall_corner,\n  s.mrkt_stall_road_side\nFROM mrkt_kmc2_data.mrkt_stall_mst s\nWHERE s.mrkt_code = 101\n  AND s.mrkt_phase_code = 1\n  AND s.mrkt_block_code = 1\n  AND s.status = 1\nORDER BY s.mrkt_stall_no\nLIMIT 5000"
+    },
+    {
+      "id": 52,
+      "category": "General Reports",
+      "source": "feedback",
+      "queryId": "MKT-20260430-00001",
+      "addedAt": "2026-04-30T06:22:18.755Z",
+      "question": "get all the duplicate RPH names in the same market phase and block",
+      "sql": "WITH dup AS (\n  SELECT\n    rr.mrkt_rph_name,\n    s.mrkt_code,\n    s.mrkt_phase_code,\n    s.mrkt_block_code\n  FROM mrkt_kmc2_data.mrkt_rent_roll_mst rr\n  JOIN mrkt_kmc2_data.mrkt_stall_mst s ON rr.mrkt_stall_id = s.mrkt_stall_id\n  GROUP BY rr.mrkt_rph_name, s.mrkt_code, s.mrkt_phase_code, s.mrkt_block_code\n  HAVING COUNT(*) > 1\n)\nSELECT\n  rr.id AS rent_roll_id,\n  rr.mrkt_stall_id,\n  s.mrkt_stall_no,\n  rr.mrkt_rph_name,\n  COALESCE(s.mrkt_code, 0) AS market_code,\n  COALESCE(s.mrkt_phase_code, 0) AS phase_code,\n  COALESCE(s.mrkt_block_code, 0) AS block_code\nFROM mrkt_kmc2_data.mrkt_rent_roll_mst rr\nJOIN mrkt_kmc2_data.mrkt_stall_mst s ON rr.mrkt_stall_id = s.mrkt_stall_id\nJOIN dup d\n  ON rr.mrkt_rph_name = d.mrkt_rph_name\n  AND s.mrkt_code = d.mrkt_code\n  AND s.mrkt_phase_code = d.mrkt_phase_code\n  AND s.mrkt_block_code = d.mrkt_block_code\nORDER BY rr.mrkt_rph_name, s.mrkt_stall_no\nLIMIT 5000"
     }
   ]
 }

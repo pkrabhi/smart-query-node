@@ -1,8 +1,8 @@
 {
   "module": "ENGINEERING",
   "schema_name": "public",
-  "discovered_at": "2026-04-21T10:32:25.353Z",
-  "table_count": 1198,
+  "discovered_at": "2026-05-07T06:17:41.576Z",
+  "table_count": 1199,
   "tables": {
     "abrar_agency": {
       "real_name": "abrar_agency_master",
@@ -409,8 +409,8 @@
     },
     "access_control_actions_test": {
       "real_name": "access_control_actions_test",
-      "description": "Access control actions test (3,044 rows) — s name, s url, s displayname, s ordernumber, s queryparams, parentmodule, enabled, servicecode",
-      "row_count": 3044,
+      "description": "Access control actions test (3,090 rows) — s name, s url, s displayname, s ordernumber, s queryparams, parentmodule, enabled, servicecode",
+      "row_count": 3090,
       "key_columns": {
         "id": {
           "type": "int",
@@ -449,11 +449,11 @@
         },
         "servicecode": {
           "type": "varchar",
-          "nullRate": "13%"
+          "nullRate": "14%"
         },
         "code": {
           "type": "varchar",
-          "nullRate": "48%"
+          "nullRate": "50%"
         },
         "path": {
           "type": "varchar"
@@ -466,11 +466,11 @@
         },
         "s_navigation_url": {
           "type": "varchar",
-          "nullRate": "26%"
+          "nullRate": "25%"
         },
         "s_right_icon": {
           "type": "varchar",
-          "nullRate": "57%"
+          "nullRate": "54%"
         },
         "s_left_icon": {
           "type": "varchar"
@@ -493,7 +493,7 @@
         },
         "tenantid": {
           "type": "varchar",
-          "nullRate": "99%",
+          "nullRate": "100%",
           "values": [
             "km.kolkata",
             "km"
@@ -501,19 +501,19 @@
         },
         "module_name": {
           "type": "varchar",
-          "nullRate": "36%"
+          "nullRate": "34%"
         },
         "module_category": {
           "type": "varchar",
-          "nullRate": "32%"
+          "nullRate": "31%"
         },
         "module_id": {
           "type": "int",
-          "nullRate": "32%"
+          "nullRate": "31%"
         },
         "is_dashboard": {
           "type": "varchar",
-          "nullRate": "32%",
+          "nullRate": "30%",
           "values": [
             "false",
             "true"
@@ -1238,8 +1238,8 @@
     },
     "access_control_role_actions": {
       "real_name": "access_control_role_actions",
-      "description": "Access control role actions (4,317 rows) — rolecode, actionid, actioncode, tenantid, createdAt, updatedAt, status, role actions id seq",
-      "row_count": 4317,
+      "description": "Access control role actions (4,397 rows) — rolecode, actionid, actioncode, tenantid, createdAt, updatedAt, status, role actions id seq",
+      "row_count": 4397,
       "key_columns": {
         "id": {
           "type": "int",
@@ -1497,8 +1497,8 @@
     },
     "access_control_roles": {
       "real_name": "access_control_roles",
-      "description": "Access control roles (504 rows) — role name, role code, description, createdat, updatedat, module, status, role display name",
-      "row_count": 504,
+      "description": "Access control roles (506 rows) — role name, role code, description, createdat, updatedat, module, status, role display name",
+      "row_count": 506,
       "key_columns": {
         "id": {
           "type": "int",
@@ -2637,8 +2637,8 @@
     },
     "bldg_demand_pgw_txn": {
       "real_name": "bldg_demand_pgw_txn",
-      "description": "Bldg demand pgw txn (694,757 rows) — bldg demand, bldg demand type, bldg assno, bldg borough, bldg lbs lic, bldg payment code, bldg demand amt, txn",
-      "row_count": 694757,
+      "description": "Bldg demand pgw txn (694,763 rows) — bldg demand, bldg demand type, bldg assno, bldg borough, bldg lbs lic, bldg payment code, bldg demand amt, txn",
+      "row_count": 694763,
       "key_columns": {
         "bldg_demand_no": {
           "type": "varchar"
@@ -4915,8 +4915,8 @@
     },
     "check_user_access_logs": {
       "real_name": "check_user_access_logs",
-      "description": "Check user access logs (135,571 rows) — user, office, user type, access token, error description, url, createdat, updatedat",
-      "row_count": 135571,
+      "description": "Check user access logs (135,660 rows) — user, office, user type, access token, error description, url, createdat, updatedat",
+      "row_count": 135660,
       "key_columns": {
         "id": {
           "type": "int",
@@ -4987,8 +4987,8 @@
     },
     "api_transaction_details": {
       "real_name": "coll_api_transaction_details",
-      "description": "Api transaction details (1,776 rows) — module, receipt, center code, process name, status, createdat, createdby, updatedat",
-      "row_count": 1776,
+      "description": "Api transaction details (1,860 rows) — module, receipt, center code, process name, status, createdat, createdby, updatedat",
+      "row_count": 1860,
       "key_columns": {
         "id": {
           "type": "int",
@@ -4999,16 +4999,17 @@
           "required": true,
           "values": [
             "02",
+            "16",
+            "1",
+            "14",
             "5",
             "9",
-            "14",
-            "16",
             "6",
-            "1",
             "8",
-            "22",
             "37",
-            "2"
+            "22",
+            "2",
+            "3"
           ]
         },
         "receipt_no": {
@@ -5060,15 +5061,17 @@
             "Emp841",
             "16075",
             "Emp3764",
+            "16237",
             "13073",
             "undefined",
             "16114",
             "10512",
             "Emp114",
             "12725",
+            "16158",
             "16160",
-            "16046",
-            "12109"
+            "Emp8559",
+            "16046"
           ]
         },
         "updatedat": {
@@ -5271,8 +5274,8 @@
     },
     "receipt_data": {
       "real_name": "coll_receipt_data",
-      "description": "Receipt data (2,296 rows) — receipt, receipt demand details, paid by mobile, create uid, create date, modify uid, modify date, version",
-      "row_count": 2296,
+      "description": "Receipt data (2,422 rows) — receipt, receipt demand details, paid by mobile, create uid, create date, modify uid, modify date, version",
+      "row_count": 2422,
       "key_columns": {
         "id": {
           "type": "int",
@@ -5330,8 +5333,8 @@
     },
     "receipt_pdf_data": {
       "real_name": "coll_receipt_pdf_data",
-      "description": "Receipt pdf data (2,365 rows) — receipt, pdf base64 data, create uid, create date, modify uid, modify date, version, transaction",
-      "row_count": 2365,
+      "description": "Receipt pdf data (2,490 rows) — receipt, pdf base64 data, create uid, create date, modify uid, modify date, version, transaction",
+      "row_count": 2490,
       "key_columns": {
         "id": {
           "type": "int",
@@ -5444,8 +5447,8 @@
     },
     "transaction_id": {
       "real_name": "coll_transaction_id",
-      "description": "Transaction id (1,315 rows) — transaction, receipt, center code, unique, process name, status, createdat, createdby",
-      "row_count": 1315,
+      "description": "Transaction id (1,431 rows) — transaction, receipt, center code, unique, process name, status, createdat, createdby",
+      "row_count": 1431,
       "key_columns": {
         "id": {
           "type": "int",
@@ -5481,8 +5484,8 @@
           "required": true,
           "values": [
             "Center Collection Day Begin",
-            "Treasury Day Begin",
             "Cancel Receipt",
+            "Treasury Day Begin",
             "Data Transfer 2.0 to 1.0",
             "Treasury Day End",
             "Receipt Re-Print",
@@ -5508,11 +5511,11 @@
             "16075",
             "16114",
             "16035",
-            "Emp3764",
             "16237",
+            "Emp3764",
+            "Emp8559",
             "Emp841",
             "13073",
-            "Emp8559",
             "16158",
             "anik",
             "16160",
@@ -5537,9 +5540,10 @@
             "http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=02",
             "http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/insertCCDayEndInfo",
             "http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=16",
+            "http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=14",
+            "http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=03",
             "http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=01",
             "http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/updateReceiptHeaderAfterReprint",
-            "http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=14",
             "http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=04"
           ]
         },
@@ -5929,8 +5933,8 @@
     },
     "common_configuration": {
       "real_name": "common_configuration",
-      "description": "Common configuration (6 rows) — name, url",
-      "row_count": 6,
+      "description": "Common configuration (7 rows) — name, url",
+      "row_count": 7,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -8713,8 +8717,8 @@
     },
     "eg_filestoremap": {
       "real_name": "eg_filestoremap",
-      "description": "Eg filestoremap (80,932 rows) — filestoreid, filename, contenttype, module, tag, tenantid, version, filesource",
-      "row_count": 80932,
+      "description": "Eg filestoremap (81,245 rows) — filestoreid, filename, contenttype, module, tag, tenantid, version, filesource",
+      "row_count": 81245,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -9273,8 +9277,8 @@
     },
     "eg_hrms_assignment": {
       "real_name": "eg_hrms_assignment",
-      "description": "Eg hrms assignment (15,963 rows) — uuid, employeeid, position, department, designation, fromdate, todate, govtordernumber",
-      "row_count": 15963,
+      "description": "Eg hrms assignment (15,981 rows) — uuid, employeeid, position, department, designation, fromdate, todate, govtordernumber",
+      "row_count": 15981,
       "key_columns": {
         "uuid": {
           "type": "varchar",
@@ -9404,8 +9408,8 @@
     },
     "eg_hrms_assignment_additional": {
       "real_name": "eg_hrms_assignment_additional",
-      "description": "Eg hrms assignment additional (37 rows) — uuid, employeeid, position, department, designation, fromdate, todate, govtordernumber",
-      "row_count": 37,
+      "description": "Eg hrms assignment additional (39 rows) — uuid, employeeid, position, department, designation, fromdate, todate, govtordernumber",
+      "row_count": 39,
       "key_columns": {
         "uuid": {
           "type": "varchar",
@@ -9998,8 +10002,8 @@
     },
     "eg_hrms_employee": {
       "real_name": "eg_hrms_employee",
-      "description": "Eg hrms employee (15,724 rows) — uuid, code, dateofappointment, employeestatus, employeetype, active, tenantid, createdby",
-      "row_count": 15724,
+      "description": "Eg hrms employee (15,726 rows) — uuid, code, dateofappointment, employeestatus, employeetype, active, tenantid, createdby",
+      "row_count": 15726,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -10150,8 +10154,8 @@
     },
     "eg_hrms_jurisdiction": {
       "real_name": "eg_hrms_jurisdiction",
-      "description": "Eg hrms jurisdiction (15,721 rows) — uuid, employeeid, hierarchy, boundarytype, boundary, tenantid, createdby, createddate",
-      "row_count": 15721,
+      "description": "Eg hrms jurisdiction (15,723 rows) — uuid, employeeid, hierarchy, boundarytype, boundary, tenantid, createdby, createddate",
+      "row_count": 15723,
       "key_columns": {
         "uuid": {
           "type": "varchar",
@@ -10394,8 +10398,8 @@
     },
     "eg_kmc_role": {
       "real_name": "eg_kmc_role",
-      "description": "Eg kmc role (18,395 rows) — user, office, module, role, department, start date, end date, status",
-      "row_count": 18395,
+      "description": "Eg kmc role (18,412 rows) — user, office, module, role, department, start date, end date, status",
+      "row_count": 18412,
       "key_columns": {
         "id": {
           "type": "int",
@@ -11306,8 +11310,8 @@
     },
     "eg_pg_qrtz_triggers": {
       "real_name": "eg_pg_qrtz_triggers",
-      "description": "Eg pg qrtz triggers (4 rows) — sched name, trigger name, trigger group, job name, job group, description, next fire time, prev fire time",
-      "row_count": 4,
+      "description": "Eg pg qrtz triggers (2 rows) — sched name, trigger name, trigger group, job name, job group, description, next fire time, prev fire time",
+      "row_count": 2,
       "key_columns": {
         "sched_name": {
           "type": "varchar",
@@ -15177,8 +15181,8 @@
     },
     "eg_token": {
       "real_name": "eg_token",
-      "description": "Eg token (51,380 rows) — tenantid, tokennumber, tokenidentity, validated, ttlsecs, createddate, lastmodifieddate, createdby",
-      "row_count": 51380,
+      "description": "Eg token (51,465 rows) — tenantid, tokennumber, tokenidentity, validated, ttlsecs, createddate, lastmodifieddate, createdby",
+      "row_count": 51465,
       "key_columns": {
         "id": {
           "type": "char",
@@ -15415,8 +15419,8 @@
     },
     "eg_user": {
       "real_name": "eg_user",
-      "description": "Eg user (16,069 rows) — title, salutation, dob, locale, username, password, pwdexpirydate, mobilenumber",
-      "row_count": 16069,
+      "description": "Eg user (16,071 rows) — title, salutation, dob, locale, username, password, pwdexpirydate, mobilenumber",
+      "row_count": 16071,
       "key_columns": {
         "title": {
           "type": "varchar",
@@ -15756,8 +15760,8 @@
     },
     "eg_user_address": {
       "real_name": "eg_user_address",
-      "description": "Eg user address (28,555 rows) — version, createddate, lastmodifieddate, createdby, lastmodifiedby, type, address, city",
-      "row_count": 28555,
+      "description": "Eg user address (28,559 rows) — version, createddate, lastmodifieddate, createdby, lastmodifiedby, type, address, city",
+      "row_count": 28559,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -15825,8 +15829,8 @@
     },
     "eg_user_aud": {
       "real_name": "eg_user_aud",
-      "description": "Eg user aud (35,523 rows) — title, salutation, dob, locale, username, password, pwdexpirydate, mobilenumber",
-      "row_count": 35523,
+      "description": "Eg user aud (36,917 rows) — title, salutation, dob, locale, username, password, pwdexpirydate, mobilenumber",
+      "row_count": 36917,
       "key_columns": {
         "title": {
           "type": "varchar",
@@ -16561,8 +16565,8 @@
     },
     "eg_user_login": {
       "real_name": "eg_user_login",
-      "description": "Eg user login (15,175 rows) — user, full name, old login time, new login time, old login status, new login status, change timestamp, new token",
-      "row_count": 15175,
+      "description": "Eg user login (15,811 rows) — user, full name, old login time, new login time, old login status, new login status, change timestamp, new token",
+      "row_count": 15811,
       "key_columns": {
         "id": {
           "type": "int",
@@ -16608,8 +16612,8 @@
     },
     "eg_user_login_failed_attempts": {
       "real_name": "eg_user_login_failed_attempts",
-      "description": "Eg user login failed attempts (4,550 rows) — user uuid, attempt date, active",
-      "row_count": 4550,
+      "description": "Eg user login failed attempts (4,552 rows) — user uuid, attempt date, active",
+      "row_count": 4552,
       "key_columns": {
         "user_uuid": {
           "type": "varchar",
@@ -16633,8 +16637,8 @@
     },
     "eg_user_logout": {
       "real_name": "eg_user_logout",
-      "description": "Eg user logout (35,156 rows) — user, full name, old logout time, new logout time, old logout status, new logout status, change timestamp, new token",
-      "row_count": 35156,
+      "description": "Eg user logout (36,523 rows) — user, full name, old logout time, new logout time, old logout status, new logout status, change timestamp, new token",
+      "row_count": 36523,
       "key_columns": {
         "id": {
           "type": "int",
@@ -16718,8 +16722,8 @@
     },
     "eg_userrole_v1": {
       "real_name": "eg_userrole_v1",
-      "description": "Eg userrole v1 (32,035 rows) — role code, role tenantid, user, user tenantid, lastmodifieddate, status",
-      "row_count": 32035,
+      "description": "Eg userrole v1 (32,037 rows) — role code, role tenantid, user, user tenantid, lastmodifieddate, status",
+      "row_count": 32037,
       "key_columns": {
         "role_code": {
           "type": "varchar"
@@ -26666,8 +26670,8 @@
     },
     "cancelled_tender_bidder_payment_dtls": {
       "real_name": "eng_cancelled_tender_bidder_payment_dtls",
-      "description": "Cancelled tender bidder payment dtls — file, esitimation, tender, contractor name, payment mode, transaction, transaction date, emd amount",
-      "row_count": 0,
+      "description": "Cancelled tender bidder payment dtls (1 rows) — file, esitimation, tender, contractor name, payment mode, transaction, transaction date, emd amount",
+      "row_count": 1,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -26757,8 +26761,8 @@
     },
     "lock_records": {
       "real_name": "eng_lock_records",
-      "description": "Lock records (4 rows) — reference, sub module, user, lock, created by, created at, updated by, updated at",
-      "row_count": 4,
+      "description": "Lock records (12 rows) — reference, sub module, user, lock, created by, created at, updated by, updated at",
+      "row_count": 12,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -26768,27 +26772,16 @@
           "type": "varchar"
         },
         "sub_module": {
-          "type": "varchar",
-          "values": [
-            "TENDER",
-            "PO",
-            "ANNEX"
-          ]
+          "type": "varchar"
         },
         "user_id": {
           "type": "varchar",
           "values": [
-            "Emp841 - Navjyot Singh",
-            "Emp841",
-            "Emp3764 - Arshad Usman"
+            "Emp841 - Navjyot Singh"
           ]
         },
         "lock": {
-          "type": "numeric",
-          "values": [
-            "0",
-            "1"
-          ]
+          "type": "numeric"
         },
         "created_by": {
           "type": "varchar",
@@ -26813,8 +26806,8 @@
     },
     "lock_records_aud": {
       "real_name": "eng_lock_records_aud",
-      "description": "Lock records aud (241 rows) — reference, sub module, user, lock, created by, created at, updated by, updated at",
-      "row_count": 241,
+      "description": "Lock records aud (295 rows) — reference, sub module, user, lock, created by, created at, updated by, updated at",
+      "row_count": 295,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -26875,8 +26868,8 @@
     },
     "tender_bidder_payment_dtls": {
       "real_name": "eng_tender_bidder_payment_dtls",
-      "description": "Tender bidder payment dtls (3 rows) — file, esitimation, tender, contractor name, payment mode, transaction, transaction date, emd amount",
-      "row_count": 3,
+      "description": "Tender bidder payment dtls (11 rows) — file, esitimation, tender, contractor name, payment mode, transaction, transaction date, emd amount",
+      "row_count": 11,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -27076,8 +27069,8 @@
     },
     "concept_note": {
       "real_name": "engg_concept_note",
-      "description": "Concept note (2 rows) — file, note, file description, document upload, concept note status, createdAt, updatedAt, version",
-      "row_count": 2,
+      "description": "Concept note (6 rows) — file, note, file description, document upload, concept note status, createdAt, updatedAt, version",
+      "row_count": 6,
       "key_columns": {
         "id": {
           "type": "int",
@@ -27433,8 +27426,8 @@
     },
     "dpr_approval_estimate": {
       "real_name": "engg_dpr_approval_estimate",
-      "description": "Dpr approval estimate (1 rows) — file, file description, dpr, sae, dy ce, dpr date, approval stage, approver",
-      "row_count": 1,
+      "description": "Dpr approval estimate (5 rows) — file, file description, dpr, sae, dy ce, dpr date, approval stage, approver",
+      "row_count": 5,
       "key_columns": {
         "id": {
           "type": "int",
@@ -27482,13 +27475,15 @@
           "type": "varchar"
         },
         "createdby": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "createdAt": {
           "type": "timestamp"
         },
         "updatedby": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "updatedAt": {
           "type": "timestamp"
@@ -27514,7 +27509,8 @@
           "type": "timestamp"
         },
         "approveddate": {
-          "type": "timestamp"
+          "type": "timestamp",
+          "nullRate": "100%"
         },
         "uo_number": {
           "type": "varchar"
@@ -27529,28 +27525,36 @@
           "type": "varchar"
         },
         "memo_number": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "50%"
         },
         "memo_date": {
-          "type": "timestamp"
+          "type": "timestamp",
+          "nullRate": "50%"
         },
         "e_file_no": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "50%"
         },
         "uo_date": {
-          "type": "timestamp"
+          "type": "timestamp",
+          "nullRate": "50%"
         },
         "remarks": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "50%"
         },
         "approved_document_upload": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "a_fs_number": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "bill_no": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         }
       }
     },
@@ -27732,8 +27736,8 @@
     },
     "engineering_bidding_po_details": {
       "real_name": "engg_engineering_bidding_po_details",
-      "description": "Engineering bidding po details (4 rows) — contractor name, contractor phone, contractor email, tender, company person, bank name, po number, transaction",
-      "row_count": 4,
+      "description": "Engineering bidding po details (8 rows) — contractor name, contractor phone, contractor email, tender, company person, bank name, po number, transaction",
+      "row_count": 8,
       "key_columns": {
         "id": {
           "type": "int",
@@ -27919,8 +27923,8 @@
     },
     "est_tender": {
       "real_name": "engg_est_tender_master",
-      "description": "Est tender master (2 rows) — file, estimate, tender, publish date, bidding opening date, sale start date, sale end date, classification start date",
-      "row_count": 2,
+      "description": "Est tender master (7 rows) — file, estimate, tender, publish date, bidding opening date, sale start date, sale end date, classification start date",
+      "row_count": 7,
       "key_columns": {
         "id": {
           "type": "int",
@@ -27945,11 +27949,11 @@
         },
         "sale_start_date": {
           "type": "timestamp",
-          "nullRate": "78%"
+          "nullRate": "100%"
         },
         "sale_end_date": {
           "type": "timestamp",
-          "nullRate": "78%"
+          "nullRate": "100%"
         },
         "classification_start_date": {
           "type": "timestamptz"
@@ -27967,13 +27971,7 @@
           "type": "varchar"
         },
         "create_uid": {
-          "type": "varchar",
-          "values": [
-            "Emp841",
-            "Emp3764",
-            "amankanungo",
-            "Emp114"
-          ]
+          "type": "varchar"
         },
         "createdAt": {
           "type": "timestamp"
@@ -27986,35 +27984,14 @@
           "type": "timestamp"
         },
         "version_no": {
-          "type": "numeric",
-          "values": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11"
-          ]
+          "type": "numeric"
         },
         "c_status": {
           "type": "smallint",
-          "required": true,
-          "values": [
-            "1",
-            "0"
-          ]
+          "required": true
         },
         "typeofyear": {
-          "type": "varchar",
-          "values": [
-            "S",
-            "M"
-          ]
+          "type": "varchar"
         },
         "stateid": {
           "type": "varchar",
@@ -28029,156 +28006,89 @@
           "nullRate": "100%"
         },
         "tender_type": {
-          "type": "varchar",
-          "values": [
-            "percentageWiseTender",
-            "itemWiseTender"
-          ]
+          "type": "varchar"
         },
         "emd_value": {
-          "type": "varchar",
-          "values": [
-            "10",
-            "10000",
-            "6",
-            "8",
-            "5",
-            "9",
-            "8000",
-            "1000",
-            "4",
-            "7",
-            "100",
-            "20"
-          ]
+          "type": "varchar"
         },
         "bid_type": {
-          "type": "varchar",
-          "values": [
-            "both",
-            "lowestBidder"
-          ]
+          "type": "varchar"
         },
         "no_of_years": {
-          "type": "varchar",
-          "nullRate": "22%",
-          "values": [
-            "4",
-            "3",
-            "5",
-            "1"
-          ]
+          "type": "varchar"
         },
         "emd_type": {
-          "type": "varchar",
-          "nullRate": "22%",
-          "values": [
-            "Percentage",
-            "Value",
-            "%"
-          ]
+          "type": "varchar"
         },
         "po_type": {
           "type": "varchar",
-          "nullRate": "57%",
-          "values": [
-            "Multiple PO",
-            "Single PO"
-          ]
+          "nullRate": "40%"
         },
         "is_crn_available": {
           "type": "varchar",
-          "nullRate": "57%",
-          "values": [
-            "Y"
-          ]
+          "nullRate": "40%"
         },
         "crn_remarks": {
           "type": "varchar",
-          "nullRate": "57%"
+          "nullRate": "40%"
         },
         "lock_flag": {
           "type": "numeric",
-          "required": true,
-          "values": [
-            "0",
-            "1"
-          ]
+          "required": true
         },
         "tender_bidders": {
           "type": "int",
-          "required": true,
-          "values": [
-            "0"
-          ]
+          "required": true
         },
         "tender_financial_vetting": {
           "type": "int",
-          "required": true,
-          "values": [
-            "0",
-            "1"
-          ]
+          "required": true
         },
         "crn_partial_flag": {
           "type": "smallint",
-          "required": true,
-          "values": [
-            "0",
-            "1"
-          ]
+          "required": true
         },
         "bid": {
           "type": "int",
-          "required": true,
-          "values": [
-            "0"
-          ]
+          "required": true
         },
         "action_bid": {
-          "type": "int",
-          "nullRate": "64%",
-          "values": [
-            "0",
-            "1"
-          ]
+          "type": "int"
         },
         "created_at": {
           "type": "timestamp",
           "required": true
         },
         "status": {
-          "type": "int",
-          "values": [
-            "0",
-            "1"
-          ]
+          "type": "int"
         },
         "cancel_remarks": {
           "type": "varchar",
-          "nullRate": "99%"
+          "nullRate": "100%"
         },
         "cancelled_by": {
           "type": "varchar",
-          "nullRate": "99%"
+          "nullRate": "100%"
         },
         "cancelled_on": {
           "type": "timestamp",
-          "nullRate": "99%"
+          "nullRate": "100%"
         },
         "wf_pdf": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "estimate_header_id": {
           "type": "varchar",
-          "fk": "kmc_work_estimate_hearder.estimate_header_id"
+          "fk": "kmc_work_estimate_hearder.estimate_header_id",
+          "nullRate": "100%"
         }
       }
     },
     "estimate_details_item_bid": {
       "real_name": "engg_estimate_details_item_bid",
-      "description": "Estimate details item bid — file, est header, item, item desc, unitofmeasure, item rate, gst type, fact",
-      "row_count": 0,
+      "description": "Estimate details item bid (20 rows) — file, est header, item, item desc, unitofmeasure, item rate, gst type, fact",
+      "row_count": 20,
       "key_columns": {
         "id": {
           "type": "int",
@@ -28188,41 +28098,15 @@
           "type": "varchar",
           "fk": "estimate_file_creations.file_no",
           "values": [
-            "KMC/CME/BR-4/WD-023/D/25-26/145594",
-            "KMC/SOL/BR-16/WD-142/D/25-26/598",
-            "KMC/SOL/BR-16/WD-142/D/25-26/600",
-            "KMC/SOL/BR-1/WD-001/D/25-26/538",
-            "KMC/SOL/BR-10/WD-089/D/25-26/554",
-            "KMC/SOL/BR-10/WD-089/D/25-26/556",
-            "KMC/SOL/BR-16/WD-142/D/25-26/536",
-            "KMC/SOL/BR-16/WD-142/D/25-26/540",
-            "KMC/SOL/BR-16/WD-142/D/25-26/552",
-            "KMC/SOL/BR-16/WD-142/D/25-26/558",
-            "KMC/SOL/BR-16/WD-142/D/25-26/560",
-            "KMC/SOL/BR-16/WD-142/D/25-26/564",
-            "KMC/SOL/BR-16/WD-142/D/25-26/566",
-            "KMC/SOL/BR-16/WD-142/D/25-26/568",
-            "KMC/SOL/BR-16/WD-142/D/25-26/570"
+            "KMC/CME/BR-15/WD-133/D/26-27/812",
+            "KMC/CME/BR-15/WD-133/FF/26-27/810"
           ]
         },
         "est_header_id": {
           "type": "varchar",
           "values": [
-            "EST-KMC/CME/BR-4/WD-023/D/25-26/145594",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/598",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/600",
-            "EST-KMC/SOL/BR-1/WD-001/D/25-26/538",
-            "EST-KMC/SOL/BR-10/WD-089/D/25-26/554",
-            "EST-KMC/SOL/BR-10/WD-089/D/25-26/556",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/536",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/540",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/552",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/558",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/560",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/564",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/566",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/568",
-            "EST-KMC/SOL/BR-16/WD-142/D/25-26/570"
+            "EST-KMC/CME/BR-15/WD-133/D/26-27/812",
+            "EST-KMC/CME/BR-15/WD-133/FF/26-27/810"
           ]
         },
         "item_no": {
@@ -28232,23 +28116,7 @@
           "type": "varchar"
         },
         "unitofmeasure": {
-          "type": "varchar",
-          "values": [
-            "EA",
-            "MTR",
-            "25M",
-            "G25",
-            "HBG",
-            "M2H",
-            "BLK",
-            "IU",
-            "kg",
-            "KG",
-            "COL",
-            "SQM",
-            "M3",
-            "FT2"
-          ]
+          "type": "varchar"
         },
         "item_rate": {
           "type": "numeric"
@@ -28262,10 +28130,7 @@
         "fact": {
           "type": "varchar",
           "values": [
-            "1",
-            "+1*1.23",
-            "1*1.22",
-            "1*1.33"
+            "1"
           ]
         },
         "formula": {
@@ -28283,61 +28148,30 @@
         "cgst_percent": {
           "type": "numeric",
           "values": [
-            "9",
             "0"
           ]
         },
         "cgst_amount": {
           "type": "numeric",
           "values": [
-            "3645",
-            "0",
-            "27.54",
-            "153.9",
-            "283.5",
-            "405",
-            "849.6",
-            "1260",
-            "1275.75",
-            "2638.98",
-            "3572.1",
-            "6006.15",
-            "6006.96",
-            "7017.03",
-            "8037.63"
+            "0"
           ]
         },
         "sgst_percent": {
           "type": "numeric",
           "values": [
-            "9",
             "0"
           ]
         },
         "sgst_amount": {
           "type": "numeric",
           "values": [
-            "3645",
-            "0",
-            "27.54",
-            "153.9",
-            "283.5",
-            "405",
-            "849.6",
-            "1260",
-            "1275.75",
-            "2638.98",
-            "3572.1",
-            "6006.15",
-            "6006.96",
-            "7017.03",
-            "8037.63"
+            "0"
           ]
         },
         "igst_percent": {
           "type": "numeric",
           "values": [
-            "0",
             "18"
           ]
         },
@@ -28347,8 +28181,6 @@
         "cess_percent": {
           "type": "numeric",
           "values": [
-            "2",
-            "0",
             "1"
           ]
         },
@@ -28368,24 +28200,7 @@
           ]
         },
         "quantity": {
-          "type": "numeric",
-          "values": [
-            "9",
-            "14",
-            "16",
-            "13",
-            "12",
-            "15",
-            "118",
-            "1000",
-            "1110",
-            "1125",
-            "1178",
-            "1236",
-            "1900",
-            "11120",
-            "11234"
-          ]
+          "type": "numeric"
         },
         "annexture_rate": {
           "type": "numeric"
@@ -28408,21 +28223,8 @@
         "createdAt": {
           "type": "timestamp",
           "values": [
-            "2026-02-03 16:04:58.127",
-            "2026-02-11 18:03:11.522",
-            "2026-02-16 12:56:38.259",
-            "2026-01-16 16:19:34.401",
-            "2026-01-16 16:56:36.17",
-            "2026-01-20 18:57:40.372",
-            "2026-01-21 11:40:53.642",
-            "2026-01-21 14:47:25.404",
-            "2026-01-21 16:42:22.256",
-            "2026-01-22 15:52:08.469",
-            "2026-01-22 16:16:52.398",
-            "2026-01-27 15:52:23.529",
-            "2026-01-27 19:12:19.698",
-            "2026-01-28 15:53:09.613",
-            "2026-01-29 09:27:22.061"
+            "2026-04-27 14:48:54.522",
+            "2026-04-27 09:25:36.396"
           ]
         },
         "updatedby": {
@@ -28434,21 +28236,8 @@
         "updatedAt": {
           "type": "timestamp",
           "values": [
-            "2026-02-03 16:04:58.127",
-            "2026-02-11 18:03:11.522",
-            "2026-02-16 12:56:38.259",
-            "2026-01-16 16:19:34.401",
-            "2026-01-16 16:56:36.17",
-            "2026-01-20 18:57:40.372",
-            "2026-01-21 11:40:53.642",
-            "2026-01-21 14:47:25.404",
-            "2026-01-21 16:42:22.256",
-            "2026-01-22 15:52:08.469",
-            "2026-01-22 16:16:52.398",
-            "2026-01-27 15:52:23.529",
-            "2026-01-27 19:12:19.698",
-            "2026-01-28 15:53:09.613",
-            "2026-01-29 09:27:22.061"
+            "2026-04-27 14:48:54.522",
+            "2026-04-27 09:25:36.396"
           ]
         },
         "version": {
@@ -28469,19 +28258,18 @@
         "schedule_name": {
           "type": "varchar",
           "values": [
-            "KMC Fair Rate",
-            "TestScheduleNav",
-            "KMC.SMALL-DIA TUBEWELL 2012",
-            "KMC.FAIR RATE BIG-DIA TUBEWELL",
-            "ELECTRIC-MECH.WORK(VOL-1)OCT18",
-            "PWD.BLDG SCHEDULE_WEF 01.11.2017"
+            "KMC.CME(C)_FAIR_RATES-2012",
+            "KMC.FAIR RATE BIG-DIA TUBEWELL"
           ]
         },
         "r1_price": {
           "type": "numeric"
         },
         "r2_price": {
-          "type": "numeric"
+          "type": "numeric",
+          "values": [
+            "0"
+          ]
         },
         "r3_price": {
           "type": "numeric",
@@ -28562,33 +28350,11 @@
           ]
         },
         "r1_date": {
-          "type": "date",
-          "values": [
-            "2026-01-29",
-            "2026-01-28",
-            "2026-02-18",
-            "2026-02-11",
-            "2026-02-19",
-            "2026-02-05",
-            "2026-02-06",
-            "2026-02-07",
-            "2026-02-26",
-            "2026-01-22",
-            "2026-01-26",
-            "2026-01-30",
-            "2026-02-09",
-            "2026-02-12",
-            "2026-02-20"
-          ]
+          "type": "date"
         },
         "r2_date": {
           "type": "date",
-          "nullRate": "90%",
-          "values": [
-            "2026-01-29",
-            "2026-01-23",
-            "2026-01-30"
-          ]
+          "nullRate": "100%"
         },
         "r3_date": {
           "type": "date",
@@ -28646,9 +28412,7 @@
           "type": "varchar",
           "values": [
             "11063",
-            "8601",
-            "11063|8601",
-            "8601|11063"
+            "8601"
           ]
         },
         "no_of_winner": {
@@ -28671,37 +28435,22 @@
           "type": "varchar",
           "values": [
             "8610 - PRICEWATERHOUSE COOPERS PVT.LTD. - AABCP9181H",
-            "AK02 - INDUJA HOME SOLUTION PVT LTD - AADCI0626C",
-            "AK02 - INDUJA HOME SOLUTION PVT LTD - AADCI0626C|8610 - PRICEWATERHOUSE COOPERS PVT.LTD. - AABCP9181H",
-            "8610 - PRICEWATERHOUSE COOPERS PVT.LTD. - AABCP9181H|AK02 - INDUJA HOME SOLUTION PVT LTD - AADCI0626C"
+            "AK02 - INDUJA HOME SOLUTION PVT LTD - AADCI0626C"
           ]
         },
         "tender_no": {
           "type": "varchar",
           "fk": "engg_est_tender_master.tender_no",
           "values": [
-            "TEN-KMC/CME/BR-4/WD-023/D/25-26/145594",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/598",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/600",
-            "TEN-KMC/SOL/BR-1/WD-001/D/25-26/538",
-            "TEN-KMC/SOL/BR-10/WD-089/D/25-26/554",
-            "TEN-KMC/SOL/BR-10/WD-089/D/25-26/556",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/536",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/540",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/552",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/558",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/560",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/564",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/566",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/568",
-            "TEN-KMC/SOL/BR-16/WD-142/D/25-26/570"
+            "TEN-KMC/CME/BR-15/WD-133/D/26-27/812",
+            "TEN-KMC/CME/BR-15/WD-133/FF/26-27/810"
           ]
         },
         "bid_winner": {
           "type": "int",
           "values": [
-            "1",
-            "0"
+            "0",
+            "1"
           ]
         },
         "final_bid_price": {
@@ -28710,59 +28459,39 @@
         "item_allocation_type": {
           "type": "varchar",
           "values": [
-            "Item Wise Allocation",
-            "All Items On Final Round Value",
-            "All Items Value"
+            "Item Wise Allocation"
           ]
         },
         "total_winners": {
           "type": "int",
           "required": true,
           "values": [
-            "1",
-            "2",
-            "0"
+            "1"
           ]
         },
         "winner_type": {
           "type": "int",
-          "nullRate": "10%",
           "values": [
-            "0",
-            "1"
+            "0"
           ]
         },
         "stateid": {
           "type": "varchar",
-          "nullRate": "59%",
           "values": [
-            "24616",
-            "24463",
-            "24476",
-            "24511",
-            "24557",
-            "24573",
-            "24611",
-            "24986",
-            "25023",
-            "25064"
+            "25301",
+            "25284"
           ]
         },
         "statusid": {
           "type": "varchar",
-          "nullRate": "59%",
           "values": [
-            "329",
-            "324",
-            "313"
+            "329"
           ]
         },
         "status_description": {
           "type": "varchar",
-          "nullRate": "59%",
           "values": [
-            "Approved",
-            "Forward"
+            "Approved"
           ]
         },
         "cancelled_by": {
@@ -28784,7 +28513,8 @@
           "nullRate": "100%"
         },
         "wf_pdf": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         }
       }
     },
@@ -29390,8 +29120,8 @@
     },
     "financial_bid_estimation": {
       "real_name": "engg_financial_bid_estimation",
-      "description": "Financial bid estimation (9 rows) — file, est header, item, item desc, unitofmeasure, item rate, gst type, fact",
-      "row_count": 9,
+      "description": "Financial bid estimation (46 rows) — file, est header, item, item desc, unitofmeasure, item rate, gst type, fact",
+      "row_count": 46,
       "key_columns": {
         "id": {
           "type": "int",
@@ -29710,8 +29440,8 @@
     },
     "financial_bidding_details": {
       "real_name": "engg_financial_bidding_details",
-      "description": "Financial bidding details (4 rows) — contractor name, contractor phone, tender, bid value 1, bid type 1, bid date 1, bid value 2, bid type 2",
-      "row_count": 4,
+      "description": "Financial bidding details (8 rows) — contractor name, contractor phone, tender, bid value 1, bid type 1, bid date 1, bid value 2, bid type 2",
+      "row_count": 8,
       "key_columns": {
         "id": {
           "type": "int",
@@ -29968,8 +29698,8 @@
     },
     "financial_bidding_details_history": {
       "real_name": "engg_financial_bidding_details_history",
-      "description": "Financial bidding details history — contractor name, contractor phone, tender, bid value 1, bid type 1, bid date 1, bid value 2, bid type 2",
-      "row_count": 0,
+      "description": "Financial bidding details history (2 rows) — contractor name, contractor phone, tender, bid value 1, bid type 1, bid date 1, bid value 2, bid type 2",
+      "row_count": 2,
       "key_columns": {
         "id": {
           "type": "int",
@@ -30307,8 +30037,8 @@
     },
     "invoice_details": {
       "real_name": "engg_invoice_details",
-      "description": "Invoice details — contractor name, contractor phone, tender, estimate, po number, item number, item desc, unitofmeasure",
-      "row_count": 0,
+      "description": "Invoice details (6 rows) — contractor name, contractor phone, tender, estimate, po number, item number, item desc, unitofmeasure",
+      "row_count": 6,
       "key_columns": {
         "id": {
           "type": "int",
@@ -30450,8 +30180,8 @@
     },
     "invoice_headers": {
       "real_name": "engg_invoice_headers",
-      "description": "Invoice headers — contractor name, contractor phone, contractor address, tender, estimate, po number, status approval, bill",
-      "row_count": 0,
+      "description": "Invoice headers (5 rows) — contractor name, contractor phone, contractor address, tender, estimate, po number, status approval, bill",
+      "row_count": 5,
       "key_columns": {
         "id": {
           "type": "int",
@@ -30666,8 +30396,8 @@
     },
     "po_estimation_details": {
       "real_name": "engg_po_estimation_details",
-      "description": "Po estimation details (6 rows) — tender, file, estimation, year 1, year 2, year 3, year 4, year 5",
-      "row_count": 6,
+      "description": "Po estimation details (19 rows) — tender, file, estimation, year 1, year 2, year 3, year 4, year 5",
+      "row_count": 19,
       "key_columns": {
         "tender_no": {
           "type": "varchar",
@@ -30926,8 +30656,8 @@
     },
     "po_headers": {
       "real_name": "engg_po_headers",
-      "description": "Po headers (2 rows) — contractor name, contractor phone, tender, estimate, po creation date, po number, po type, site",
-      "row_count": 2,
+      "description": "Po headers (6 rows) — contractor name, contractor phone, tender, estimate, po creation date, po number, po type, site",
+      "row_count": 6,
       "key_columns": {
         "id": {
           "type": "int",
@@ -31169,8 +30899,8 @@
     },
     "po_item_bidding_details": {
       "real_name": "engg_po_item_bidding_details",
-      "description": "Po item bidding details (6 rows) — contractor name, contractor phone, tender, estimate, po creation date, po number, item number, item desc",
-      "row_count": 6,
+      "description": "Po item bidding details (19 rows) — contractor name, contractor phone, tender, estimate, po creation date, po number, item number, item desc",
+      "row_count": 19,
       "key_columns": {
         "id": {
           "type": "int",
@@ -31456,8 +31186,8 @@
     },
     "receipt_details": {
       "real_name": "engg_receipt_details",
-      "description": "Receipt details (6 rows) — contractor name, contractor phone, tender, estimate, po number, item number, item desc, category",
-      "row_count": 6,
+      "description": "Receipt details (23 rows) — contractor name, contractor phone, tender, estimate, po number, item number, item desc, category",
+      "row_count": 23,
       "key_columns": {
         "id": {
           "type": "int",
@@ -31716,8 +31446,8 @@
     },
     "receipt_headers": {
       "real_name": "engg_receipt_headers",
-      "description": "Receipt headers (2 rows) — contractor name, contractor phone, tender, estimate, po number, ship to, bill to, status approval",
-      "row_count": 2,
+      "description": "Receipt headers (8 rows) — contractor name, contractor phone, tender, estimate, po number, ship to, bill to, status approval",
+      "row_count": 8,
       "key_columns": {
         "id": {
           "type": "int",
@@ -31882,8 +31612,8 @@
     },
     "report_document": {
       "real_name": "engg_report_document",
-      "description": "Report document (75 rows) — reference, type, document base64, options, createdby, created date, modifiedby, modified date",
-      "row_count": 75,
+      "description": "Report document (123 rows) — reference, type, document base64, options, createdby, created date, modifiedby, modified date",
+      "row_count": 123,
       "key_columns": {
         "id": {
           "type": "int",
@@ -31893,7 +31623,19 @@
           "type": "varchar"
         },
         "type": {
-          "type": "varchar"
+          "type": "varchar",
+          "values": [
+            "Estimate",
+            "Technical Bidders",
+            "Tender",
+            "Financial Vetting",
+            "Measurement Book",
+            "PO",
+            "Financial Bidders",
+            "Invoice",
+            "File Creation",
+            "Workflow History"
+          ]
         },
         "document_base64": {
           "type": "varchar"
@@ -31901,7 +31643,18 @@
         "options": {
           "type": "varchar",
           "values": [
-            "[object Object]"
+            "[object Object]",
+            "undefined",
+            "{\\\"file_no\\\":\\\"KMC/CME/BR-15/WD-133/D/25-26/764\\",
+            "\\\"process_name\\\":\\\"Estimate\\\"",
+            "\\\"workflowHistory\\\":[{\\\"created_date\\\":\\\"31/03/2026\\\"",
+            "\\\"comments\\\":\\\"test\\\"}",
+            "{\\\"created_date\\\":\\\"31/03/2026\\\"",
+            "\\\"comments\\\":\\\"test\\\"}",
+            "{\\\"created_date\\\":\\\"31/03/2026\\\"",
+            "\\\"comments\\\":\\\"test\\\"}",
+            "{\\\"created_date\\\":\\\"31/03/2026\\\"",
+            "\\\"comments\\\":\\\"ok\\\"}]}\""
           ]
         },
         "createdby": {
@@ -31909,7 +31662,8 @@
           "values": [
             "Emp841",
             "undefined",
-            "16114"
+            "16114",
+            "system"
           ]
         },
         "created_date": {
@@ -32025,8 +31779,8 @@
     },
     "schedule": {
       "real_name": "engg_schedule_master",
-      "description": "Schedule master (12 rows) — schedule name, schedule category, schedule year, schedule segment, schedule owner, module, upload, schedule description",
-      "row_count": 12,
+      "description": "Schedule master (13 rows) — schedule name, schedule category, schedule year, schedule segment, schedule owner, module, upload, schedule description",
+      "row_count": 13,
       "key_columns": {
         "id": {
           "type": "int",
@@ -32081,8 +31835,8 @@
     },
     "tender_bidders": {
       "real_name": "engg_tender_bidders",
-      "description": "Tender bidders (4 rows) — contractor name, contractor phone, contractor email, tender, company person, shortlisted flag, bid type, bid value",
-      "row_count": 4,
+      "description": "Tender bidders (13 rows) — contractor name, contractor phone, contractor email, tender, company person, shortlisted flag, bid type, bid value",
+      "row_count": 13,
       "key_columns": {
         "id": {
           "type": "int",
@@ -32246,8 +32000,8 @@
     },
     "tender_contractor_crn_details": {
       "real_name": "engg_tender_contractor_crn_details",
-      "description": "Tender contractor crn details (3 rows) — contractor name, contractor phone, tender, estimate, file, crn number, crn amount, contractor code",
-      "row_count": 3,
+      "description": "Tender contractor crn details (25 rows) — contractor name, contractor phone, tender, estimate, file, crn number, crn amount, contractor code",
+      "row_count": 25,
       "key_columns": {
         "id": {
           "type": "int",
@@ -32347,8 +32101,8 @@
     },
     "tender_docs": {
       "real_name": "engg_tender_docs",
-      "description": "Tender docs (2 rows) — file, tender, tender doc1, tender doc2, tender doc3, create uid, createdAt, modify uid",
-      "row_count": 2,
+      "description": "Tender docs (7 rows) — file, tender, tender doc1, tender doc2, tender doc3, create uid, createdAt, modify uid",
+      "row_count": 7,
       "key_columns": {
         "id": {
           "type": "int",
@@ -32509,8 +32263,8 @@
     },
     "estimate_file_creations": {
       "real_name": "estimate_file_creations",
-      "description": "Estimate file creations (15 rows) — file, department, borough, ward, zone unit, work type, financial year, serial",
-      "row_count": 15,
+      "description": "Estimate file creations (25 rows) — file, department, borough, ward, zone unit, work type, financial year, serial",
+      "row_count": 25,
       "key_columns": {
         "id": {
           "type": "int",
@@ -33846,8 +33600,8 @@
     },
     "holiday_list": {
       "real_name": "holiday_list",
-      "description": "Holiday list (721 rows) — asmt day, asmt reason, create, create date, modify, modify date, days, is holiday",
-      "row_count": 721,
+      "description": "Holiday list (722 rows) — asmt day, asmt reason, create, create date, modify, modify date, days, is holiday",
+      "row_count": 722,
       "key_columns": {
         "asmt_day": {
           "type": "timestamp",
@@ -34030,8 +33784,8 @@
     },
     "hr_filestore_doc": {
       "real_name": "hr_filestore_doc",
-      "description": "Hr filestore doc (22 rows) — document type, document, document name, filestore, created at, updated at",
-      "row_count": 22,
+      "description": "Hr filestore doc (27 rows) — document type, document, document name, filestore, created at, updated at",
+      "row_count": 27,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -41268,8 +41022,8 @@
     },
     "hrm_change_audit": {
       "real_name": "hrm_change_audit",
-      "description": "Hrm change audit (24 rows) — emp, hrm section, hrm current value, hrm field name, hrm table name, hrm updated value, hrm remarks, order",
-      "row_count": 24,
+      "description": "Hrm change audit (25 rows) — emp, hrm section, hrm current value, hrm field name, hrm table name, hrm updated value, hrm remarks, order",
+      "row_count": 25,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -47158,8 +46912,8 @@
     },
     "hrm_emp_addr_detail": {
       "real_name": "hrm_emp_addr_dtl",
-      "description": "Hrm emp addr detail (44,447 rows) — emp, hrm emp curr addr1, hrm emp curr addr2, hrm emp curr addr3, hrm emp curr pin, hrm emp curr phone, hrm emp perm addr1",
-      "row_count": 44447,
+      "description": "Hrm emp addr detail (44,460 rows) — emp, hrm emp curr addr1, hrm emp curr addr2, hrm emp curr addr3, hrm emp curr pin, hrm emp curr phone, hrm emp perm addr1",
+      "row_count": 44460,
       "key_columns": {
         "emp_id": {
           "type": "bigint",
@@ -48622,8 +48376,8 @@
     },
     "hrm_emp_addtnl_duty_detail": {
       "real_name": "hrm_emp_addtnl_duty_dtl",
-      "description": "Hrm emp addtnl duty detail (1,008 rows) — emp, hrm addtnl dept code, hrm addtnl sub dept code, hrm addtnl from date, hrm addtnl to date, hrm addtnl order, hrm addtnl order date, create uid",
-      "row_count": 1008,
+      "description": "Hrm emp addtnl duty detail (1,014 rows) — emp, hrm addtnl dept code, hrm addtnl sub dept code, hrm addtnl from date, hrm addtnl to date, hrm addtnl order, hrm addtnl order date, create uid",
+      "row_count": 1014,
       "key_columns": {
         "emp_no": {
           "type": "varchar"
@@ -49909,8 +49663,8 @@
     },
     "hrm_emp_edu_detail": {
       "real_name": "hrm_emp_edu_dtl",
-      "description": "Hrm emp edu detail (2,737 rows) — emp, hrm edu qualification, hrm edu board univ, hrm edu institution, hrm edu yop, hrm edu marks, create uid",
-      "row_count": 2737,
+      "description": "Hrm emp edu detail (2,739 rows) — emp, hrm edu qualification, hrm edu board univ, hrm edu institution, hrm edu yop, hrm edu marks, create uid",
+      "row_count": 2739,
       "key_columns": {
         "emp_id": {
           "type": "bigint",
@@ -50450,8 +50204,8 @@
     },
     "hrm_emp_experience_detail": {
       "real_name": "hrm_emp_experience_dtl",
-      "description": "Hrm emp experience detail (141 rows) — emp, hrm employer name, hrm employer adrress, hrm from date yyyymm, hrm to date yyyymm, hrm duration in months, hrm role name, hrm job nature",
-      "row_count": 141,
+      "description": "Hrm emp experience detail (153 rows) — emp, hrm employer name, hrm employer adrress, hrm from date yyyymm, hrm to date yyyymm, hrm duration in months, hrm role name, hrm job nature",
+      "row_count": 153,
       "key_columns": {
         "emp_no": {
           "type": "varchar"
@@ -50780,8 +50534,8 @@
     },
     "hrm_emp_pers": {
       "real_name": "hrm_emp_pers",
-      "description": "Hrm emp pers (62,920 rows) — emp, first name, middle name, last name, employee type, hrm emp photo, hrm father f name",
-      "row_count": 62920,
+      "description": "Hrm emp pers (62,933 rows) — emp, first name, middle name, last name, employee type, hrm emp photo, hrm father f name",
+      "row_count": 62933,
       "key_columns": {
         "emp_id": {
           "type": "bigint",
@@ -54343,8 +54097,8 @@
     },
     "hrm_emp_status_change_order_details": {
       "real_name": "hrm_emp_status_change_order_details",
-      "description": "Hrm emp status change order details (48 rows) — hrm status order uuid, emp, order, order date, order execut date, order authority, order executor, create uid",
-      "row_count": 48,
+      "description": "Hrm emp status change order details (60 rows) — hrm status order uuid, emp, order, order date, order execut date, order authority, order executor, create uid",
+      "row_count": 60,
       "key_columns": {
         "hrm_status_order_uuid": {
           "type": "bigint",
@@ -54363,22 +54117,27 @@
           "type": "timestamp"
         },
         "order_authority_id": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "order_executor_id": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "create_uid": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "create_date": {
           "type": "timestamp"
         },
         "update_uid": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "100%"
         },
         "update_date": {
-          "type": "timestamp"
+          "type": "timestamp",
+          "nullRate": "100%"
         },
         "remark": {
           "type": "text"
@@ -54629,8 +54388,8 @@
     },
     "hrm_emp_training_detail": {
       "real_name": "hrm_emp_training_dtl",
-      "description": "Hrm emp training detail (141 rows) — emp, hrm training name, hrm training from date, hrm training to date, hrm training duration, hrm training grade, create uid, create date",
-      "row_count": 141,
+      "description": "Hrm emp training detail (153 rows) — emp, hrm training name, hrm training from date, hrm training to date, hrm training duration, hrm training grade, create uid, create date",
+      "row_count": 153,
       "key_columns": {
         "emp_no": {
           "type": "varchar"
@@ -54890,8 +54649,8 @@
     },
     "hrm_employment_detail": {
       "real_name": "hrm_employment_dtl",
-      "description": "Hrm employment detail (62,686 rows) — emp, hrm dept code, hrm unit off code, hrm sub dept code, hrm appointment date, hrm joining date, hrm confirmation date",
-      "row_count": 62686,
+      "description": "Hrm employment detail (62,693 rows) — emp, hrm dept code, hrm unit off code, hrm sub dept code, hrm appointment date, hrm joining date, hrm confirmation date",
+      "row_count": 62693,
       "key_columns": {
         "emp_id": {
           "type": "bigint",
@@ -54907,7 +54666,7 @@
         },
         "hrm_unit_off_code": {
           "type": "varchar",
-          "nullRate": "30%"
+          "nullRate": "29%"
         },
         "hrm_sub_dept_code": {
           "type": "varchar",
@@ -54931,7 +54690,7 @@
         },
         "hrm_separation_date": {
           "type": "timestamp",
-          "nullRate": "52%"
+          "nullRate": "51%"
         },
         "hrm_separation_order": {
           "type": "varchar",
@@ -55000,8 +54759,7 @@
             "19927",
             "69926",
             "66453",
-            "75937",
-            "76960"
+            "75937"
           ]
         },
         "create_date": {
@@ -55009,24 +54767,7 @@
         },
         "modified_uid": {
           "type": "varchar",
-          "nullRate": "37%",
-          "values": [
-            "MIGRATOR",
-            "18021",
-            "47193",
-            "76148",
-            "19927",
-            "75937",
-            "66453",
-            "69926",
-            "37670",
-            "19219",
-            "40794",
-            "68328",
-            "76290",
-            "77353",
-            "16104"
-          ]
+          "nullRate": "37%"
         },
         "modified_date": {
           "type": "timestamp",
@@ -55048,9 +54789,7 @@
             "10",
             "11",
             "12",
-            "13",
-            "14",
-            "15"
+            "13"
           ]
         },
         "hrm_gradation_code": {
@@ -55103,7 +54842,9 @@
           "values": [
             "18",
             "3",
-            "27"
+            "27",
+            "35",
+            "36"
           ]
         },
         "notification_date": {
@@ -55111,13 +54852,14 @@
           "nullRate": "100%",
           "values": [
             "2009-11-27 00:00:00",
+            "2009-11-16 00:00:00",
             "2009-12-01 00:00:00",
-            "2009-11-16 00:00:00"
+            "2026-04-08 00:00:00"
           ]
         },
         "hrm_majdoor_batch_no": {
           "type": "varchar",
-          "nullRate": "75%"
+          "nullRate": "74%"
         },
         "hrm_category": {
           "type": "varchar",
@@ -55175,8 +54917,7 @@
           "type": "varchar",
           "nullRate": "100%",
           "values": [
-            "Y",
-            "N"
+            "Y"
           ]
         },
         "hrm_degree_year": {
@@ -55247,9 +54988,7 @@
             "SPRG",
             "CON",
             "DEPT",
-            "DEPU",
-            "CAS",
-            "REEMP"
+            "DEPU"
           ]
         },
         "hrm_rank_no": {
@@ -55286,7 +55025,7 @@
         },
         "hrm_prv_dsgn_code": {
           "type": "varchar",
-          "nullRate": "76%"
+          "nullRate": "75%"
         },
         "hrm_prv_cadre_join_date": {
           "type": "timestamp",
@@ -55354,7 +55093,7 @@
         },
         "hrm_labour_yn": {
           "type": "varchar",
-          "nullRate": "39%",
+          "nullRate": "38%",
           "values": [
             "N",
             "Y"
@@ -55390,7 +55129,7 @@
         },
         "hrm_transfer_initiated_yn": {
           "type": "varchar",
-          "nullRate": "97%",
+          "nullRate": "96%",
           "values": [
             "N",
             "Y"
@@ -55509,8 +55248,8 @@
             "U",
             "S",
             "R",
-            "UES",
             "UPH",
+            "UES",
             "US"
           ]
         },
@@ -55528,7 +55267,56 @@
         },
         "is_row_active": {
           "type": "char",
-          "nullRate": "100%"
+          "nullRate": "100%",
+          "values": [
+            "Y"
+          ]
+        },
+        "hrm_pay_grade_code": {
+          "type": "numeric",
+          "nullRate": "30%"
+        },
+        "hrm_pay_comm_no": {
+          "type": "varchar",
+          "nullRate": "38%",
+          "values": [
+            "6"
+          ]
+        },
+        "hrm_pay_band_no": {
+          "type": "varchar",
+          "nullRate": "38%",
+          "values": [
+            "PB-1",
+            "PB-3",
+            "PB-2",
+            "PB-4",
+            "PB-4A",
+            "NA",
+            "PB-4B",
+            "PB-5"
+          ]
+        },
+        "hrm_grade_pay": {
+          "type": "numeric",
+          "nullRate": "53%",
+          "values": [
+            "1900",
+            "1800",
+            "1700",
+            "2600",
+            "2100",
+            "3900",
+            "4100",
+            "4400",
+            "3600",
+            "5400",
+            "3200",
+            "4800",
+            "2300",
+            "6600",
+            "2900"
+          ]
         }
       }
     },
@@ -60427,8 +60215,8 @@
     },
     "hrm_incident_log": {
       "real_name": "hrm_incident_log",
-      "description": "Hrm incident log (997,469 rows) — emp, hrm incident type, hrm incident date, hrm cadre code, hrm dsgn code, hrm dept code, hrm unit off code, hrm sub dept code",
-      "row_count": 997469,
+      "description": "Hrm incident log (997,508 rows) — emp, hrm incident type, hrm incident date, hrm cadre code, hrm dsgn code, hrm dept code, hrm unit off code, hrm sub dept code",
+      "row_count": 997508,
       "key_columns": {
         "emp_no": {
           "type": "varchar",
@@ -68257,8 +68045,8 @@
     },
     "hrm_promotee_list": {
       "real_name": "hrm_promotee_list",
-      "description": "Hrm promotee list (2,510 rows) — hrm srl, emp, hrm emp full name, hrm caste, hrm from gradation, hrm from dept code, hrm from sub dept code, hrm from office code",
-      "row_count": 2510,
+      "description": "Hrm promotee list (2,512 rows) — hrm srl, emp, hrm emp full name, hrm caste, hrm from gradation, hrm from dept code, hrm from sub dept code, hrm from office code",
+      "row_count": 2512,
       "key_columns": {
         "hrm_srl_no": {
           "type": "numeric"
@@ -68868,8 +68656,8 @@
     },
     "hrm_promotion_header": {
       "real_name": "hrm_promotion_hdr",
-      "description": "Hrm promotion header (257 rows) — hrm cadre code, hrm order, hrm order desc, hrm order date, create uid, create date, modified uid, modified date",
-      "row_count": 257,
+      "description": "Hrm promotion header (258 rows) — hrm cadre code, hrm order, hrm order desc, hrm order date, create uid, create date, modified uid, modified date",
+      "row_count": 258,
       "key_columns": {
         "hrm_cadre_code": {
           "type": "varchar"
@@ -70475,8 +70263,8 @@
     },
     "hrm_roster_detail": {
       "real_name": "hrm_roster_dtl",
-      "description": "Hrm roster detail (3,618 rows) — hrm roster, hrm reserved category, hrm required, hrm filled up",
-      "row_count": 3618,
+      "description": "Hrm roster detail (3,620 rows) — hrm roster, hrm reserved category, hrm required, hrm filled up",
+      "row_count": 3620,
       "key_columns": {
         "hrm_roster_id": {
           "type": "numeric",
@@ -70568,8 +70356,8 @@
     },
     "hrm_roster_header": {
       "real_name": "hrm_roster_hdr",
-      "description": "Hrm roster header (1,810 rows) — hrm roster, hrm roster type, hrm cadre code, hrm order, hrm order date, hrm no of emp, hrm actual pos, hrm roster end pos",
-      "row_count": 1810,
+      "description": "Hrm roster header (1,811 rows) — hrm roster, hrm roster type, hrm cadre code, hrm order, hrm order date, hrm no of emp, hrm actual pos, hrm roster end pos",
+      "row_count": 1811,
       "key_columns": {
         "hrm_roster_id": {
           "type": "numeric",
@@ -74991,8 +74779,8 @@
     },
     "hrm_temp_incident_list": {
       "real_name": "hrm_temp_incident_list",
-      "description": "Hrm temp incident list (467 rows) — hrm srl, emp, hrm emp name, hrm caste, hrm from gradation, hrm from dept code, hrm from sub dept code, hrm from office code",
-      "row_count": 467,
+      "description": "Hrm temp incident list (479 rows) — hrm srl, emp, hrm emp name, hrm caste, hrm from gradation, hrm from dept code, hrm from sub dept code, hrm from office code",
+      "row_count": 479,
       "key_columns": {
         "hrm_srl_no": {
           "type": "numeric"
@@ -76795,8 +76583,8 @@
     },
     "hrm_temp_transfer_list": {
       "real_name": "hrm_temp_transfer_list",
-      "description": "Hrm temp transfer list (207 rows) — hrm srl, emp, hrm emp name, hrm cadre code, hrm from dept code, hrm from sub dept code, hrm to dept code, hrm to sub dept code",
-      "row_count": 207,
+      "description": "Hrm temp transfer list (561 rows) — hrm srl, emp, hrm emp name, hrm cadre code, hrm from dept code, hrm from sub dept code, hrm to dept code, hrm to sub dept code",
+      "row_count": 561,
       "key_columns": {
         "hrm_srl_no": {
           "type": "numeric"
@@ -76814,12 +76602,10 @@
             "1004",
             "2003",
             "1002",
-            "1003",
             "2002",
             "9003",
             "1012",
             "1007",
-            "10001",
             "1001",
             "9002"
           ]
@@ -76831,16 +76617,18 @@
           "type": "varchar",
           "values": [
             "46",
+            "1112",
             "23",
             "24",
-            "1112",
             "57",
             "15",
+            "134",
             "52",
             "17",
             "43",
             "54",
-            "55"
+            "55",
+            "58"
           ]
         },
         "hrm_to_dept_code": {
@@ -76850,22 +76638,24 @@
           "type": "varchar",
           "values": [
             "46",
+            "1112",
             "23",
             "24",
-            "1112",
             "57",
             "15",
+            "134",
             "52",
             "54",
             "17",
             "43",
             "49",
-            "55"
+            "55",
+            "58"
           ]
         },
         "hrm_transfer_complete_yn": {
           "type": "varchar",
-          "nullRate": "98%",
+          "nullRate": "99%",
           "values": [
             "Y"
           ]
@@ -76876,28 +76666,28 @@
         },
         "hrm_transfer_confirm_yn": {
           "type": "varchar",
-          "nullRate": "73%",
+          "nullRate": "89%",
           "values": [
             "Y"
           ]
         },
         "hrm_order_no": {
           "type": "varchar",
-          "nullRate": "73%",
+          "nullRate": "89%",
           "values": [
             "ORDER"
           ]
         },
         "hrm_order_desc": {
           "type": "varchar",
-          "nullRate": "73%",
+          "nullRate": "89%",
           "values": [
             "test"
           ]
         },
         "hrm_order_date": {
           "type": "date",
-          "nullRate": "73%",
+          "nullRate": "89%",
           "values": [
             "2026-04-15",
             "2026-03-26"
@@ -76905,7 +76695,7 @@
         },
         "hrm_joining_date": {
           "type": "date",
-          "nullRate": "98%",
+          "nullRate": "99%",
           "values": [
             "2026-03-26"
           ]
@@ -76913,32 +76703,32 @@
         "as_on_date": {
           "type": "date",
           "values": [
-            "2015-07-01",
+            "2026-04-28",
             "2016-01-01",
-            "2015-10-01",
+            "2015-07-01",
             "2015-08-01",
-            "2015-06-01",
-            "2026-04-15"
+            "2015-10-01",
+            "2015-06-01"
           ]
         },
         "no_of_months": {
           "type": "numeric",
           "values": [
-            "84",
             "1",
+            "84",
             "60"
           ]
         },
         "approval_uid": {
           "type": "varchar",
-          "nullRate": "98%",
+          "nullRate": "99%",
           "values": [
             "AD001"
           ]
         },
         "approval_date": {
           "type": "date",
-          "nullRate": "98%",
+          "nullRate": "99%",
           "values": [
             "2026-03-26"
           ]
@@ -77384,8 +77174,8 @@
     },
     "hrm_temp_transfer_list_hst": {
       "real_name": "hrm_temp_transfer_list_hst",
-      "description": "Hrm temp transfer list hst (3,551 rows) — hrm srl, emp, hrm emp name, hrm cadre code, hrm from dept code, hrm from sub dept code, hrm to dept code, hrm to sub dept code",
-      "row_count": 3551,
+      "description": "Hrm temp transfer list hst (3,562 rows) — hrm srl, emp, hrm emp name, hrm cadre code, hrm from dept code, hrm from sub dept code, hrm to dept code, hrm to sub dept code",
+      "row_count": 3562,
       "key_columns": {
         "hrm_srl_no": {
           "type": "numeric"
@@ -78224,27 +78014,27 @@
     },
     "hrm_transfer_dept_vacancy": {
       "real_name": "hrm_transfer_dept_vacancy",
-      "description": "Hrm transfer dept vacancy (572 rows) — hrm cadre code, hrm dept code, hrm sub dept code, hrm vacancy",
-      "row_count": 572,
+      "description": "Hrm transfer dept vacancy (915 rows) — hrm cadre code, hrm dept code, hrm sub dept code, hrm vacancy",
+      "row_count": 915,
       "key_columns": {
         "hrm_cadre_code": {
           "type": "varchar",
           "values": [
+            "2001",
             "2002",
             "10003",
             "10013",
+            "1003",
             "1012",
             "1004",
-            "1003",
             "10012",
             "10010",
-            "2001",
             "2003",
             "10008",
             "10009",
-            "10001",
             "1008",
-            "1002"
+            "1002",
+            "9003"
           ]
         },
         "hrm_dept_code": {
@@ -78259,36 +78049,19 @@
             "1112",
             "15",
             "24",
-            "43",
+            "57",
+            "134",
             "55",
+            "43",
             "51",
             "53",
-            "44",
-            "48",
             "2425",
-            "50",
-            "57"
+            "44",
+            "48"
           ]
         },
         "hrm_vacancy": {
-          "type": "numeric",
-          "values": [
-            "0",
-            "-46",
-            "-1",
-            "-4",
-            "-3",
-            "-9",
-            "-5",
-            "-7",
-            "-2",
-            "-12",
-            "-15",
-            "-11",
-            "-10",
-            "-8",
-            "-89"
-          ]
+          "type": "numeric"
         }
       }
     },
@@ -78470,23 +78243,23 @@
     },
     "hrm_transfer_header": {
       "real_name": "hrm_transfer_hdr",
-      "description": "Hrm transfer header (977 rows) — hrm cadre code, hrm order, hrm order desc, hrm order date, create uid, create date, modified uid, modified date",
-      "row_count": 977,
+      "description": "Hrm transfer header (1,286 rows) — hrm cadre code, hrm order, hrm order desc, hrm order date, create uid, create date, modified uid, modified date",
+      "row_count": 1286,
       "key_columns": {
         "hrm_cadre_code": {
           "type": "varchar",
           "values": [
+            "2001",
             "10003",
             "10013",
             "10010",
             "10012",
             "10008",
-            "2001",
             "10009",
             "1004",
             "2003",
+            "10001",
             "1002",
-            "1003",
             "2002",
             "9003",
             "1012",
@@ -78501,14 +78274,14 @@
         },
         "hrm_order_desc": {
           "type": "varchar",
-          "nullRate": "94%",
+          "nullRate": "95%",
           "values": [
             "test"
           ]
         },
         "hrm_order_date": {
           "type": "date",
-          "nullRate": "94%",
+          "nullRate": "95%",
           "values": [
             "2026-04-15",
             "2026-03-26"
@@ -78518,6 +78291,7 @@
           "type": "varchar",
           "values": [
             "47193",
+            "SO001",
             "75937",
             "18021"
           ]
@@ -78525,21 +78299,23 @@
         "create_date": {
           "type": "date",
           "values": [
+            "2026-04-28",
             "2011-07-09",
             "2011-08-02",
             "2011-07-30",
-            "2015-09-15",
             "2011-07-28",
             "2016-01-22",
-            "2015-11-07",
+            "2015-09-15",
+            "2026-04-15",
             "2015-09-11",
             "2015-09-09",
+            "2015-11-07",
             "2015-06-20"
           ]
         },
         "modified_uid": {
           "type": "varchar",
-          "nullRate": "94%",
+          "nullRate": "95%",
           "values": [
             "SO001",
             "shahrukh"
@@ -78547,7 +78323,7 @@
         },
         "modified_date": {
           "type": "date",
-          "nullRate": "94%",
+          "nullRate": "95%",
           "values": [
             "2026-04-15",
             "2026-03-26"
@@ -78555,6 +78331,7 @@
         },
         "version_no": {
           "type": "numeric",
+          "nullRate": "32%",
           "values": [
             "1"
           ]
@@ -78566,17 +78343,21 @@
           "type": "numeric",
           "values": [
             "60",
-            "84"
+            "1",
+            "84",
+            "170"
           ]
         },
         "as_on_date": {
           "type": "date",
           "values": [
             "2011-03-01",
-            "2015-07-01",
+            "2026-04-28",
             "2016-01-01",
-            "2015-10-01",
+            "2015-07-01",
+            "2026-04-15",
             "2015-08-01",
+            "2015-10-01",
             "2015-06-01"
           ]
         }
@@ -80318,8 +80099,8 @@
     },
     "hrm_vacancy_detail": {
       "real_name": "hrm_vacancy_dtl",
-      "description": "Hrm vacancy detail (18,511 rows) — hrm vacancy, hrm dept code, hrm sub dept code, hrm no of actual vacancy, hrm no of conseq vacancy, hrm no of open vacancy, create uid, create date",
-      "row_count": 18511,
+      "description": "Hrm vacancy detail (18,580 rows) — hrm vacancy, hrm dept code, hrm sub dept code, hrm no of actual vacancy, hrm no of conseq vacancy, hrm no of open vacancy, create uid, create date",
+      "row_count": 18580,
       "key_columns": {
         "hrm_vacancy_id": {
           "type": "numeric",
@@ -80636,8 +80417,8 @@
     },
     "hrm_vacancy": {
       "real_name": "hrm_vacancy_mst",
-      "description": "Hrm vacancy master (1,354 rows) — hrm vacancy, hrm cadre code, create uid, create date, modified uid, modified date, version",
-      "row_count": 1354,
+      "description": "Hrm vacancy master (1,357 rows) — hrm vacancy, hrm cadre code, create uid, create date, modified uid, modified date, version",
+      "row_count": 1357,
       "key_columns": {
         "hrm_vacancy_id": {
           "type": "numeric",
@@ -86227,8 +86008,8 @@
     },
     "hrms_msg_txn_data": {
       "real_name": "hrms_msg_txn_data",
-      "description": "Hrms msg txn data (188 rows) — msg, mobile, sms body, create date, sms delivery date, sms delivery status, email, email delivery status",
-      "row_count": 188,
+      "description": "Hrms msg txn data (189 rows) — msg, mobile, sms body, create date, sms delivery date, sms delivery status, email, email delivery status",
+      "row_count": 189,
       "key_columns": {
         "msg_id": {
           "type": "varchar"
@@ -87288,8 +87069,8 @@
     },
     "item_masters": {
       "real_name": "item_masters",
-      "description": "Item masters (30,570 rows) — column1, type, scheduletype, category, category code, schedulename, scheduleyear, scheduleowner",
-      "row_count": 30570,
+      "description": "Item masters (30,600 rows) — column1, type, scheduletype, category, category code, schedulename, scheduleyear, scheduleowner",
+      "row_count": 30600,
       "key_columns": {
         "column1": {
           "type": "numeric",
@@ -87646,8 +87427,8 @@
     },
     "report": {
       "real_name": "kmc_report_mst",
-      "description": "Report master (154 rows) — report name, query field, db name, table name query, condition, createdat, createdby, updatedat",
-      "row_count": 154,
+      "description": "Report master (159 rows) — report name, query field, db name, table name query, condition, createdat, createdby, updatedat",
+      "row_count": 159,
       "key_columns": {
         "id": {
           "type": "int",
@@ -87740,18 +87521,19 @@
         },
         "column_1": {
           "type": "varchar",
-          "nullRate": "11%"
+          "nullRate": "16%"
         },
         "api_column_1": {
-          "type": "varchar"
+          "type": "varchar",
+          "nullRate": "14%"
         },
         "column_2": {
           "type": "varchar",
-          "nullRate": "26%"
+          "nullRate": "25%"
         },
         "api_column_2": {
           "type": "varchar",
-          "nullRate": "28%"
+          "nullRate": "26%"
         },
         "mandatory_column": {
           "type": "varchar",
@@ -87759,43 +87541,48 @@
         },
         "date_range": {
           "type": "numeric",
-          "nullRate": "32%",
+          "nullRate": "31%",
           "values": [
             "90",
             "92",
             "30",
             "53",
+            "400",
             "365",
             "366",
-            "15",
-            "400"
+            "15"
           ]
         },
         "column_3": {
           "type": "varchar",
-          "nullRate": "42%"
+          "nullRate": "39%",
+          "values": [
+            "License_Status",
+            "Sub-Office",
+            "month"
+          ]
         },
         "api_column_3": {
           "type": "varchar",
-          "nullRate": "45%"
+          "nullRate": "42%"
         },
         "column_4": {
           "type": "varchar",
-          "nullRate": "44%"
+          "nullRate": "41%"
         },
         "api_column_4": {
           "type": "varchar",
-          "nullRate": "47%",
+          "nullRate": "44%",
           "values": [
+            "73",
             "52",
             "22252",
-            "50",
-            "73"
+            "50"
           ]
         },
         "column_5": {
           "type": "varchar",
-          "nullRate": "48%",
+          "nullRate": "50%",
           "values": [
             "FIN_YEAR",
             "Payment_Status"
@@ -87803,7 +87590,7 @@
         },
         "api_column_5": {
           "type": "varchar",
-          "nullRate": "57%",
+          "nullRate": "58%",
           "values": [
             "22257",
             "39"
@@ -87811,22 +87598,22 @@
         },
         "column_6": {
           "type": "varchar",
-          "nullRate": "50%"
+          "nullRate": "52%"
         },
         "api_column_6": {
           "type": "varchar",
-          "nullRate": "62%",
+          "nullRate": "64%",
           "values": [
             "22257"
           ]
         },
         "column_7": {
           "type": "varchar",
-          "nullRate": "50%"
+          "nullRate": "52%"
         },
         "api_column_7": {
           "type": "varchar",
-          "nullRate": "63%"
+          "nullRate": "64%"
         },
         "tk_validation": {
           "type": "varchar",
@@ -87837,7 +87624,7 @@
         },
         "pdf_file_column": {
           "type": "varchar",
-          "nullRate": "22%"
+          "nullRate": "21%"
         },
         "pdf_api_url": {
           "type": "varchar",
@@ -87845,13 +87632,13 @@
         },
         "department_name": {
           "type": "varchar",
-          "nullRate": "65%",
+          "nullRate": "61%",
           "values": [
             "Collection Department",
+            "Engineering Department",
             "Uttaran Service Department",
             "Grievance Cell",
             "Central Record Department",
-            "Engineering Department",
             "Licence Department",
             "License Department",
             "Work Dairy Department"
@@ -87859,14 +87646,14 @@
         },
         "signatory_name": {
           "type": "varchar",
-          "nullRate": "93%",
+          "nullRate": "94%",
           "values": [
             "Verified and Approved By"
           ]
         },
         "get_count_columns": {
           "type": "varchar",
-          "nullRate": "77%",
+          "nullRate": "78%",
           "values": [
             "\"Total Received",
             "Total Resolved",
@@ -87887,7 +87674,7 @@
         },
         "footer_message": {
           "type": "varchar",
-          "nullRate": "93%",
+          "nullRate": "94%",
           "values": [
             "All officers are required to generete online complaince report using their userid on ver urgent basis."
           ]
@@ -87922,15 +87709,15 @@
         },
         "column_width": {
           "type": "varchar",
-          "nullRate": "95%"
+          "nullRate": "90%"
         },
         "table_font_size": {
           "type": "numeric",
-          "nullRate": "95%",
+          "nullRate": "90%",
           "values": [
+            "8",
             "6",
-            "7",
-            "8"
+            "7"
           ]
         }
       }
@@ -89367,8 +89154,8 @@
     },
     "work_estimate_details": {
       "real_name": "kmc_work_estimate_details",
-      "description": "Work estimate details (20 rows) — file, est header, item, item desc, unitofmeasure, item rate, gst type, fact",
-      "row_count": 20,
+      "description": "Work estimate details (50 rows) — file, est header, item, item desc, unitofmeasure, item rate, gst type, fact",
+      "row_count": 50,
       "key_columns": {
         "id": {
           "type": "int",
@@ -89388,24 +89175,7 @@
           "type": "varchar"
         },
         "unitofmeasure": {
-          "type": "varchar",
-          "values": [
-            "EA",
-            "MTR",
-            "HBG",
-            "25M",
-            "M2H",
-            "G25",
-            "kg",
-            "BLK",
-            "KG",
-            "IU",
-            "PRM",
-            "COL",
-            "BAG",
-            "OI",
-            "PPT"
-          ]
+          "type": "varchar"
         },
         "item_rate": {
           "type": "numeric"
@@ -89413,19 +89183,19 @@
         "gst_type": {
           "type": "varchar",
           "values": [
-            "Line Level",
-            "Gross Level"
+            "Line Level"
           ]
         },
         "fact": {
-          "type": "varchar"
+          "type": "varchar",
+          "values": [
+            "1"
+          ]
         },
         "formula": {
           "type": "varchar",
           "values": [
-            "1",
-            "1*1.2",
-            "2"
+            "1"
           ]
         },
         "estimate_price": {
@@ -89437,42 +89207,31 @@
         "cgst_percent": {
           "type": "numeric",
           "values": [
-            "9",
-            "0",
-            "1",
-            "10",
-            "4",
-            "12"
+            "0"
           ]
         },
         "cgst_amount": {
-          "type": "numeric"
+          "type": "numeric",
+          "values": [
+            "0"
+          ]
         },
         "sgst_percent": {
           "type": "numeric",
           "values": [
-            "9",
-            "0",
-            "1",
-            "10",
-            "4",
-            "12"
+            "0"
           ]
         },
         "sgst_amount": {
-          "type": "numeric"
+          "type": "numeric",
+          "values": [
+            "0"
+          ]
         },
         "igst_percent": {
           "type": "numeric",
           "values": [
-            "0",
-            "18",
-            "10",
-            "1",
-            "9",
-            "3",
-            "2",
-            "4"
+            "18"
           ]
         },
         "igst_amount": {
@@ -89481,8 +89240,6 @@
         "cess_percent": {
           "type": "numeric",
           "values": [
-            "2",
-            "0",
             "1"
           ]
         },
@@ -89502,7 +89259,13 @@
           ]
         },
         "quantity": {
-          "type": "numeric"
+          "type": "numeric",
+          "values": [
+            "9",
+            "10",
+            "100",
+            "1"
+          ]
         },
         "document_upload": {
           "type": "varchar",
@@ -89510,10 +89273,7 @@
         },
         "createdby": {
           "type": "varchar",
-          "nullRate": "100%",
-          "values": [
-            "Emp841"
-          ]
+          "nullRate": "100%"
         },
         "createdAt": {
           "type": "timestamp"
@@ -89535,32 +89295,14 @@
         "item_name": {
           "type": "varchar",
           "values": [
-            "NA",
-            "TEST"
+            "NA"
           ]
         },
         "schedule_name": {
-          "type": "varchar",
-          "values": [
-            "KMC Fair Rate",
-            "KMC.FAIR RATE BIG-DIA TUBEWELL",
-            "KMC.SMALL-DIA TUBEWELL 2012",
-            "TestScheduleNav",
-            "ELECTRICAL_WORKS_VOL1_AUG_2008",
-            "ELECTRIC-MECH.WORK(VOL-1)OCT18",
-            "test2",
-            "schedule",
-            "ENGG_TEST_SCHEDULE_73",
-            "TestSchedule1",
-            "PWD.BLDG SCHEDULE_WEF 01.11.2017",
-            "Works - PWD Schedule.BUILDING WORKS:2010-2011",
-            "CONSOLIDATED RATE CIVIL_2018",
-            "TestSchedule"
-          ]
+          "type": "varchar"
         },
         "finalrate": {
-          "type": "varchar",
-          "nullRate": "41%"
+          "type": "varchar"
         },
         "lock_flag": {
           "type": "int",
@@ -89571,48 +89313,32 @@
         },
         "estimation_increment": {
           "type": "int",
-          "nullRate": "71%",
-          "values": [
-            "1",
-            "0"
-          ]
+          "nullRate": "100%"
         },
         "status": {
           "type": "int",
           "required": true,
           "values": [
-            "0",
-            "9",
-            "1"
+            "0"
           ]
         },
         "annexture_estimation_id": {
           "type": "int",
-          "nullRate": "74%"
+          "nullRate": "100%"
         },
         "annexture_estimation_no": {
           "type": "varchar",
-          "nullRate": "74%",
-          "values": [
-            "ANNEX/1/EST-KMC/SOL/BR-16/WD-142/D/25-26/596",
-            "ANNEX/4/EST-KMC/SOL/BR-16/WD-142/D/25-26/596",
-            "ANNEX/2/EST-KMC/SOL/BR-10/WD-089/D/25-26/602",
-            "ANNEX/1/EST-KMC/SOL/BR-10/WD-089/D/25-26/602",
-            "ANNEX/3/EST-KMC/SOL/BR-10/WD-089/D/25-26/602",
-            "ANNEX/1/EST-KMC/CME/BR-15/WD-133/D/25-26/736",
-            "ANNEX/1/EST-KMC/CME/BR-15/WD-133/D/25-26/748",
-            "ANNEX/1/EST-KMC/SOL/BR-16/WD-142/D/25-26/636",
-            "ANNEX/1/EST-KMC/SOL/BR-16/WD-142/D/25-26/700",
-            "ANNEX/2/EST-KMC/CME/BR-15/WD-133/D/25-26/748",
-            "ANNEX/1/EST-KMC/CME/BR-15/WD-133/D/25-26/750"
-          ]
+          "nullRate": "100%"
         },
         "remarks": {
           "type": "text",
-          "nullRate": "99%"
+          "nullRate": "86%"
         },
         "c_status": {
-          "type": "int"
+          "type": "int",
+          "values": [
+            "1"
+          ]
         }
       }
     },
@@ -89883,8 +89609,8 @@
     },
     "work_estimate_distributions": {
       "real_name": "kmc_work_estimate_distributions",
-      "description": "Work estimate distributions (2 rows) — file, est header, cost centre, borough, ward, street, description, distributed amount",
-      "row_count": 2,
+      "description": "Work estimate distributions (3 rows) — file, est header, cost centre, borough, ward, street, description, distributed amount",
+      "row_count": 3,
       "key_columns": {
         "id": {
           "type": "int",
@@ -90044,8 +89770,8 @@
     },
     "work_estimate_hearder": {
       "real_name": "kmc_work_estimate_hearder",
-      "description": "Work estimate hearder (4 rows) — file, file description, estimate header, work type, department, borough, ward, zone",
-      "row_count": 4,
+      "description": "Work estimate hearder (10 rows) — file, file description, estimate header, work type, department, borough, ward, zone",
+      "row_count": 10,
       "key_columns": {
         "id": {
           "type": "int",
@@ -90083,7 +89809,10 @@
           "type": "varchar"
         },
         "work_purpose": {
-          "type": "varchar"
+          "type": "varchar",
+          "values": [
+            "General"
+          ]
         },
         "work_start_date": {
           "type": "varchar",
@@ -90097,7 +89826,10 @@
           "type": "varchar"
         },
         "gst_type": {
-          "type": "varchar"
+          "type": "varchar",
+          "values": [
+            "Line Level"
+          ]
         },
         "concept_note": {
           "type": "varchar"
@@ -90121,20 +89853,29 @@
           "type": "numeric"
         },
         "cess_percent": {
-          "type": "numeric"
+          "type": "numeric",
+          "values": [
+            "1"
+          ]
         },
         "contingency_percent": {
           "type": "numeric"
         },
         "createdby": {
-          "type": "varchar"
+          "type": "varchar",
+          "values": [
+            "Emp841"
+          ]
         },
         "createdAt": {
           "type": "timestamp"
         },
         "updatedby": {
           "type": "varchar",
-          "nullRate": "67%"
+          "nullRate": "60%",
+          "values": [
+            "Emp841"
+          ]
         },
         "updatedAt": {
           "type": "timestamp"
@@ -90165,19 +89906,19 @@
           "type": "numeric"
         },
         "stateid": {
-          "type": "varchar",
-          "nullRate": "33%"
+          "type": "varchar"
         },
         "statusid": {
-          "type": "varchar",
-          "nullRate": "33%"
+          "type": "varchar"
         },
         "status_description": {
-          "type": "varchar",
-          "nullRate": "33%"
+          "type": "varchar"
         },
         "fund_type": {
-          "type": "varchar"
+          "type": "varchar",
+          "values": [
+            "Revenue"
+          ]
         },
         "account_bal": {
           "type": "varchar"
@@ -90190,7 +89931,10 @@
           "type": "int"
         },
         "is_multi_borough": {
-          "type": "int"
+          "type": "int",
+          "values": [
+            "0"
+          ]
         },
         "cgst_percent": {
           "type": "varchar"
@@ -90211,10 +89955,13 @@
         },
         "wf_pdf": {
           "type": "varchar",
-          "nullRate": "67%"
+          "nullRate": "90%"
         },
         "c_status": {
-          "type": "int"
+          "type": "int",
+          "values": [
+            "1"
+          ]
         }
       }
     },
@@ -90727,8 +90474,8 @@
     },
     "work_temp_estimate_details": {
       "real_name": "kmc_work_temp_estimate_details",
-      "description": "Work temp estimate details (1 rows) — file, est header, item, item desc, unitofmeasure, item rate, gst type, fact",
-      "row_count": 1,
+      "description": "Work temp estimate details (13 rows) — file, est header, item, item desc, unitofmeasure, item rate, gst type, fact",
+      "row_count": 13,
       "key_columns": {
         "id": {
           "type": "int",
@@ -91024,8 +90771,8 @@
     },
     "work_temp_estimate_hearder": {
       "real_name": "kmc_work_temp_estimate_hearder",
-      "description": "Work temp estimate hearder (1 rows) — file, file description, estimate header, work type, department, borough, ward, zone",
-      "row_count": 1,
+      "description": "Work temp estimate hearder (4 rows) — file, file description, estimate header, work type, department, borough, ward, zone",
+      "row_count": 4,
       "key_columns": {
         "id": {
           "type": "int",
@@ -91087,8 +90834,8 @@
     },
     "lic_demand_pgw_txn": {
       "real_name": "lic_demand_pgw_txn",
-      "description": "Lic demand pgw txn (2,789,063 rows) — txn, lic regn, lic demand year, lic demand serial, lic section, lic demand amt, create uid, create date",
-      "row_count": 2789063,
+      "description": "Lic demand pgw txn (2,789,066 rows) — txn, lic regn, lic demand year, lic demand serial, lic section, lic demand amt, create uid, create date",
+      "row_count": 2789066,
       "key_columns": {
         "txn_id": {
           "type": "varchar"
@@ -91141,6 +90888,9 @@
         },
         "create_date": {
           "type": "date"
+        },
+        "lic_refrence_type": {
+          "type": "varchar"
         }
       }
     },
@@ -91643,8 +91393,8 @@
     },
     "message": {
       "real_name": "message",
-      "description": "Message (5,478 rows) — locale, code, tenantid, module, createdby, createddate, lastmodifiedby, lastmodifieddate",
-      "row_count": 5478,
+      "description": "Message (5,498 rows) — locale, code, tenantid, module, createdby, createddate, lastmodifiedby, lastmodifieddate",
+      "row_count": 5498,
       "key_columns": {
         "id": {
           "type": "varchar",
@@ -91669,7 +91419,8 @@
           "type": "varchar",
           "required": true,
           "values": [
-            "km"
+            "km",
+            "km.kolkata"
           ]
         },
         "module": {
@@ -91690,20 +91441,24 @@
         },
         "lastmodifiedby": {
           "type": "bigint",
-          "nullRate": "99%",
+          "nullRate": "98%",
           "values": [
-            "6",
             "16167",
+            "16316",
+            "6",
+            "15603",
             "15465",
             "1",
             "25",
+            "16158",
             "266",
-            "16158"
+            "15464",
+            "16178"
           ]
         },
         "lastmodifieddate": {
           "type": "timestamp",
-          "nullRate": "99%"
+          "nullRate": "98%"
         }
       }
     },
@@ -92036,8 +91791,8 @@
     },
     "misc_demand_detail": {
       "real_name": "misc_demand_dtl",
-      "description": "Misc demand detail (368 rows) — demand, fin year, office code, misc chrg code, demand amt, remarks dem dtl, create uid, create date",
-      "row_count": 368,
+      "description": "Misc demand detail (372 rows) — demand, fin year, office code, misc chrg code, demand amt, remarks dem dtl, create uid, create date",
+      "row_count": 372,
       "key_columns": {
         "demand_no": {
           "type": "varchar"
@@ -92480,8 +92235,8 @@
     },
     "misc_demand_header": {
       "real_name": "misc_demand_hdr",
-      "description": "Misc demand header (269 rows) — demand, fin year, office code, demand date, appln date, ward, street code, premises",
-      "row_count": 269,
+      "description": "Misc demand header (273 rows) — demand, fin year, office code, demand date, appln date, ward, street code, premises",
+      "row_count": 273,
       "key_columns": {
         "demand_no": {
           "type": "varchar"
@@ -92962,8 +92717,8 @@
     },
     "misc_demand_hdr_audit": {
       "real_name": "misc_demand_hdr_audit",
-      "description": "Misc demand hdr audit (292 rows) — demand, fin year, office code, demand date, appln date, ward, street code, premises",
-      "row_count": 292,
+      "description": "Misc demand hdr audit (298 rows) — demand, fin year, office code, demand date, appln date, ward, street code, premises",
+      "row_count": 298,
       "key_columns": {
         "demand_no": {
           "type": "varchar"
@@ -93500,8 +93255,8 @@
     },
     "misc_demand_print_detail": {
       "real_name": "misc_demand_print_dtl",
-      "description": "Misc demand print detail (36 rows) — department, designation, subject, body, version, create date, create uid, modified date",
-      "row_count": 36,
+      "description": "Misc demand print detail (37 rows) — department, designation, subject, body, version, create date, create uid, modified date",
+      "row_count": 37,
       "key_columns": {
         "id": {
           "type": "int",
@@ -93649,8 +93404,8 @@
     },
     "misc_demand_seq": {
       "real_name": "misc_demand_seq_mst",
-      "description": "Misc demand seq master (5 rows) — dept code, fin year, seq, last seq value, created at, created by, updated at, updated by",
-      "row_count": 5,
+      "description": "Misc demand seq master (6 rows) — dept code, fin year, seq, last seq value, created at, created by, updated at, updated by",
+      "row_count": 6,
       "key_columns": {
         "id": {
           "type": "int",
@@ -93696,8 +93451,8 @@
     },
     "misc_demand_seq_mst_history": {
       "real_name": "misc_demand_seq_mst_history",
-      "description": "Misc demand seq mst history (298 rows) — dept code, fin year, seq, last seq value, created at, created by, updated at, updated by",
-      "row_count": 298,
+      "description": "Misc demand seq mst history (301 rows) — dept code, fin year, seq, last seq value, created at, created by, updated at, updated by",
+      "row_count": 301,
       "key_columns": {
         "id": {
           "type": "int",
@@ -93706,7 +93461,9 @@
             "3",
             "8",
             "2",
-            "10"
+            "16",
+            "10",
+            "17"
           ]
         },
         "dept_code": {
@@ -93716,6 +93473,7 @@
             "LIGHT",
             "PAS",
             "SWM",
+            "LIC",
             "ROAD"
           ]
         },
@@ -93723,7 +93481,8 @@
           "type": "varchar",
           "required": true,
           "values": [
-            "2025-2026"
+            "2025-2026",
+            "2026-2027"
           ]
         },
         "seq_no": {
@@ -93740,13 +93499,16 @@
             "2025-05-20 13:47:42.635",
             "2025-05-21 05:19:31.764",
             "2025-05-20 10:50:45.185",
-            "2025-07-19 08:16:42.645"
+            "2025-11-20 08:36:31.513",
+            "2025-07-19 08:16:42.645",
+            "2026-04-23 14:37:01.11"
           ]
         },
         "created_by": {
           "type": "varchar",
           "values": [
-            "15600"
+            "15600",
+            "16237"
           ]
         },
         "updated_at": {
@@ -93759,7 +93521,9 @@
             "16032",
             "16234",
             "15464",
-            "16035"
+            "16035",
+            "16237",
+            "16114"
           ]
         },
         "active_flg": {
@@ -93779,8 +93543,8 @@
     },
     "misc_sub_category": {
       "real_name": "misc_sub_category_master",
-      "description": "Misc sub category master (109 rows) — category, sub category short desc, sub category long desc, rate, unit type, created at, created by, updated at",
-      "row_count": 109,
+      "description": "Misc sub category master (110 rows) — category, sub category short desc, sub category long desc, rate, unit type, created at, created by, updated at",
+      "row_count": 110,
       "key_columns": {
         "id": {
           "type": "int",
@@ -95103,8 +94867,8 @@
     },
     "pgw_txn": {
       "real_name": "mrkt_pgw_txn",
-      "description": "Pgw txn (95 rows) — stall, demand serial, fin year, code, txn amount, txn, create date, created by",
-      "row_count": 95,
+      "description": "Pgw txn (99 rows) — stall, demand serial, fin year, code, txn amount, txn, create date, created by",
+      "row_count": 99,
       "key_columns": {
         "mrkt_stall_id": {
           "type": "varchar"
@@ -101260,8 +101024,8 @@
     },
     "pay_info": {
       "real_name": "pay_info",
-      "description": "Pay info (38 rows) — empno, bicode, basicpay, hodyn, coyn, optiondate, isactive, create uid",
-      "row_count": 38,
+      "description": "Pay info (44 rows) — empno, bicode, basicpay, hodyn, coyn, optiondate, isactive, create uid",
+      "row_count": 44,
       "key_columns": {
         "id": {
           "type": "int",
@@ -102378,8 +102142,8 @@
     },
     "portal_asmt_pgw_all_type_txn": {
       "real_name": "portal_asmt_pgw_all_type_txn",
-      "description": "Portal asmt pgw all type txn (24,647,592 rows) — txn, txn status, ward, assesee, bill, fs bill, bill type, bill qrtr",
-      "row_count": 24647592,
+      "description": "Portal asmt pgw all type txn (24,648,032 rows) — txn, txn status, ward, assesee, bill, fs bill, bill type, bill qrtr",
+      "row_count": 24648032,
       "key_columns": {
         "txn_id": {
           "type": "varchar"
@@ -102762,8 +102526,8 @@
     },
     "portal_cc_pgw_txn_parent": {
       "real_name": "portal_cc_pgw_txn_parent",
-      "description": "Portal cc pgw txn parent (1,744 rows) — txn, txn amount, txn date, txn status, txn entity name, txn recpt, txn pgw, txn pay mode",
-      "row_count": 1744,
+      "description": "Portal cc pgw txn parent (1,754 rows) — txn, txn amount, txn date, txn status, txn entity name, txn recpt, txn pgw, txn pay mode",
+      "row_count": 1754,
       "key_columns": {
         "txn_id": {
           "type": "varchar"
@@ -102791,11 +102555,11 @@
         },
         "txn_recpt_no": {
           "type": "varchar",
-          "nullRate": "85%"
+          "nullRate": "86%"
         },
         "txn_pgw_id": {
           "type": "varchar",
-          "nullRate": "63%"
+          "nullRate": "65%"
         },
         "txn_pay_mode": {
           "type": "varchar",
@@ -102809,24 +102573,7 @@
           "nullRate": "100%"
         },
         "txn_mobile_no": {
-          "type": "varchar",
-          "values": [
-            "9380863061",
-            "9040706205",
-            "8770271856",
-            "9833652841",
-            "8310313764",
-            "8712125712",
-            "8109202272",
-            "9148744129",
-            "9382305932",
-            "9830612221",
-            "9836070700",
-            "8917307072",
-            "6291004366",
-            "9953744595",
-            "8970982992"
-          ]
+          "type": "varchar"
         },
         "txn_response_date": {
           "type": "timestamp",
@@ -102838,7 +102585,7 @@
         },
         "gateway": {
           "type": "varchar",
-          "nullRate": "55%",
+          "nullRate": "57%",
           "values": [
             "PAYU",
             "PayU",
@@ -102851,24 +102598,7 @@
           "nullRate": "100%"
         },
         "create_id": {
-          "type": "varchar",
-          "values": [
-            "16032",
-            "undefined",
-            "16178",
-            "Emp841",
-            "16179",
-            "16068",
-            "565",
-            "16152",
-            "16186",
-            "16175",
-            "32",
-            "16239",
-            "15600",
-            "16075",
-            "Emp114"
-          ]
+          "type": "varchar"
         },
         "txn_type_id": {
           "type": "varchar",
@@ -102876,13 +102606,15 @@
             "34",
             "36",
             "10",
+            "05",
+            "53",
             "09",
             "07",
-            "05",
             "28",
             "11",
             "35",
             "31",
+            "54",
             "undefined"
           ]
         },
@@ -103200,8 +102932,8 @@
     },
     "portal_pgw_txn_parent": {
       "real_name": "portal_pgw_txn_parent",
-      "description": "Portal pgw txn parent (3,235,553 rows) — txn, txn amount, txn date, txn status, txn entity name, txn recpt, txn pgw, txn pay mode",
-      "row_count": 3235553,
+      "description": "Portal pgw txn parent (3,235,589 rows) — txn, txn amount, txn date, txn status, txn entity name, txn recpt, txn pgw, txn pay mode",
+      "row_count": 3235589,
       "key_columns": {
         "txn_id": {
           "type": "varchar"
@@ -103986,8 +103718,8 @@
     },
     "portal_transaction_dtls": {
       "real_name": "portal_transaction_dtls",
-      "description": "Portal transaction dtls (809 rows) — trxn, trxn no enc, receipt, demand details, mobile, mode payment, department code, create uid",
-      "row_count": 809,
+      "description": "Portal transaction dtls (819 rows) — trxn, trxn no enc, receipt, demand details, mobile, mode payment, department code, create uid",
+      "row_count": 819,
       "key_columns": {
         "id": {
           "type": "int",
@@ -106096,8 +105828,8 @@
     },
     "report_api": {
       "real_name": "report_api",
-      "description": "Report api (79 rows) — api query, db name, query name, createdby, createdat, updatedby, updatedat, issql",
-      "row_count": 79,
+      "description": "Report api (80 rows) — api query, db name, query name, createdby, createdat, updatedby, updatedat, issql",
+      "row_count": 80,
       "key_columns": {
         "id": {
           "type": "int",
@@ -107296,10 +107028,85 @@
         }
       }
     },
+    "swm_ce_demand_pgw_txn": {
+      "real_name": "swm_ce_demand_pgw_txn",
+      "description": "Swm ce demand pgw txn (108,710 rows) — txn, demand, demand year, lic ce, registration, demand amount, demand valid till, create uid",
+      "row_count": 108710,
+      "key_columns": {
+        "txn_id": {
+          "type": "varchar"
+        },
+        "demand_no": {
+          "type": "varchar"
+        },
+        "demand_year": {
+          "type": "varchar",
+          "values": [
+            "2025-2026",
+            "2024-2025",
+            "2023-2024",
+            "2026-2027",
+            "2018-2019"
+          ]
+        },
+        "lic_ce_no": {
+          "type": "varchar"
+        },
+        "registration_no": {
+          "type": "varchar",
+          "nullRate": "100%"
+        },
+        "demand_amount": {
+          "type": "numeric"
+        },
+        "demand_valid_till": {
+          "type": "varchar"
+        },
+        "create_uid": {
+          "type": "varchar",
+          "values": [
+            "PORTAL"
+          ]
+        },
+        "create_date": {
+          "type": "date",
+          "nullRate": "100%"
+        },
+        "interest_amt": {
+          "type": "numeric"
+        },
+        "transport_charge": {
+          "type": "numeric",
+          "nullRate": "100%"
+        },
+        "porcessing_charge": {
+          "type": "numeric",
+          "nullRate": "100%",
+          "values": [
+            "0.00"
+          ]
+        },
+        "supervision_charge": {
+          "type": "numeric",
+          "nullRate": "100%"
+        },
+        "cd_waste_app_no": {
+          "type": "varchar",
+          "nullRate": "100%"
+        },
+        "demand_type": {
+          "type": "varchar",
+          "values": [
+            "1",
+            "4"
+          ]
+        }
+      }
+    },
     "t_holiday_dtls": {
       "real_name": "t_holiday_dtls",
-      "description": "T holiday dtls (298 rows) — cal date, days, is holiday, description",
-      "row_count": 298,
+      "description": "T holiday dtls (299 rows) — cal date, days, is holiday, description",
+      "row_count": 299,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -111112,8 +110919,8 @@
     },
     "user_borough_ward_mappings": {
       "real_name": "user_borough_ward_mappings",
-      "description": "User borough ward mappings (14 rows) — user, office, module, department, borough, ward, start date, end date",
-      "row_count": 14,
+      "description": "User borough ward mappings (15 rows) — user, office, module, department, borough, ward, start date, end date",
+      "row_count": 15,
       "key_columns": {
         "id": {
           "type": "int",
@@ -111476,8 +111283,8 @@
     },
     "user_pwd_record": {
       "real_name": "user_pwd_record",
-      "description": "User pwd record (20,724 rows) — user, user name, user pwd, created on",
-      "row_count": 20724,
+      "description": "User pwd record (20,728 rows) — user, user name, user pwd, created on",
+      "row_count": 20728,
       "key_columns": {
         "id": {
           "type": "bigint",
@@ -112314,11 +112121,11 @@
     "ccs_member_master.is_deleted distinct values (1): 'N'",
     "check_user_access_logs.error_description distinct values (6): 'Success', 'User has tried to login by another device/browser/tab/duel login attempt', 'User has no access to the screen', 'The url is neither present in child table nor in parent table', 'No screens/actions have been mapped to the user id. Please try again with the valid user name', 'No roles have been mapped to the user id. Please try again with the valid user id'",
     "check_user_access_logs.status distinct values (1): '0'",
-    "coll_api_transaction_details.module_id distinct values (11): '02', '5', '9', '14', '16', '6', '1', '8', '22', '37'",
+    "coll_api_transaction_details.module_id distinct values (12): '02', '16', '1', '14', '5', '9', '6', '8', '37', '22'",
     "coll_api_transaction_details.center_code distinct values (5): '1', '0', '46', '6', '30'",
     "coll_api_transaction_details.process_name distinct values (10): 'SAVE API PT', 'CANCEL API PT', 'CANCEL API', 'DISHONOR API PT', 'SAVE API BUS', 'BUSTEE', '[object Object]', 'PARKING', 'CME_CIVIL', 'DRAINAGE'",
     "coll_api_transaction_details.status distinct values (2): '1', '0'",
-    "coll_api_transaction_details.createdby distinct values (13): '16035', 'Emp841', '16075', 'Emp3764', '13073', 'undefined', '16114', '10512', 'Emp114', '12725'",
+    "coll_api_transaction_details.createdby distinct values (16): '16035', 'Emp841', '16075', 'Emp3764', '16237', '13073', 'undefined', '16114', '10512', 'Emp114'",
     "coll_counter_user_mapping.modifiedid distinct values (5): '78179', '16035', '13073', '012', 'Emp991'",
     "coll_counter_user_mapping.status distinct values (2): 'active', 'inactive'",
     "coll_counter_user_mapping.office distinct values (6): '1', '2', '3', '8', '12', '29'",
@@ -112329,10 +112136,10 @@
     "coll_receipt_pdf_data.transaction_no distinct values (1): '3420240000100023'",
     "coll_receipt_pdf_data.base64status distinct values (2): '0', '1'",
     "coll_transaction_id.center_code distinct values (8): '1', '151', '46', '2', '29', '11111', '159', '3'",
-    "coll_transaction_id.process_name distinct values (8): 'Center Collection Day Begin', 'Treasury Day Begin', 'Cancel Receipt', 'Data Transfer 2.0 to 1.0', 'Treasury Day End', 'Receipt Re-Print', 'Collection Day End', 'Center Collection Day End'",
+    "coll_transaction_id.process_name distinct values (8): 'Center Collection Day Begin', 'Cancel Receipt', 'Treasury Day Begin', 'Data Transfer 2.0 to 1.0', 'Treasury Day End', 'Receipt Re-Print', 'Collection Day End', 'Center Collection Day End'",
     "coll_transaction_id.status distinct values (3): '2', '0', '1'",
-    "coll_transaction_id.createdby distinct values (23): '16075', '16114', '16035', 'Emp3764', '16237', 'Emp841', '13073', 'Emp8559', '16158', 'anik'",
-    "coll_transaction_id.url distinct values (9): 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/cancelReceipt', 'https://www.kmcgov.in/KMCWebService/services/Ekmc2CommonCollectionMigrationService/insertCCDayEndInfo', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=02', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/insertCCDayEndInfo', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=16', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=01', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/updateReceiptHeaderAfterReprint', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=14', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=04'",
+    "coll_transaction_id.createdby distinct values (23): '16075', '16114', '16035', '16237', 'Emp3764', 'Emp8559', 'Emp841', '13073', '16158', 'anik'",
+    "coll_transaction_id.url distinct values (10): 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/cancelReceipt', 'https://www.kmcgov.in/KMCWebService/services/Ekmc2CommonCollectionMigrationService/insertCCDayEndInfo', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=02', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/insertCCDayEndInfo', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=16', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=14', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=03', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=01', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/updateReceiptHeaderAfterReprint', 'http://103.164.202.27:8081/KMCWebServiceUAT/services/Ekmc2CommonCollectionMigrationService/receiveEkmc2CollectionData?departmentCode=04'",
     "com_bank_branch_mst.create_id distinct values (3): 'SYSTEM', 'PAYROLL', 'TEST'",
     "com_bank_branch_mst.create_date distinct values (3): '2026-02-05 00:00:00', '2025-07-24 00:00:00', '2004-12-29 00:00:00'",
     "com_bank_branch_mst.modify_id distinct values (1): 'TEST'",
@@ -112891,9 +112698,7 @@
     "employee_curr_dtl.emp_asset_dclration_type distinct values (2): 'UPLOAD', 'DATA'",
     "employee_curr_dtl.is_submitted distinct values (2): 'Y', 'N'",
     "employee_curr_dtl.is_locked distinct values (2): 'Y', 'N'",
-    "eng_lock_records.sub_module distinct values (3): 'TENDER', 'PO', 'ANNEX'",
-    "eng_lock_records.user_id distinct values (3): 'Emp841 - Navjyot Singh', 'Emp841', 'Emp3764 - Arshad Usman'",
-    "eng_lock_records.lock distinct values (2): '0', '1'",
+    "eng_lock_records.user_id distinct values (1): 'Emp841 - Navjyot Singh'",
     "eng_lock_records_aud.sub_module distinct values (3): 'TENDER', 'PO', 'ANNEX'",
     "eng_lock_records_aud.user_id distinct values (3): 'Emp841 - Navjyot Singh', 'Emp841', 'Emp3764 - Arshad Usman'",
     "eng_lock_records_aud.lock distinct values (2): '0', '1'",
@@ -112951,47 +112756,28 @@
     "engg_engineering_bidding_po_details.fromaccount distinct values (3): '8387363838', 'test', '122222222222222'",
     "engg_engineering_bidding_po_details.lock_flag distinct values (1): '0'",
     "engg_engineering_bidding_po_details.instrument_mode distinct values (2): 'Online', 'Cheque'",
-    "engg_est_tender_master.create_uid distinct values (4): 'Emp841', 'Emp3764', 'amankanungo', 'Emp114'",
-    "engg_est_tender_master.version_no distinct values (11): '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'",
-    "engg_est_tender_master.c_status distinct values (2): '1', '0'",
-    "engg_est_tender_master.typeofyear distinct values (2): 'S', 'M'",
-    "engg_est_tender_master.tender_type distinct values (2): 'percentageWiseTender', 'itemWiseTender'",
-    "engg_est_tender_master.emd_value distinct values (12): '10', '10000', '6', '8', '5', '9', '8000', '1000', '4', '7'",
-    "engg_est_tender_master.bid_type distinct values (2): 'both', 'lowestBidder'",
-    "engg_est_tender_master.no_of_years distinct values (4): '4', '3', '5', '1'",
-    "engg_est_tender_master.emd_type distinct values (3): 'Percentage', 'Value', '%'",
-    "engg_est_tender_master.po_type distinct values (2): 'Multiple PO', 'Single PO'",
-    "engg_est_tender_master.is_crn_available distinct values (1): 'Y'",
-    "engg_est_tender_master.lock_flag distinct values (2): '0', '1'",
-    "engg_est_tender_master.tender_bidders distinct values (1): '0'",
-    "engg_est_tender_master.tender_financial_vetting distinct values (2): '0', '1'",
-    "engg_est_tender_master.crn_partial_flag distinct values (2): '0', '1'",
-    "engg_est_tender_master.bid distinct values (1): '0'",
-    "engg_est_tender_master.action_bid distinct values (2): '0', '1'",
-    "engg_est_tender_master.status distinct values (2): '0', '1'",
-    "engg_estimate_details_item_bid.file_no distinct values (25): 'KMC/CME/BR-4/WD-023/D/25-26/145594', 'KMC/SOL/BR-16/WD-142/D/25-26/598', 'KMC/SOL/BR-16/WD-142/D/25-26/600', 'KMC/SOL/BR-1/WD-001/D/25-26/538', 'KMC/SOL/BR-10/WD-089/D/25-26/554', 'KMC/SOL/BR-10/WD-089/D/25-26/556', 'KMC/SOL/BR-16/WD-142/D/25-26/536', 'KMC/SOL/BR-16/WD-142/D/25-26/540', 'KMC/SOL/BR-16/WD-142/D/25-26/552', 'KMC/SOL/BR-16/WD-142/D/25-26/558'",
-    "engg_estimate_details_item_bid.est_header_id distinct values (25): 'EST-KMC/CME/BR-4/WD-023/D/25-26/145594', 'EST-KMC/SOL/BR-16/WD-142/D/25-26/598', 'EST-KMC/SOL/BR-16/WD-142/D/25-26/600', 'EST-KMC/SOL/BR-1/WD-001/D/25-26/538', 'EST-KMC/SOL/BR-10/WD-089/D/25-26/554', 'EST-KMC/SOL/BR-10/WD-089/D/25-26/556', 'EST-KMC/SOL/BR-16/WD-142/D/25-26/536', 'EST-KMC/SOL/BR-16/WD-142/D/25-26/540', 'EST-KMC/SOL/BR-16/WD-142/D/25-26/552', 'EST-KMC/SOL/BR-16/WD-142/D/25-26/558'",
-    "engg_estimate_details_item_bid.unitofmeasure distinct values (14): 'EA', 'MTR', '25M', 'G25', 'HBG', 'M2H', 'BLK', 'IU', 'kg', 'KG'",
+    "engg_estimate_details_item_bid.file_no distinct values (2): 'KMC/CME/BR-15/WD-133/D/26-27/812', 'KMC/CME/BR-15/WD-133/FF/26-27/810'",
+    "engg_estimate_details_item_bid.est_header_id distinct values (2): 'EST-KMC/CME/BR-15/WD-133/D/26-27/812', 'EST-KMC/CME/BR-15/WD-133/FF/26-27/810'",
     "engg_estimate_details_item_bid.gst_type distinct values (1): 'Line Level'",
-    "engg_estimate_details_item_bid.fact distinct values (4): '1', '+1*1.23', '1*1.22', '1*1.33'",
+    "engg_estimate_details_item_bid.fact distinct values (1): '1'",
     "engg_estimate_details_item_bid.formula distinct values (1): '1'",
-    "engg_estimate_details_item_bid.cgst_percent distinct values (2): '9', '0'",
-    "engg_estimate_details_item_bid.cgst_amount distinct values (22): '3645', '0', '27.54', '153.9', '283.5', '405', '849.6', '1260', '1275.75', '2638.98'",
-    "engg_estimate_details_item_bid.sgst_percent distinct values (2): '9', '0'",
-    "engg_estimate_details_item_bid.sgst_amount distinct values (22): '3645', '0', '27.54', '153.9', '283.5', '405', '849.6', '1260', '1275.75', '2638.98'",
-    "engg_estimate_details_item_bid.igst_percent distinct values (2): '0', '18'",
-    "engg_estimate_details_item_bid.cess_percent distinct values (3): '2', '0', '1'",
+    "engg_estimate_details_item_bid.cgst_percent distinct values (1): '0'",
+    "engg_estimate_details_item_bid.cgst_amount distinct values (1): '0'",
+    "engg_estimate_details_item_bid.sgst_percent distinct values (1): '0'",
+    "engg_estimate_details_item_bid.sgst_amount distinct values (1): '0'",
+    "engg_estimate_details_item_bid.igst_percent distinct values (1): '18'",
+    "engg_estimate_details_item_bid.cess_percent distinct values (1): '1'",
     "engg_estimate_details_item_bid.misc_percent distinct values (1): '0'",
     "engg_estimate_details_item_bid.misc_amount distinct values (1): '0'",
-    "engg_estimate_details_item_bid.quantity distinct values (16): '9', '14', '16', '13', '12', '15', '118', '1000', '1110', '1125'",
     "engg_estimate_details_item_bid.annexture_line_amount distinct values (1): '0'",
     "engg_estimate_details_item_bid.createdby distinct values (1): 'Emp841'",
-    "engg_estimate_details_item_bid.createdAt distinct values (25): '2026-02-03 16:04:58.127', '2026-02-11 18:03:11.522', '2026-02-16 12:56:38.259', '2026-01-16 16:19:34.401', '2026-01-16 16:56:36.17', '2026-01-20 18:57:40.372', '2026-01-21 11:40:53.642', '2026-01-21 14:47:25.404', '2026-01-21 16:42:22.256', '2026-01-22 15:52:08.469'",
+    "engg_estimate_details_item_bid.createdAt distinct values (2): '2026-04-27 14:48:54.522', '2026-04-27 09:25:36.396'",
     "engg_estimate_details_item_bid.updatedby distinct values (1): 'Emp841'",
-    "engg_estimate_details_item_bid.updatedAt distinct values (25): '2026-02-03 16:04:58.127', '2026-02-11 18:03:11.522', '2026-02-16 12:56:38.259', '2026-01-16 16:19:34.401', '2026-01-16 16:56:36.17', '2026-01-20 18:57:40.372', '2026-01-21 11:40:53.642', '2026-01-21 14:47:25.404', '2026-01-21 16:42:22.256', '2026-01-22 15:52:08.469'",
+    "engg_estimate_details_item_bid.updatedAt distinct values (2): '2026-04-27 14:48:54.522', '2026-04-27 09:25:36.396'",
     "engg_estimate_details_item_bid.remaining_qty distinct values (1): '0'",
     "engg_estimate_details_item_bid.item_name distinct values (1): 'NA'",
-    "engg_estimate_details_item_bid.schedule_name distinct values (6): 'KMC Fair Rate', 'TestScheduleNav', 'KMC.SMALL-DIA TUBEWELL 2012', 'KMC.FAIR RATE BIG-DIA TUBEWELL', 'ELECTRIC-MECH.WORK(VOL-1)OCT18', 'PWD.BLDG SCHEDULE_WEF 01.11.2017'",
+    "engg_estimate_details_item_bid.schedule_name distinct values (2): 'KMC.CME(C)_FAIR_RATES-2012', 'KMC.FAIR RATE BIG-DIA TUBEWELL'",
+    "engg_estimate_details_item_bid.r2_price distinct values (1): '0'",
     "engg_estimate_details_item_bid.r3_price distinct values (1): '0'",
     "engg_estimate_details_item_bid.r4_price distinct values (1): '0'",
     "engg_estimate_details_item_bid.r5_price distinct values (1): '0'",
@@ -113005,20 +112791,18 @@
     "engg_estimate_details_item_bid.r13_price distinct values (1): '0'",
     "engg_estimate_details_item_bid.r14_price distinct values (1): '0'",
     "engg_estimate_details_item_bid.r15_price distinct values (1): '0'",
-    "engg_estimate_details_item_bid.r1_date distinct values (22): '2026-01-29', '2026-01-28', '2026-02-18', '2026-02-11', '2026-02-19', '2026-02-05', '2026-02-06', '2026-02-07', '2026-02-26', '2026-01-22'",
-    "engg_estimate_details_item_bid.r2_date distinct values (3): '2026-01-29', '2026-01-23', '2026-01-30'",
-    "engg_estimate_details_item_bid.contractor_code distinct values (4): '11063', '8601', '11063|8601', '8601|11063'",
+    "engg_estimate_details_item_bid.contractor_code distinct values (2): '11063', '8601'",
     "engg_estimate_details_item_bid.no_of_winner distinct values (1): '1'",
     "engg_estimate_details_item_bid.active_flag distinct values (1): '1'",
-    "engg_estimate_details_item_bid.engg_contractor_name distinct values (4): '8610 - PRICEWATERHOUSE COOPERS PVT.LTD. - AABCP9181H', 'AK02 - INDUJA HOME SOLUTION PVT LTD - AADCI0626C', 'AK02 - INDUJA HOME SOLUTION PVT LTD - AADCI0626C|8610 - PRICEWATERHOUSE COOPERS PVT.LTD. - AABCP9181H', '8610 - PRICEWATERHOUSE COOPERS PVT.LTD. - AABCP9181H|AK02 - INDUJA HOME SOLUTION PVT LTD - AADCI0626C'",
-    "engg_estimate_details_item_bid.tender_no distinct values (25): 'TEN-KMC/CME/BR-4/WD-023/D/25-26/145594', 'TEN-KMC/SOL/BR-16/WD-142/D/25-26/598', 'TEN-KMC/SOL/BR-16/WD-142/D/25-26/600', 'TEN-KMC/SOL/BR-1/WD-001/D/25-26/538', 'TEN-KMC/SOL/BR-10/WD-089/D/25-26/554', 'TEN-KMC/SOL/BR-10/WD-089/D/25-26/556', 'TEN-KMC/SOL/BR-16/WD-142/D/25-26/536', 'TEN-KMC/SOL/BR-16/WD-142/D/25-26/540', 'TEN-KMC/SOL/BR-16/WD-142/D/25-26/552', 'TEN-KMC/SOL/BR-16/WD-142/D/25-26/558'",
-    "engg_estimate_details_item_bid.bid_winner distinct values (2): '1', '0'",
-    "engg_estimate_details_item_bid.item_allocation_type distinct values (3): 'Item Wise Allocation', 'All Items On Final Round Value', 'All Items Value'",
-    "engg_estimate_details_item_bid.total_winners distinct values (3): '1', '2', '0'",
-    "engg_estimate_details_item_bid.winner_type distinct values (2): '0', '1'",
-    "engg_estimate_details_item_bid.stateid distinct values (10): '24616', '24463', '24476', '24511', '24557', '24573', '24611', '24986', '25023', '25064'",
-    "engg_estimate_details_item_bid.statusid distinct values (3): '329', '324', '313'",
-    "engg_estimate_details_item_bid.status_description distinct values (2): 'Approved', 'Forward'",
+    "engg_estimate_details_item_bid.engg_contractor_name distinct values (2): '8610 - PRICEWATERHOUSE COOPERS PVT.LTD. - AABCP9181H', 'AK02 - INDUJA HOME SOLUTION PVT LTD - AADCI0626C'",
+    "engg_estimate_details_item_bid.tender_no distinct values (2): 'TEN-KMC/CME/BR-15/WD-133/D/26-27/812', 'TEN-KMC/CME/BR-15/WD-133/FF/26-27/810'",
+    "engg_estimate_details_item_bid.bid_winner distinct values (2): '0', '1'",
+    "engg_estimate_details_item_bid.item_allocation_type distinct values (1): 'Item Wise Allocation'",
+    "engg_estimate_details_item_bid.total_winners distinct values (1): '1'",
+    "engg_estimate_details_item_bid.winner_type distinct values (1): '0'",
+    "engg_estimate_details_item_bid.stateid distinct values (2): '25301', '25284'",
+    "engg_estimate_details_item_bid.statusid distinct values (1): '329'",
+    "engg_estimate_details_item_bid.status_description distinct values (1): 'Approved'",
     "engg_estimate_details_item_bid.cancelled_status distinct values (1): '0'",
     "engg_estimate_details_item_bid_history.unitofmeasure distinct values (18): 'EA', 'MTR', '25M', 'G25', 'HBG', 'M2H', 'BLK', 'IU', 'KG', 'kg'",
     "engg_estimate_details_item_bid_history.gst_type distinct values (1): 'Line Level'",
@@ -113261,8 +113045,9 @@
     "engg_receipt_headers.statusid distinct values (2): '322', '321'",
     "engg_receipt_headers.payment_status distinct values (2): '0', '1'",
     "engg_receipt_headers.receipt_paid_on distinct values (2): '2025-02-20 05:30:00', '2024-02-20 05:30:00'",
-    "engg_report_document.options distinct values (1): '[object Object]'",
-    "engg_report_document.createdby distinct values (3): 'Emp841', 'undefined', '16114'",
+    "engg_report_document.type distinct values (10): 'Estimate', 'Technical Bidders', 'Tender', 'Financial Vetting', 'Measurement Book', 'PO', 'Financial Bidders', 'Invoice', 'File Creation', 'Workflow History'",
+    "engg_report_document.options distinct values (12): '[object Object]', 'undefined', '{\\\"file_no\\\":\\\"KMC/CME/BR-15/WD-133/D/25-26/764\\', '\\\"process_name\\\":\\\"Estimate\\\"', '\\\"workflowHistory\\\":[{\\\"created_date\\\":\\\"31/03/2026\\\"', '\\\"comments\\\":\\\"test\\\"}', '{\\\"created_date\\\":\\\"31/03/2026\\\"', '\\\"comments\\\":\\\"test\\\"}', '{\\\"created_date\\\":\\\"31/03/2026\\\"', '\\\"comments\\\":\\\"test\\\"}'",
+    "engg_report_document.createdby distinct values (4): 'Emp841', 'undefined', '16114', 'system'",
     "engg_report_document.version distinct values (1): '1'",
     "engg_rr_pgw_txn.plan_no distinct values (4): 'PLAN789', 'PLAN1234567890', 'PLAN123', 'PLAN22322'",
     "engg_rr_pgw_txn.engg_demand_date distinct values (8): '0001-01-01 BC', '2025-06-04', '2026-03-18', '2026-01-16', '2019-12-20', '2025-11-18', '2025-11-19', '2026-03-06'",
@@ -114421,19 +114206,18 @@
     "hrm_employment_dtl.hrm_promotion_eligible_yn distinct values (2): 'Y', 'N'",
     "hrm_employment_dtl.hrm_transfer_eligible_yn distinct values (1): 'Y'",
     "hrm_employment_dtl.hrm_esi_yn distinct values (2): 'N', 'Y'",
-    "hrm_employment_dtl.create_uid distinct values (11): 'MIGRATOR', 'OLD_GI', '18021', '76148', '47193', '33831', '19927', '69926', '66453', '75937'",
-    "hrm_employment_dtl.modified_uid distinct values (18): 'MIGRATOR', '18021', '47193', '76148', '19927', '75937', '66453', '69926', '37670', '19219'",
-    "hrm_employment_dtl.version_no distinct values (15): '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'",
+    "hrm_employment_dtl.create_uid distinct values (10): 'MIGRATOR', 'OLD_GI', '18021', '76148', '47193', '33831', '19927', '69926', '66453', '75937'",
+    "hrm_employment_dtl.version_no distinct values (13): '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'",
     "hrm_employment_dtl.hrm_direct_promotion_flag distinct values (3): 'PROMOTEE', 'DIRECT', 'SPECIAL'",
     "hrm_employment_dtl.hrm_dip_deg_flag distinct values (2): 'DIPLOMA', 'DEGREE'",
-    "hrm_employment_dtl.pension_notification_number distinct values (3): '18', '3', '27'",
-    "hrm_employment_dtl.notification_date distinct values (3): '2009-11-27 00:00:00', '2009-12-01 00:00:00', '2009-11-16 00:00:00'",
+    "hrm_employment_dtl.pension_notification_number distinct values (5): '18', '3', '27', '35', '36'",
+    "hrm_employment_dtl.notification_date distinct values (4): '2009-11-27 00:00:00', '2009-11-16 00:00:00', '2009-12-01 00:00:00', '2026-04-08 00:00:00'",
     "hrm_employment_dtl.hrm_category distinct values (5): 'C', 'D', 'B', 'A', 'N'",
     "hrm_employment_dtl.hrm_nature_of_post distinct values (3): 'P', 'PERMANENT', 'TEMPORARY'",
     "hrm_employment_dtl.hrm_holder distinct values (2): 'S', 'O'",
     "hrm_employment_dtl.hrm_promotion_debarred_yn distinct values (2): 'Y', 'N'",
-    "hrm_employment_dtl.hrm_promotion_refused_yn distinct values (2): 'Y', 'N'",
-    "hrm_employment_dtl.hrm_entry_mode distinct values (7): 'DIR', 'SPRG', 'CON', 'DEPT', 'DEPU', 'CAS', 'REEMP'",
+    "hrm_employment_dtl.hrm_promotion_refused_yn distinct values (1): 'Y'",
+    "hrm_employment_dtl.hrm_entry_mode distinct values (5): 'DIR', 'SPRG', 'CON', 'DEPT', 'DEPU'",
     "hrm_employment_dtl.hrm_qualified_yn distinct values (2): 'N', 'Y'",
     "hrm_employment_dtl.hrm_dp_yn distinct values (2): 'N', 'Y'",
     "hrm_employment_dtl.hrm_publish_yn distinct values (2): 'Y', 'N'",
@@ -114446,9 +114230,13 @@
     "hrm_employment_dtl.hrm_hod_yn distinct values (2): 'Y', 'N'",
     "hrm_employment_dtl.hrm_ctr_officer_yn distinct values (2): 'Y', 'N'",
     "hrm_employment_dtl.hrm_gradation_code_old distinct values (4): 'IND', 'OUT', 'SEA', 'SERG'",
-    "hrm_employment_dtl.hrm_appointed_as distinct values (6): 'U', 'S', 'R', 'UES', 'UPH', 'US'",
+    "hrm_employment_dtl.hrm_appointed_as distinct values (6): 'U', 'S', 'R', 'UPH', 'UES', 'US'",
     "hrm_employment_dtl.data_migrated distinct values (1): 't'",
     "hrm_employment_dtl.data_migration_date distinct values (1): '2026-02-26 10:46:01.765225'",
+    "hrm_employment_dtl.is_row_active distinct values (1): 'Y'",
+    "hrm_employment_dtl.hrm_pay_comm_no distinct values (1): '6'",
+    "hrm_employment_dtl.hrm_pay_band_no distinct values (8): 'PB-1', 'PB-3', 'PB-2', 'PB-4', 'PB-4A', 'NA', 'PB-4B', 'PB-5'",
+    "hrm_employment_dtl.hrm_grade_pay distinct values (20): '1900', '1800', '1700', '2600', '2100', '3900', '4100', '4400', '3600', '5400'",
     "hrm_employment_dtl_08082025.hrm_promotion_eligible_yn distinct values (4): 'Y', 'N', 'Q', 'P'",
     "hrm_employment_dtl_08082025.hrm_transfer_eligible_yn distinct values (1): 'Y'",
     "hrm_employment_dtl_08082025.hrm_esi_yn distinct values (2): 'N', 'Y'",
@@ -115525,17 +115313,17 @@
     "hrm_temp_incident_list_hst.hrm_incident_cancelled_yn distinct values (1): 'Y'",
     "hrm_temp_incident_list_hst.created_uid distinct values (9): '47193', '18021', '76148', '76960', '18020', '19927', '62380', '80690', '79151'",
     "hrm_temp_incident_list_hst.modified_uid distinct values (9): '76148', '18021', '47193', '76960', '62380', '19927', '18020', '80690', '79151'",
-    "hrm_temp_transfer_list.hrm_cadre_code distinct values (12): '2001', '1004', '2003', '1002', '1003', '2002', '9003', '1012', '1007', '10001'",
-    "hrm_temp_transfer_list.hrm_from_sub_dept_code distinct values (11): '46', '23', '24', '1112', '57', '15', '52', '17', '43', '54'",
-    "hrm_temp_transfer_list.hrm_to_sub_dept_code distinct values (12): '46', '23', '24', '1112', '57', '15', '52', '54', '17', '43'",
+    "hrm_temp_transfer_list.hrm_cadre_code distinct values (10): '2001', '1004', '2003', '1002', '2002', '9003', '1012', '1007', '1001', '9002'",
+    "hrm_temp_transfer_list.hrm_from_sub_dept_code distinct values (13): '46', '1112', '23', '24', '57', '15', '134', '52', '17', '43'",
+    "hrm_temp_transfer_list.hrm_to_sub_dept_code distinct values (14): '46', '1112', '23', '24', '57', '15', '134', '52', '54', '17'",
     "hrm_temp_transfer_list.hrm_transfer_complete_yn distinct values (1): 'Y'",
     "hrm_temp_transfer_list.hrm_transfer_confirm_yn distinct values (1): 'Y'",
     "hrm_temp_transfer_list.hrm_order_no distinct values (1): 'ORDER'",
     "hrm_temp_transfer_list.hrm_order_desc distinct values (1): 'test'",
     "hrm_temp_transfer_list.hrm_order_date distinct values (2): '2026-04-15', '2026-03-26'",
     "hrm_temp_transfer_list.hrm_joining_date distinct values (1): '2026-03-26'",
-    "hrm_temp_transfer_list.as_on_date distinct values (6): '2015-07-01', '2016-01-01', '2015-10-01', '2015-08-01', '2015-06-01', '2026-04-15'",
-    "hrm_temp_transfer_list.no_of_months distinct values (3): '84', '1', '60'",
+    "hrm_temp_transfer_list.as_on_date distinct values (6): '2026-04-28', '2016-01-01', '2015-07-01', '2015-08-01', '2015-10-01', '2015-06-01'",
+    "hrm_temp_transfer_list.no_of_months distinct values (3): '1', '84', '60'",
     "hrm_temp_transfer_list.approval_uid distinct values (1): 'AD001'",
     "hrm_temp_transfer_list.approval_date distinct values (1): '2026-03-26'",
     "hrm_temp_transfer_list_09012026.hrm_from_sub_dept_code distinct values (13): '46', '24', '23', '52', '1112', '15', '57', '55', '17', '127'",
@@ -115617,9 +115405,8 @@
     "hrm_temp_transfer_list_hst_30012026.no_of_months distinct values (2): '60', '84'",
     "hrm_temp_transfer_list_hst_30012026.approval_uid distinct values (1): '47193'",
     "hrm_temp_transfer_list_hst_30012026.approval_date distinct values (7): '2011-07-29', '2011-08-05', '2011-09-01', '2011-08-13', '2011-07-16', '2011-08-03', '2011-07-18'",
-    "hrm_transfer_dept_vacancy.hrm_cadre_code distinct values (21): '2002', '10003', '10013', '1012', '1004', '1003', '10012', '10010', '2001', '2003'",
-    "hrm_transfer_dept_vacancy.hrm_sub_dept_code distinct values (19): '46', '52', '23', '1112', '15', '24', '43', '55', '51', '53'",
-    "hrm_transfer_dept_vacancy.hrm_vacancy distinct values (18): '0', '-46', '-1', '-4', '-3', '-9', '-5', '-7', '-2', '-12'",
+    "hrm_transfer_dept_vacancy.hrm_cadre_code distinct values (20): '2001', '2002', '10003', '10013', '1003', '1012', '1004', '10012', '10010', '2003'",
+    "hrm_transfer_dept_vacancy.hrm_sub_dept_code distinct values (20): '46', '52', '23', '1112', '15', '24', '57', '134', '55', '43'",
     "hrm_transfer_dept_vacancy_09012026.hrm_sub_dept_code distinct values (22): '46', '52', '23', '1112', '24', '15', '55', '43', '51', '53'",
     "hrm_transfer_dept_vacancy_26022026.hrm_cadre_code distinct values (21): '2002', '10003', '10013', '1012', '1004', '1003', '10012', '10010', '2001', '2003'",
     "hrm_transfer_dept_vacancy_26022026.hrm_sub_dept_code distinct values (20): '46', '52', '23', '1112', '15', '24', '43', '55', '51', '53'",
@@ -115627,17 +115414,17 @@
     "hrm_transfer_dept_vacancy_30012026.hrm_cadre_code distinct values (20): '2002', '10003', '10013', '1012', '1004', '1003', '10012', '10010', '2001', '2003'",
     "hrm_transfer_dept_vacancy_30012026.hrm_sub_dept_code distinct values (19): '46', '52', '23', '1112', '15', '24', '57', '55', '58', '43'",
     "hrm_transfer_dept_vacancy_30012026.hrm_vacancy distinct values (18): '0', '-46', '-1', '-4', '-2', '-3', '-8', '-7', '-5', '-11'",
-    "hrm_transfer_hdr.hrm_cadre_code distinct values (17): '10003', '10013', '10010', '10012', '10008', '2001', '10009', '1004', '2003', '1002'",
+    "hrm_transfer_hdr.hrm_cadre_code distinct values (17): '2001', '10003', '10013', '10010', '10012', '10008', '10009', '1004', '2003', '10001'",
     "hrm_transfer_hdr.hrm_order_no distinct values (1): 'ORDER'",
     "hrm_transfer_hdr.hrm_order_desc distinct values (1): 'test'",
     "hrm_transfer_hdr.hrm_order_date distinct values (2): '2026-04-15', '2026-03-26'",
-    "hrm_transfer_hdr.create_uid distinct values (3): '47193', '75937', '18021'",
-    "hrm_transfer_hdr.create_date distinct values (10): '2011-07-09', '2011-08-02', '2011-07-30', '2015-09-15', '2011-07-28', '2016-01-22', '2015-11-07', '2015-09-11', '2015-09-09', '2015-06-20'",
+    "hrm_transfer_hdr.create_uid distinct values (4): '47193', 'SO001', '75937', '18021'",
+    "hrm_transfer_hdr.create_date distinct values (12): '2026-04-28', '2011-07-09', '2011-08-02', '2011-07-30', '2011-07-28', '2016-01-22', '2015-09-15', '2026-04-15', '2015-09-11', '2015-09-09'",
     "hrm_transfer_hdr.modified_uid distinct values (2): 'SO001', 'shahrukh'",
     "hrm_transfer_hdr.modified_date distinct values (2): '2026-04-15', '2026-03-26'",
     "hrm_transfer_hdr.version_no distinct values (1): '1'",
-    "hrm_transfer_hdr.no_of_months distinct values (2): '60', '84'",
-    "hrm_transfer_hdr.as_on_date distinct values (6): '2011-03-01', '2015-07-01', '2016-01-01', '2015-10-01', '2015-08-01', '2015-06-01'",
+    "hrm_transfer_hdr.no_of_months distinct values (4): '60', '1', '84', '170'",
+    "hrm_transfer_hdr.as_on_date distinct values (8): '2011-03-01', '2026-04-28', '2016-01-01', '2015-07-01', '2026-04-15', '2015-08-01', '2015-10-01', '2015-06-01'",
     "hrm_transfer_hdr_09012026.hrm_order_no distinct values (4): 'ORDER', 'test', 'ORDER01', 'ORDER123'",
     "hrm_transfer_hdr_09012026.hrm_order_desc distinct values (4): 'test', '521', 'TEST', 'TEST123456789'",
     "hrm_transfer_hdr_09012026.hrm_order_date distinct values (6): '2025-09-03', '2025-11-18', '2025-11-19', '2025-12-24', '2025-11-12', '2026-01-06'",
@@ -116098,19 +115885,20 @@
     "kmc_report_mst.isfetchdepartment distinct values (2): '0', '1'",
     "kmc_report_mst.isfetchborough distinct values (2): '0', '1'",
     "kmc_report_mst.isfetchward distinct values (2): '0', '1'",
-    "kmc_report_mst.date_range distinct values (8): '90', '92', '30', '53', '365', '366', '15', '400'",
-    "kmc_report_mst.api_column_4 distinct values (4): '52', '22252', '50', '73'",
+    "kmc_report_mst.date_range distinct values (8): '90', '92', '30', '53', '400', '365', '366', '15'",
+    "kmc_report_mst.column_3 distinct values (3): 'License_Status', 'Sub-Office', 'month'",
+    "kmc_report_mst.api_column_4 distinct values (4): '73', '52', '22252', '50'",
     "kmc_report_mst.column_5 distinct values (2): 'FIN_YEAR', 'Payment_Status'",
     "kmc_report_mst.api_column_5 distinct values (2): '22257', '39'",
     "kmc_report_mst.api_column_6 distinct values (1): '22257'",
     "kmc_report_mst.tk_validation distinct values (2): '1', '0'",
-    "kmc_report_mst.department_name distinct values (8): 'Collection Department', 'Uttaran Service Department', 'Grievance Cell', 'Central Record Department', 'Engineering Department', 'Licence Department', 'License Department', 'Work Dairy Department'",
+    "kmc_report_mst.department_name distinct values (8): 'Collection Department', 'Engineering Department', 'Uttaran Service Department', 'Grievance Cell', 'Central Record Department', 'Licence Department', 'License Department', 'Work Dairy Department'",
     "kmc_report_mst.signatory_name distinct values (1): 'Verified and Approved By'",
     "kmc_report_mst.get_count_columns distinct values (17): '\"Total Received', 'Total Resolved', 'Total Pending', 'Last 3 days Pending', 'Last 7 days Pending', 'Last 15 days Pending', 'Above 15 days Pending\"', '\"CASH', 'DD', 'Cheque'",
     "kmc_report_mst.footer_message distinct values (1): 'All officers are required to generete online complaince report using their userid on ver urgent basis.'",
     "kmc_report_mst.sl_num distinct values (2): 'Sno', 'SL.No'",
     "kmc_report_mst.text_note distinct values (2): '\"[\\\"Please enter quarter in mentioned format(e.g for 1st qtr of FY 2024-25 enter value as 20241', 'for 4th qtr of FY 2024-25 enter value as 20244).\\\"]\"'",
-    "kmc_report_mst.table_font_size distinct values (3): '6', '7', '8'",
+    "kmc_report_mst.table_font_size distinct values (3): '8', '6', '7'",
     "kmc_report_mst_020926.db_name distinct values (2): 'digit', 'finance'",
     "kmc_report_mst_020926.createdby distinct values (1): 'kmc'",
     "kmc_report_mst_020926.updatedby distinct values (1): 'kmc'",
@@ -116203,26 +115991,34 @@
     "kmc_work_estimate_annexture_hearder.fund_type distinct values (1): 'Revenue'",
     "kmc_work_estimate_annexture_hearder.account_bal distinct values (2): '12000000.00', '1500000.00'",
     "kmc_work_estimate_annexture_hearder.lock_flag distinct values (2): '0', '1'",
-    "kmc_work_estimate_details.unitofmeasure distinct values (21): 'EA', 'MTR', 'HBG', '25M', 'M2H', 'G25', 'kg', 'BLK', 'KG', 'IU'",
-    "kmc_work_estimate_details.gst_type distinct values (2): 'Line Level', 'Gross Level'",
-    "kmc_work_estimate_details.formula distinct values (3): '1', '1*1.2', '2'",
-    "kmc_work_estimate_details.cgst_percent distinct values (6): '9', '0', '1', '10', '4', '12'",
-    "kmc_work_estimate_details.sgst_percent distinct values (6): '9', '0', '1', '10', '4', '12'",
-    "kmc_work_estimate_details.igst_percent distinct values (8): '0', '18', '10', '1', '9', '3', '2', '4'",
-    "kmc_work_estimate_details.cess_percent distinct values (3): '2', '0', '1'",
+    "kmc_work_estimate_details.gst_type distinct values (1): 'Line Level'",
+    "kmc_work_estimate_details.fact distinct values (1): '1'",
+    "kmc_work_estimate_details.formula distinct values (1): '1'",
+    "kmc_work_estimate_details.cgst_percent distinct values (1): '0'",
+    "kmc_work_estimate_details.cgst_amount distinct values (1): '0'",
+    "kmc_work_estimate_details.sgst_percent distinct values (1): '0'",
+    "kmc_work_estimate_details.sgst_amount distinct values (1): '0'",
+    "kmc_work_estimate_details.igst_percent distinct values (1): '18'",
+    "kmc_work_estimate_details.cess_percent distinct values (1): '1'",
     "kmc_work_estimate_details.misc_percent distinct values (1): '0'",
     "kmc_work_estimate_details.misc_amount distinct values (1): '0'",
-    "kmc_work_estimate_details.createdby distinct values (1): 'Emp841'",
-    "kmc_work_estimate_details.item_name distinct values (2): 'NA', 'TEST'",
-    "kmc_work_estimate_details.schedule_name distinct values (14): 'KMC Fair Rate', 'KMC.FAIR RATE BIG-DIA TUBEWELL', 'KMC.SMALL-DIA TUBEWELL 2012', 'TestScheduleNav', 'ELECTRICAL_WORKS_VOL1_AUG_2008', 'ELECTRIC-MECH.WORK(VOL-1)OCT18', 'test2', 'schedule', 'ENGG_TEST_SCHEDULE_73', 'TestSchedule1'",
+    "kmc_work_estimate_details.quantity distinct values (4): '9', '10', '100', '1'",
+    "kmc_work_estimate_details.item_name distinct values (1): 'NA'",
     "kmc_work_estimate_details.lock_flag distinct values (1): '0'",
-    "kmc_work_estimate_details.estimation_increment distinct values (2): '1', '0'",
-    "kmc_work_estimate_details.status distinct values (3): '0', '9', '1'",
-    "kmc_work_estimate_details.annexture_estimation_no distinct values (11): 'ANNEX/1/EST-KMC/SOL/BR-16/WD-142/D/25-26/596', 'ANNEX/4/EST-KMC/SOL/BR-16/WD-142/D/25-26/596', 'ANNEX/2/EST-KMC/SOL/BR-10/WD-089/D/25-26/602', 'ANNEX/1/EST-KMC/SOL/BR-10/WD-089/D/25-26/602', 'ANNEX/3/EST-KMC/SOL/BR-10/WD-089/D/25-26/602', 'ANNEX/1/EST-KMC/CME/BR-15/WD-133/D/25-26/736', 'ANNEX/1/EST-KMC/CME/BR-15/WD-133/D/25-26/748', 'ANNEX/1/EST-KMC/SOL/BR-16/WD-142/D/25-26/636', 'ANNEX/1/EST-KMC/SOL/BR-16/WD-142/D/25-26/700', 'ANNEX/2/EST-KMC/CME/BR-15/WD-133/D/25-26/748'",
+    "kmc_work_estimate_details.status distinct values (1): '0'",
+    "kmc_work_estimate_details.c_status distinct values (1): '1'",
     "kmc_work_estimate_distributions.borough distinct values (14): 'Borough XVI', 'II', '2', 'BOROUGH-I', 'Borough X', 'Borough I', 'III', 'Borough VI', '16', '6'",
     "kmc_work_estimate_distributions.ward distinct values (8): '001', '142', 'Ward 142', '010', '089', 'Ward 89', '048', 'Ward 1'",
     "kmc_work_estimate_distributions.description distinct values (5): 'test', 'Test', '10', 'cost desc', 'tet'",
     "kmc_work_estimate_distributions.location distinct values (5): 'KMC Head Office', 'General', 'PARK', 'Test Location', 'KMC Field Office'",
+    "kmc_work_estimate_hearder.work_purpose distinct values (1): 'General'",
+    "kmc_work_estimate_hearder.gst_type distinct values (1): 'Line Level'",
+    "kmc_work_estimate_hearder.cess_percent distinct values (1): '1'",
+    "kmc_work_estimate_hearder.createdby distinct values (1): 'Emp841'",
+    "kmc_work_estimate_hearder.updatedby distinct values (1): 'Emp841'",
+    "kmc_work_estimate_hearder.fund_type distinct values (1): 'Revenue'",
+    "kmc_work_estimate_hearder.is_multi_borough distinct values (1): '0'",
+    "kmc_work_estimate_hearder.c_status distinct values (1): '1'",
     "kmc_work_estimate_hearder_01_04_2026.work_type distinct values (11): 'Development', 'Banglar Bari', 'Ghat Development', 'Fitting and Fixing', 'Flower Show', 'Maintenance', 'Labour Engagement', 'Ghat Maintenance', 'Labour Contractual', 'Nursery Maintenance'",
     "kmc_work_estimate_hearder_01_04_2026.department distinct values (5): 'SOLID WASTE MANAGEMENT- 1', 'INFORMATION TECHNOLOGY DEPARTMENT', 'WATER SUPPLY', 'CME-CIVIL', 'KMC'",
     "kmc_work_estimate_hearder_01_04_2026.borough distinct values (9): 'Borough XVI', 'Borough II', 'Borough I', 'Borough X', 'Borough III', 'BOROUGH-XV', 'Borough VI', 'BOROUGH-XVI', 'Borough V'",
@@ -116282,9 +116078,9 @@
     "logs_gw_payment.scheduler_name distinct values (2): 'RECON_PORTAL', 'Scheduler'",
     "master_modules.m_status distinct values (1): 'active'",
     "message.locale distinct values (1): 'en_IN'",
-    "message.tenantid distinct values (1): 'km'",
+    "message.tenantid distinct values (2): 'km', 'km.kolkata'",
     "message.module distinct values (2): 'rainmaker-bpa', 'rainmaker-common'",
-    "message.lastmodifiedby distinct values (7): '6', '16167', '15465', '1', '25', '266', '16158'",
+    "message.lastmodifiedby distinct values (11): '16167', '16316', '6', '15603', '15465', '1', '25', '16158', '266', '15464'",
     "message1.locale distinct values (1): 'en_IN'",
     "message1.tenantid distinct values (5): 'km', 'od.testing', 'od.balasore', 'od.berhampur', 'od.denkanal'",
     "message1.module distinct values (19): 'rainmaker-common', 'rainmaker-fsm', 'rainmaker-tl', 'rainmaker-od.testing', 'rainmaker-dss', 'rainmaker-pgr', 'rainmaker-pt', 'rainmaker-ws', 'rainmaker-bpa', 'rainmaker-mr'",
@@ -116397,12 +116193,12 @@
     "misc_demand_print_dtl.active_flag distinct values (2): 'Y', 'N'",
     "misc_demand_print_dtl.unit_office_code distinct values (1): '1'",
     "misc_demand_print_dtl.unit_office_name distinct values (1): 'BOROUGH-I'",
-    "misc_demand_seq_mst_history.id distinct values (4): '3', '8', '2', '10'",
-    "misc_demand_seq_mst_history.dept_code distinct values (4): 'LIGHT', 'PAS', 'SWM', 'ROAD'",
-    "misc_demand_seq_mst_history.fin_year distinct values (1): '2025-2026'",
-    "misc_demand_seq_mst_history.created_at distinct values (4): '2025-05-20 13:47:42.635', '2025-05-21 05:19:31.764', '2025-05-20 10:50:45.185', '2025-07-19 08:16:42.645'",
-    "misc_demand_seq_mst_history.created_by distinct values (1): '15600'",
-    "misc_demand_seq_mst_history.updated_by distinct values (5): '15600', '16032', '16234', '15464', '16035'",
+    "misc_demand_seq_mst_history.id distinct values (6): '3', '8', '2', '16', '10', '17'",
+    "misc_demand_seq_mst_history.dept_code distinct values (5): 'LIGHT', 'PAS', 'SWM', 'LIC', 'ROAD'",
+    "misc_demand_seq_mst_history.fin_year distinct values (2): '2025-2026', '2026-2027'",
+    "misc_demand_seq_mst_history.created_at distinct values (6): '2025-05-20 13:47:42.635', '2025-05-21 05:19:31.764', '2025-05-20 10:50:45.185', '2025-11-20 08:36:31.513', '2025-07-19 08:16:42.645', '2026-04-23 14:37:01.11'",
+    "misc_demand_seq_mst_history.created_by distinct values (2): '15600', '16237'",
+    "misc_demand_seq_mst_history.updated_by distinct values (7): '15600', '16032', '16234', '15464', '16035', '16237', '16114'",
     "misc_demand_seq_mst_history.active_flg distinct values (1): 'Y'",
     "misc_demand_seq_mst_history.demand_for distinct values (1): 'MISCELLANEOUS DEMAND'",
     "misc_sub_category_master.created_by distinct values (4): '15600', '16237', '16035', '16032'",
@@ -116835,10 +116631,8 @@
     "portal_asmt_pgw_all_type_txn_12032024.scheme_type distinct values (1): '50PWVMYR'",
     "portal_asmt_pgw_all_type_txn_12032024.payable_amount distinct values (22): '47.00', '279.00', '13231.00', '3672.00', '2450.00', '1016.52', '263.52', '7350.75', '271.00', '1324.00'",
     "portal_cc_pgw_txn_parent.txn_status distinct values (7): 'PENDING', 'SUCCESS', 'success', 'FAILURE', 'INPROGRESS', 'failure', 'Failed'",
-    "portal_cc_pgw_txn_parent.txn_mobile_no distinct values (17): '9380863061', '9040706205', '8770271856', '9833652841', '8310313764', '8712125712', '8109202272', '9148744129', '9382305932', '9830612221'",
     "portal_cc_pgw_txn_parent.gateway distinct values (4): 'PAYU', 'PayU', 'Billdesk', 'BILLDESK'",
-    "portal_cc_pgw_txn_parent.create_id distinct values (19): '16032', 'undefined', '16178', 'Emp841', '16179', '16068', '565', '16152', '16186', '16175'",
-    "portal_cc_pgw_txn_parent.txn_type_id distinct values (11): '34', '36', '10', '09', '07', '05', '28', '11', '35', '31'",
+    "portal_cc_pgw_txn_parent.txn_type_id distinct values (13): '34', '36', '10', '05', '53', '09', '07', '28', '11', '35'",
     "portal_contact_details.status distinct values (2): '0', '1'",
     "portal_contact_details.srl_no distinct values (6): '1', '45', '1212', '13', '55', '77'",
     "portal_pgw_txn_parent.txn_status distinct values (7): 'SUCCESS', 'FALURE', 'PENDING', 'FAILURE', 'CK', 'INPROGRESS1', 'CA'",
@@ -117000,6 +116794,10 @@
     "sumit_filestoremap.tenantid distinct values (1): 'km'",
     "sumit_filestoremap.version distinct values (1): '0'",
     "sumit_filestoremap.filesource distinct values (1): 'diskFileStorage'",
+    "swm_ce_demand_pgw_txn.demand_year distinct values (5): '2025-2026', '2024-2025', '2023-2024', '2026-2027', '2018-2019'",
+    "swm_ce_demand_pgw_txn.create_uid distinct values (1): 'PORTAL'",
+    "swm_ce_demand_pgw_txn.porcessing_charge distinct values (1): '0.00'",
+    "swm_ce_demand_pgw_txn.demand_type distinct values (2): '1', '4'",
     "t_holiday_dtls.days distinct values (12): 'Sunday', 'Wednesday', 'Saturday', 'Friday', 'Monday', 'Thursday', 'Tuesday', 'Monday   ', 'Friday   ', 'Thursday '",
     "t_holiday_dtls.is_holiday distinct values (2): 'N', 'Y'",
     "t_holiday_dtls_2024.days distinct values (1): 'Sunday'",
@@ -121813,6 +121611,10 @@
         "real_name": "super_admin_user",
         "columns": {}
       },
+      "swm_ce_demand_pgw_txn": {
+        "real_name": "swm_ce_demand_pgw_txn",
+        "columns": {}
+      },
       "t_holiday_dtls": {
         "real_name": "t_holiday_dtls",
         "columns": {}
@@ -122039,5 +121841,5 @@
       }
     }
   },
-  "_hash": "d3c410402ba9e82dfe0876189dd0803d"
+  "_hash": "0ee73490245428a6539e1b4115cfa3a7"
 }
